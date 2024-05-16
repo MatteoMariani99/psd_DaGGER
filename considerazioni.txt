@@ -1,0 +1,32 @@
+CONSIDERAZIONI
+
+1Nel caso in esame è già implementata in automatico (all'interno della classe env della gym library) l'acquisizione immagini da parte dell'expert e anche lo spawning dei comandi di velocità (azioni dell'expert).
+Le immagini vengono prese con vista dall'alto ma penso sia possibile anche prendere quelle davanti a se.
+
+
+### TO DO ###
+Va scelto l'expert (PID, MPC...) e l'ambiente (es. PyBullet) per gestire la creazione dei percorsi (quando completo un giro creo un nuovo percorso).
+E' quindi necessario aver a disposizione dei percorsi che vengono selezionati poi casualmente per il training.
+la funzione che carica il percorso va inserita nella funzione reset dell'ambiente.
+
+
+
+## DAGGER ##
+Creare un env con la macchina (utilizzare la racecar o la simple car) e un circuito se possibile.
+Per la simple car la cartella di origine è pybullet-driving-env.
+In f10_racecar_pybullet c'è il percorso di barcellona con la macchina (le ruote dietro sembrano trascinarsi)
+Per costruire l'env sono necessarie le funzioni di step, reset, render (vedi pagina tra i preferiti di firefox)
+Serve un expert che generi le immagini tramite una camera (zed della racecar per esempio).
+Muovere la macchina tramite freccie tastiera: già implementato in f10_racecar_on_plane.
+Capire se ha senso modificare il modello di rete già presente per car-racingV0.
+
+
+
+WORKFLOW
+1- creare da zero uno script per l'ambiente (simile a quello fatto per la PPO) -> (vedi pagina tra i preferiti di firefox)
+2- nella creazione delle funzioni, tener in considerazione le azioni (quali sono le nostre?) e per le osservazioni (immagini 96x96 rgb o gray)
+3- fatto ciò inserire un sdf di un percorso e provare ad includerlo nell'ambiente (prova con il barca.sdf) (è una riga di codice)
+4- fatto ciò provar a far muovere la macchina all'interno del percorso in modo da capire se fila tutto liscio con i comandi da tastiera
+5- verificare che lo stato (ovvero le immagini ricevute dalla zed) siano coerenti e della dimensione corretta
+6- copiare il modello di rete definito per il car-racingV0
+7- l'ambiente utilizzato dal dagger.py è lo script car_racing.py -> capire come gestire la tastiera (expert) e la rete -> nel senso capire come switchare dall'uno all'altro come fa lo script. Il tutto dovrebbe già essere gestito con la politica pi in quanto inizialmente il controllo dell'expert è massimo mentre poi diminuisce tramite il beta.
