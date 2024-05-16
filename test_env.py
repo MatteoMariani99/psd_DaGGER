@@ -34,11 +34,11 @@ while not done:
                     turn = 0
 
             if (k == p.B3G_UP_ARROW and (v&p.KEY_WAS_TRIGGERED)):
-                    forward=20
+                    forward=15
             if (k == p.B3G_UP_ARROW and (v&p.KEY_WAS_RELEASED)):
                     forward=0
             if (k == p.B3G_DOWN_ARROW and (v&p.KEY_WAS_TRIGGERED)):
-                    backward=20
+                    backward=15
             if (k == p.B3G_DOWN_ARROW and (v&p.KEY_WAS_RELEASED)):
                     backward=0
 

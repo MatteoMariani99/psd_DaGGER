@@ -4,7 +4,7 @@ import pybullet_data
 
 p.connect(p.GUI)
 p.setAdditionalSearchPath(pybullet_data.getDataPath())
-p.resetDebugVisualizerCamera(cameraDistance=10, cameraYaw=0, cameraPitch=-89, cameraTargetPosition=[0,0,0])
+#p.resetDebugVisualizerCamera(cameraDistance=10, cameraYaw=0, cameraPitch=-89, cameraTargetPosition=[0,0,0])
 offset = [0,0,0]
 #turtle = p.loadURDF("f10_racecar/simplecar.urdf", [0,0,.3])
 turtle = p.loadURDF("f10_racecar/simplecar.urdf", [0,0,.3])

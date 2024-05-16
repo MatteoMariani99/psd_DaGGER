@@ -10,11 +10,12 @@ from itertools import chain
 # dimensioni immagini observation space
 STATE_W = 96   
 STATE_H = 96
-zed_camera_joint = 5
+zed_camera_joint = 7 # simplecar
+# zed_camera_joint = 5 racecar
 
 
 class PyBulletContinuousEnv(gym.Env):
-    def __init__(self, total_episode_step=100):
+    def __init__(self, total_episode_step=1000):
         super(PyBulletContinuousEnv, self).__init__()
 
         # Connect to PyBullet and set up the environment
@@ -37,10 +38,10 @@ class PyBulletContinuousEnv(gym.Env):
         # Reset the simulation and the cartpole position
         p.resetSimulation()
         p.setGravity(0, 0, -9.81)
-        p.resetDebugVisualizerCamera(cameraDistance=10, cameraYaw=0, cameraPitch=-89, cameraTargetPosition=[0,0,0])
+        p.resetDebugVisualizerCamera(cameraDistance=30, cameraYaw=0, cameraPitch=-89, cameraTargetPosition=[8,0,0])
         #p.loadURDF("plane.urdf",useFixedBase = True)
         p.loadSDF("f10_racecar/meshes/barca_track.sdf", globalScaling=1)
-        self.car_id = p.loadURDF("f10_racecar/racecar_differential.urdf", [0,0,0.3])
+        self.car_id = p.loadURDF("f10_racecar/simplecar.urdf", [0,0,0.3])
 
 
     # Le osservazioni sono le immagini 96x96 rgb prese dalla zed
@@ -75,17 +76,29 @@ class PyBulletContinuousEnv(gym.Env):
         forward = action[1]
         backward = action[2]
         
+        # SIMPLECAR
         # ctrl+shift+l per fare il replace di una variabile
         # ruote anteriori
         p.setJointMotorControl2(self.car_id,1,p.VELOCITY_CONTROL,targetVelocity=forward-backward)
         p.setJointMotorControl2(self.car_id,3,p.VELOCITY_CONTROL,targetVelocity=forward-backward)
         # ruote posteriori
-        p.setJointMotorControl2(self.car_id,12,p.VELOCITY_CONTROL,targetVelocity=forward-backward)
-        p.setJointMotorControl2(self.car_id,14,p.VELOCITY_CONTROL,targetVelocity=forward-backward)
+        p.setJointMotorControl2(self.car_id,4,p.VELOCITY_CONTROL,targetVelocity=forward-backward)
+        p.setJointMotorControl2(self.car_id,5,p.VELOCITY_CONTROL,targetVelocity=forward-backward)
         # sterzo
         p.setJointMotorControl2(self.car_id,0,p.POSITION_CONTROL,targetPosition=-steer)
         p.setJointMotorControl2(self.car_id,2,p.POSITION_CONTROL,targetPosition=-steer)
 
+
+        # F10 RACECAR
+        # ruote anteriori
+        # p.setJointMotorControl2(self.car_id,1,p.VELOCITY_CONTROL,targetVelocity=forward-backward)
+        # p.setJointMotorControl2(self.car_id,3,p.VELOCITY_CONTROL,targetVelocity=forward-backward)
+        # # ruote posteriori
+        # p.setJointMotorControl2(self.car_id,4,p.VELOCITY_CONTROL,targetVelocity=forward-backward)
+        # p.setJointMotorControl2(self.car_id,5,p.VELOCITY_CONTROL,targetVelocity=forward-backward)
+        # # sterzo
+        # p.setJointMotorControl2(self.car_id,0,p.POSITION_CONTROL,targetPosition=-steer)
+        # p.setJointMotorControl2(self.car_id,2,p.POSITION_CONTROL,targetPosition=-steer)
 
         # Step di simulazione
         for _ in range(24):
