@@ -15,7 +15,7 @@ from environment import PyBulletContinuousEnv
 device = torch.device("cuda:0" if torch.cuda.is_available() else "cpu")
 print("Torch Device:", device)
 
-def run_episode(env, agent, max_timesteps=100):
+def run_episode(env, agent, max_timesteps=500):
     
     episode_reward = 0
     step = 0
@@ -54,7 +54,7 @@ if __name__ == "__main__":
     # TODO: load agent
     agent = Model()
     #print("Loading model {}:".format(args.path))
-    agent.load("dagger_test_models/model_{}.pth".format(2))
+    agent.load("dagger_test_models/model_{}.pth".format(3))
     # agent.load("models/agent.ckpt")
     #env = gym.make('CarRacing-v0').unwrapped
     env = PyBulletContinuousEnv()

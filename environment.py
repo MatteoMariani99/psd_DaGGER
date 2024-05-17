@@ -15,7 +15,7 @@ zed_camera_joint = 7 # simplecar
 
 
 class PyBulletContinuousEnv(gym.Env):
-    def __init__(self, total_episode_step=1000):
+    def __init__(self, total_episode_step=500):
         super(PyBulletContinuousEnv, self).__init__()
 
         # Connect to PyBullet and set up the environment
@@ -38,10 +38,44 @@ class PyBulletContinuousEnv(gym.Env):
         # Reset the simulation and the cartpole position
         p.resetSimulation()
         p.setGravity(0, 0, -9.81)
-        p.resetDebugVisualizerCamera(cameraDistance=30, cameraYaw=0, cameraPitch=-89, cameraTargetPosition=[8,0,0])
-        #p.loadURDF("plane.urdf",useFixedBase = True)
+        p.resetDebugVisualizerCamera(cameraDistance=30, cameraYaw=0, cameraPitch=-89, cameraTargetPosition=[0,8,0])
+        # p.loadURDF("plane.urdf",useFixedBase = True)
+        # p.loadURDF("cube/marble_cube.urdf",[-3,2,0],useFixedBase = True)
+        # p.loadURDF("cube/marble_cube.urdf",[-3,1,0],useFixedBase = True)
+        # p.loadURDF("cube/marble_cube.urdf",[-3,3,0],useFixedBase = True)
+        # p.loadURDF("cube/marble_cube.urdf",[-3,4,0],useFixedBase = True)
+        # p.loadURDF("cube/marble_cube.urdf",[-3,0,0],useFixedBase = True)
+        # p.loadURDF("cube/marble_cube.urdf",[-3,-1,0],useFixedBase = True)
+        # p.loadURDF("cube/marble_cube.urdf",[-3,-2,0],useFixedBase = True)
+        # p.loadURDF("cube/marble_cube.urdf",[-3,-3,0],useFixedBase = True)
+
+        # # horizontal
+        # p.loadURDF("cube/marble_cube.urdf",[3,5,0],useFixedBase = True)
+        # p.loadURDF("cube/marble_cube.urdf",[2,5,0],useFixedBase = True)
+        # p.loadURDF("cube/marble_cube.urdf",[4,5,0],useFixedBase = True)
+        # p.loadURDF("cube/marble_cube.urdf",[1,5,0],useFixedBase = True)
+        # p.loadURDF("cube/marble_cube.urdf",[5,5,0],useFixedBase = True)
+        # p.loadURDF("cube/marble_cube.urdf",[6,5,0],useFixedBase = True)
+        # p.loadURDF("cube/marble_cube.urdf",[7,5,0],useFixedBase = True)
+
+        # # vertical
+        # p.loadURDF("cube/marble_cube.urdf",[8,7,0],useFixedBase = True)
+        # p.loadURDF("cube/marble_cube.urdf",[8,6,0],useFixedBase = True)
+        # p.loadURDF("cube/marble_cube.urdf",[8,8,0],useFixedBase = True)
+        # p.loadURDF("cube/marble_cube.urdf",[8,5,0],useFixedBase = True)
+
+        # # vertical
+        # p.loadURDF("cube/marble_cube.urdf",[-8,7,0],useFixedBase = True)
+        # p.loadURDF("cube/marble_cube.urdf",[-8,6,0],useFixedBase = True)
+        # p.loadURDF("cube/marble_cube.urdf",[-8,8,0],useFixedBase = True)
+        # p.loadURDF("cube/marble_cube.urdf",[-8,5,0],useFixedBase = True)
         p.loadSDF("f10_racecar/meshes/barca_track.sdf", globalScaling=1)
-        self.car_id = p.loadURDF("f10_racecar/simplecar.urdf", [0,0,0.3])
+
+        self.car_id = p.loadURDF("f10_racecar/simplecar.urdf", [-15,-11,.3])
+        # sphere_color = [1, 0, 0,1]  # Red color
+        # sphere_shape = p.createCollisionShape(p.GEOM_CYLINDER, radius=0.2, height=0)
+        # sphere_body = p.createMultiBody(baseMass=1, baseCollisionShapeIndex=sphere_shape,basePosition=[-10,5, 0])
+        # p.changeVisualShape(sphere_body, -1, rgbaColor=sphere_color)
 
 
     # Le osservazioni sono le immagini 96x96 rgb prese dalla zed
@@ -101,8 +135,8 @@ class PyBulletContinuousEnv(gym.Env):
         # p.setJointMotorControl2(self.car_id,2,p.POSITION_CONTROL,targetPosition=-steer)
 
         # Step di simulazione
-        for _ in range(24):
-            p.stepSimulation()
+        #for _ in range(24):
+        p.stepSimulation()
 
         # Ottengo lo stato che sarebbero le ossservazioni (immagine 96x96x3)
         state = self.get_observation()
@@ -242,8 +276,8 @@ class PyBulletContinuousEnv(gym.Env):
         p.setJointMotorControl2(self.car_id,1,p.VELOCITY_CONTROL,targetVelocity=forward-backward)
         p.setJointMotorControl2(self.car_id,3,p.VELOCITY_CONTROL,targetVelocity=forward-backward)
         # ruote posteriori
-        p.setJointMotorControl2(self.car_id,12,p.VELOCITY_CONTROL,targetVelocity=forward-backward)
-        p.setJointMotorControl2(self.car_id,14,p.VELOCITY_CONTROL,targetVelocity=forward-backward)
+        p.setJointMotorControl2(self.car_id,4,p.VELOCITY_CONTROL,targetVelocity=forward-backward)
+        p.setJointMotorControl2(self.car_id,5,p.VELOCITY_CONTROL,targetVelocity=forward-backward)
         # sterzo
         p.setJointMotorControl2(self.car_id,0,p.POSITION_CONTROL,targetPosition=-steer)
         p.setJointMotorControl2(self.car_id,2,p.POSITION_CONTROL,targetPosition=-steer)

@@ -54,7 +54,7 @@ def train_model(X_train, y_train, X_valid, y_valid, path, num_epochs=50, learnin
     print("... train model")
     model = Model()
     criterion = torch.nn.MSELoss()
-    optimizer = torch.optim.SGD(model.parameters(), lr=learning_rate, weight_decay=lambda_l2) # built-in L2 
+    optimizer = torch.optim.Adam(model.parameters(), lr=learning_rate, weight_decay=lambda_l2) # built-in L2 
 
     X_train_torch = torch.from_numpy(X_train[:,np.newaxis,...])
     y_train_torch = torch.from_numpy(y_train)

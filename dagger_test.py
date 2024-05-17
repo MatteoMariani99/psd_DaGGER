@@ -12,6 +12,7 @@ import torch
 import cv2
 from environment import PyBulletContinuousEnv
 import pybullet as p
+import time
 
 
 
@@ -24,7 +25,7 @@ import pybullet as p
 
 
 
-NUM_ITS = 2 # default è 20. Viene utilizzato 1 lap per iteration. Le iteration rappresentano il
+NUM_ITS = 1 # default è 20. Viene utilizzato 1 lap per iteration. Le iteration rappresentano il
 # numero di volte che noi stoppiamo l'esperto per salvare i dati e fare il training della rete.
 # è un po' come se fosse il numero di episodi.
 beta_i  = 0.9 # parametro usato nella policy PI: tale valore verrà modificato tramite la 
@@ -32,7 +33,7 @@ beta_i  = 0.9 # parametro usato nella policy PI: tale valore verrà modificato t
 # Inizialmente avremo 0.9^0, poi 0.9^1 poi 0.9^2 e così via il beta diminuirà esponenzialmente.
 # Ciò significa che avremo una probabilità di utilizzare la politica dell'expert che decresce 
 # a mano a mano che si procede con il training.
-T = 2000 # ogni iteration contiene N passi
+T = 500 # ogni iteration contiene N passi
 
 
 s = """  ____    _                         
@@ -55,6 +56,7 @@ def store_data(data, datasets_dir="./data_test"):
     if not os.path.exists(datasets_dir):
         os.mkdir(datasets_dir)
     data_file = os.path.join(datasets_dir, 'data_dagger.pkl.gzip')
+    # apro il file e ci aggancio le nuove immagini
     f = gzip.open(data_file,'wb')
     pickle.dump(data, f)
 
@@ -121,6 +123,7 @@ if __name__ == "__main__":
 
 
     # qui inizia il vero e proprio algoritmo: num di iterazioni è il numero di episodi che vogliamo
+    
     for iteration in range(NUM_ITS):
         agent = Model() # ridefinisco l'istanza in quanto da questo ciclo non uscirò più
         agent.load("dagger_test_models/model_{}.pth".format(model_number)) # carico l'ultimo modello
@@ -158,10 +161,14 @@ if __name__ == "__main__":
         # gli step massimi di simulazioni scelti pari a 4000: oltre questo valore, si entra nell'if
         # si salvano i dati e si allena la rete. Poi si esc3e dal while in modo da aggiornare il modello
         # di agente considerato.
+        #start_time = time.time()
+        
+  
         while True:
             
             #a = env.getAction_expert()
             p.setGravity(0,0,-10)
+            time.sleep(1./240.)
             keys = p.getKeyboardEvents()
 
             # comandi da tastiera per l'expert
@@ -175,16 +182,16 @@ if __name__ == "__main__":
                             turn = -0.5
                     if (k == p.B3G_LEFT_ARROW and (v&p.KEY_WAS_RELEASED)):
                             turn = 0
-
                     if (k == p.B3G_UP_ARROW and (v&p.KEY_WAS_TRIGGERED)):
-                            forward=20
+                            forward=15
                     if (k == p.B3G_UP_ARROW and (v&p.KEY_WAS_RELEASED)):
                             forward=0
                     if (k == p.B3G_DOWN_ARROW and (v&p.KEY_WAS_TRIGGERED)):
-                            backward=20
+                            backward=15
                     if (k == p.B3G_DOWN_ARROW and (v&p.KEY_WAS_RELEASED)):
                             backward=0
 
+            
             # la riga 161 del dagger.py deve essere sostituita con questa
             a = np.array([turn, forward, backward]).astype('float32')
             # passo di simulazione che restituisce lo stato, reward e il flag done
@@ -215,19 +222,30 @@ if __name__ == "__main__":
 
             # [:84,...]: permette di definire l'altezza pari a 84. I puntini servono a mantenere inalterate
             # le altre dimensioni
-            
-            gray = np.dot(next_state[...,:3], [0.2125, 0.7154, 0.0721])[:84,...]
+            # 3 modi
+            gray = cv2.cvtColor(next_state, cv2.COLOR_RGB2GRAY)
+            gray = gray[:84, :]
+            # oppure
+            # gray = np.dot(next_state[...,:3], [0.2125, 0.7154, 0.0721])[:84,...]
+            # oppure
+            # gray = cv2.transform(next_state, np.array([[0.2125, 0.7154, 0.0721]]))
+            # Crop the image
+            #gray = gray[:84, :]
 
+            
+            
             # np.newaxis aumenta la dimensione dell'array di 1 (es. se è un array 1D diventa 2D)
             # torch.from_numpy crea un tensore a partire da un'array numpy
             # il modello ritorna le azioni (left/right, up, down)
+            start_time1 = time.time()
             prediction = agent(torch.from_numpy(gray[np.newaxis,np.newaxis,...]).type(torch.FloatTensor))
-
+            print("--- %s seconds ---" % (time.time() - start_time1))
             # calculate linear combination of expert and network policy
             # pi è la policy: inizialmente ci sarà solo a ovvero le azioni dell'esperto: a mano a mano
             # tramite il coefficiente beta, si avrà anche un peso derivante dalle azioni calcolate dalla
             # rete
             pi = curr_beta * a + (1 - curr_beta) * prediction.detach().numpy().flatten()
+            #pi = a
             print("Policy pi: ",pi)
             print("Policy a: ",a)
             episode_reward += r
@@ -242,7 +260,7 @@ if __name__ == "__main__":
             state = next_state
             steps += 1
 
-            # dopo T = 4000 step avviene il train della rete
+            # dopo T = N step avviene il train della rete
 
             if steps % T == 0:
                 env.stoppingCar()
@@ -271,6 +289,7 @@ if __name__ == "__main__":
 
             if done: 
                 break
+        #print("--- %s seconds ---" % (time.time() - start_time))
         
         episode_rewards.append(episode_reward)
 
