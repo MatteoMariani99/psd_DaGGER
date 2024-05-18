@@ -5,12 +5,16 @@ import numpy as np
 import os
 import gzip
 import matplotlib.pyplot as plt
+from tqdm import tqdm
 
-from model import Model
+from model_new import VehicleControlModel
 from utils import *
 import torch
 
-def read_data(datasets_dir="./data", path='data.pkl.gzip', frac = 0.1):
+
+vel_max = 15
+
+def read_data(datasets_dir="./data_test", path='data_dagger.pkl.gzip', frac = 0.1):
     """
     This method reads the states and actions recorded in drive_manually.py 
     and splits it into training/ validation set.
@@ -44,44 +48,59 @@ def preprocessing(X_train, y_train, X_valid, y_valid, history_length=1):
     # History:
     # At first you should only use the current image as input to your network to learn the next action. Then the input states
     # have shape (96, 96,1). Later, add a history of the last N images to your state so that a state has shape (96, 96, N).
-    X_train = rgb2gray(X_train)[:,:CUTOFF,:]
-    X_valid = rgb2gray(X_valid)[:,:CUTOFF,:]
+    #X_train = rgb2gray(X_train)[:,:CUTOFF,:]
+    #X_valid = rgb2gray(X_valid)[:,:CUTOFF,:]
+    X_train = (X_train)[:,:CUTOFF,:]
+    X_valid = (X_valid)[:,:CUTOFF,:]
+    print(X_train.shape)
     return X_train, y_train, X_valid, y_valid
 
 
-def train_model(X_train, y_train, X_valid, y_valid, path, num_epochs=50, learning_rate=1e-3, lambda_l2=1e-5, batch_size=32):
+def train_model(X_train, y_train, X_valid, y_valid, path, num_epochs=50, learning_rate=1e-3, lambda_l2=1e-5, batch_size=16):
     
     print("... train model")
-    model = Model()
+    model = VehicleControlModel(vel_max)
     criterion = torch.nn.MSELoss()
     optimizer = torch.optim.Adam(model.parameters(), lr=learning_rate, weight_decay=lambda_l2) # built-in L2 
 
-    X_train_torch = torch.from_numpy(X_train[:,np.newaxis,...])
+    #X_train_torch = torch.from_numpy(X_train[:,np.newaxis,...])
+    X_train = np.transpose(X_train, (0, 3, 1, 2)) # per avere l'ordine giusto delle dimensioni
+    X_train_torch = torch.from_numpy(X_train)
+    
     y_train_torch = torch.from_numpy(y_train)
-    for t in range(num_epochs):
-      print("[EPOCH]: %i" % (t), end='\r')
+    #print(y_train_torch)
+
+    for t in tqdm(range(num_epochs)):
+      #print("[EPOCH]: %i" % (t), end='\r')
       for i in range(0,len(X_train_torch),batch_size):
         curr_X = X_train_torch[i:i+batch_size]
+        #print(curr_X.shape)
         curr_Y = y_train_torch[i:i+batch_size]
+        #print(curr_Y)
         preds  = model(curr_X)
+        #print(preds)
+        #print(preds)
         loss   = criterion(preds, curr_Y)
+        print("Loss: ",loss)
         optimizer.zero_grad()
         loss.backward()
         optimizer.step()
-
+        
     model.save(path)
 
 
 if __name__ == "__main__":
 
-    parser = argparse.ArgumentParser()
-    parser.add_argument('model_name', metavar='M', default='model.pth', type=str, help='model name to save')
-    args = parser.parse_args() 
+    #parser = argparse.ArgumentParser()
+    #parser.add_argument('model_name', metavar='M', default='model.pth', type=str, help='model name to save')
+    #args = parser.parse_args() 
     # read data    
-    X_train, y_train, X_valid, y_valid = read_data("./data", frac=0.9)
+    X_train, y_train, X_valid, y_valid = read_data("./data_test", frac=0.9)
+    #print(X_train.shape)
+    
     # preprocess data
-    X_train, y_train, X_valid, y_valid = preprocessing(X_train, y_train, X_valid, y_valid, history_length=1)
+    #X_train, y_train, X_valid, y_valid = preprocessing(X_train, y_train, X_valid, y_valid, history_length=1)
     # train model
-    train_model(X_train, y_train, X_valid, y_valid, args.model_name, num_epochs=10)
+    train_model(X_train, y_train, X_valid, y_valid, 'dagger_test_models/model_1.pth', num_epochs=200)
  
   

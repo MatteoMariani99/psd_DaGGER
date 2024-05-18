@@ -15,7 +15,7 @@ zed_camera_joint = 7 # simplecar
 
 
 class PyBulletContinuousEnv(gym.Env):
-    def __init__(self, total_episode_step=500):
+    def __init__(self, total_episode_step=50):
         super(PyBulletContinuousEnv, self).__init__()
 
         # Connect to PyBullet and set up the environment
@@ -26,7 +26,9 @@ class PyBulletContinuousEnv(gym.Env):
         
         # Define action and observation space
         # Continuous action space: steer (left/right), up, down compresi tra -1, +1
-        self.action_space = spaces.Box( np.array([-1,0,0]), np.array([+1,+1,+1]), dtype=np.float32)  # steer, gas, brake
+        #self.action_space = spaces.Box( np.array([-1,0,0]), np.array([+1,+1,+1]), dtype=np.float32)  # steer, gas, brake
+        self.action_space = spaces.Box( np.array([-1,-1]), np.array([+1,+1]), dtype=np.float32)  # steer, gas/brake
+
 
         # Sono le immagini di dimensioni 96x96
         self.observation_space = spaces.Box(low=0, high=255, shape=(STATE_W, STATE_H, 3), dtype=np.uint8)
@@ -39,42 +41,20 @@ class PyBulletContinuousEnv(gym.Env):
         p.resetSimulation()
         p.setGravity(0, 0, -9.81)
         p.resetDebugVisualizerCamera(cameraDistance=30, cameraYaw=0, cameraPitch=-89, cameraTargetPosition=[0,8,0])
-        # p.loadURDF("plane.urdf",useFixedBase = True)
-        # p.loadURDF("cube/marble_cube.urdf",[-3,2,0],useFixedBase = True)
-        # p.loadURDF("cube/marble_cube.urdf",[-3,1,0],useFixedBase = True)
-        # p.loadURDF("cube/marble_cube.urdf",[-3,3,0],useFixedBase = True)
-        # p.loadURDF("cube/marble_cube.urdf",[-3,4,0],useFixedBase = True)
-        # p.loadURDF("cube/marble_cube.urdf",[-3,0,0],useFixedBase = True)
-        # p.loadURDF("cube/marble_cube.urdf",[-3,-1,0],useFixedBase = True)
-        # p.loadURDF("cube/marble_cube.urdf",[-3,-2,0],useFixedBase = True)
-        # p.loadURDF("cube/marble_cube.urdf",[-3,-3,0],useFixedBase = True)
+        #p.loadURDF("plane.urdf",useFixedBase = True)
 
-        # # horizontal
-        # p.loadURDF("cube/marble_cube.urdf",[3,5,0],useFixedBase = True)
-        # p.loadURDF("cube/marble_cube.urdf",[2,5,0],useFixedBase = True)
-        # p.loadURDF("cube/marble_cube.urdf",[4,5,0],useFixedBase = True)
-        # p.loadURDF("cube/marble_cube.urdf",[1,5,0],useFixedBase = True)
-        # p.loadURDF("cube/marble_cube.urdf",[5,5,0],useFixedBase = True)
-        # p.loadURDF("cube/marble_cube.urdf",[6,5,0],useFixedBase = True)
-        # p.loadURDF("cube/marble_cube.urdf",[7,5,0],useFixedBase = True)
+        # for i in range(0,30,1):
+        #     p.loadURDF("cube/marble_cube.urdf",[i,-1.5,0],useFixedBase = True)
+        # for l in range(0,30,1):
+        #     p.loadURDF("cube/marble_cube.urdf",[l,1.5,0],useFixedBase = True)
 
-        # # vertical
-        # p.loadURDF("cube/marble_cube.urdf",[8,7,0],useFixedBase = True)
-        # p.loadURDF("cube/marble_cube.urdf",[8,6,0],useFixedBase = True)
-        # p.loadURDF("cube/marble_cube.urdf",[8,8,0],useFixedBase = True)
-        # p.loadURDF("cube/marble_cube.urdf",[8,5,0],useFixedBase = True)
-
-        # # vertical
-        # p.loadURDF("cube/marble_cube.urdf",[-8,7,0],useFixedBase = True)
-        # p.loadURDF("cube/marble_cube.urdf",[-8,6,0],useFixedBase = True)
-        # p.loadURDF("cube/marble_cube.urdf",[-8,8,0],useFixedBase = True)
-        # p.loadURDF("cube/marble_cube.urdf",[-8,5,0],useFixedBase = True)
+        # p.loadURDF("cube/marble_cube.urdf",[29,0,0],useFixedBase = True)
         p.loadSDF("f10_racecar/meshes/barca_track.sdf", globalScaling=1)
 
         self.car_id = p.loadURDF("f10_racecar/simplecar.urdf", [-15,-11,.3])
         # sphere_color = [1, 0, 0,1]  # Red color
         # sphere_shape = p.createCollisionShape(p.GEOM_CYLINDER, radius=0.2, height=0)
-        # sphere_body = p.createMultiBody(baseMass=1, baseCollisionShapeIndex=sphere_shape,basePosition=[-10,5, 0])
+        # sphere_body = p.createMultiBody(baseMass=1, baseCollisionShapeIndex=sphere_shape,basePosition=[-10,8, 0])
         # p.changeVisualShape(sphere_body, -1, rgbaColor=sphere_color)
 
 
@@ -108,19 +88,19 @@ class PyBulletContinuousEnv(gym.Env):
 
         steer = action[0]
         forward = action[1]
-        backward = action[2]
+        #backward = action[2]
         
         # SIMPLECAR
         # ctrl+shift+l per fare il replace di una variabile
         # ruote anteriori
-        p.setJointMotorControl2(self.car_id,1,p.VELOCITY_CONTROL,targetVelocity=forward-backward)
-        p.setJointMotorControl2(self.car_id,3,p.VELOCITY_CONTROL,targetVelocity=forward-backward)
+        p.setJointMotorControl2(self.car_id,1,p.VELOCITY_CONTROL,targetVelocity=forward)
+        p.setJointMotorControl2(self.car_id,3,p.VELOCITY_CONTROL,targetVelocity=forward)
         # ruote posteriori
-        p.setJointMotorControl2(self.car_id,4,p.VELOCITY_CONTROL,targetVelocity=forward-backward)
-        p.setJointMotorControl2(self.car_id,5,p.VELOCITY_CONTROL,targetVelocity=forward-backward)
+        p.setJointMotorControl2(self.car_id,4,p.VELOCITY_CONTROL,targetVelocity=forward)
+        p.setJointMotorControl2(self.car_id,5,p.VELOCITY_CONTROL,targetVelocity=forward)
         # sterzo
-        p.setJointMotorControl2(self.car_id,0,p.POSITION_CONTROL,targetPosition=-steer)
-        p.setJointMotorControl2(self.car_id,2,p.POSITION_CONTROL,targetPosition=-steer)
+        p.setJointMotorControl2(self.car_id,0,p.POSITION_CONTROL,targetPosition=steer)
+        p.setJointMotorControl2(self.car_id,2,p.POSITION_CONTROL,targetPosition=steer)
 
 
         # F10 RACECAR
@@ -172,7 +152,7 @@ class PyBulletContinuousEnv(gym.Env):
         projMat = camInfo[3]
         
         # ottengo le 3 immagini: rgb, depth, segmentation
-        width, height, rgbImg, depthImg, segImg= p.getCameraImage(96,96,viewMatrix=viewMat,projectionMatrix=projMat, renderer=p.ER_BULLET_HARDWARE_OPENGL)
+        width, height, rgbImg, depthImg, segImg= p.getCameraImage(200,66,viewMatrix=viewMat,projectionMatrix=projMat, renderer=p.ER_BULLET_HARDWARE_OPENGL)
         # faccio un reshape in quanto da sopra ottengo un array di elementi
         rgb_opengl = np.reshape(rgbImg, (height, width, 4)) 
 
@@ -255,7 +235,7 @@ class PyBulletContinuousEnv(gym.Env):
         text = "Ster: "
         full_text = f"{text}{self.action[0]}" 
         text = "Gas: "
-        full_text1 = f"{text}{self.action[1]-self.action[2]}" 
+        full_text1 = f"{text}{self.action[1]}" 
         
         # Display del testo a video
         image = cv2.putText(rgb_image, full_text, org, font,  
@@ -269,15 +249,15 @@ class PyBulletContinuousEnv(gym.Env):
     def stoppingCar(self):
         steer = 0
         forward = 0
-        backward = 0
+        #backward = 0
         
         # ctrl+shift+l per fare il replace di una variabile
         # ruote anteriori
-        p.setJointMotorControl2(self.car_id,1,p.VELOCITY_CONTROL,targetVelocity=forward-backward)
-        p.setJointMotorControl2(self.car_id,3,p.VELOCITY_CONTROL,targetVelocity=forward-backward)
+        p.setJointMotorControl2(self.car_id,1,p.VELOCITY_CONTROL,targetVelocity=forward)
+        p.setJointMotorControl2(self.car_id,3,p.VELOCITY_CONTROL,targetVelocity=forward)
         # ruote posteriori
-        p.setJointMotorControl2(self.car_id,4,p.VELOCITY_CONTROL,targetVelocity=forward-backward)
-        p.setJointMotorControl2(self.car_id,5,p.VELOCITY_CONTROL,targetVelocity=forward-backward)
+        p.setJointMotorControl2(self.car_id,4,p.VELOCITY_CONTROL,targetVelocity=forward)
+        p.setJointMotorControl2(self.car_id,5,p.VELOCITY_CONTROL,targetVelocity=forward)
         # sterzo
         p.setJointMotorControl2(self.car_id,0,p.POSITION_CONTROL,targetPosition=-steer)
         p.setJointMotorControl2(self.car_id,2,p.POSITION_CONTROL,targetPosition=-steer)

@@ -8,12 +8,14 @@ import json
 import torch
 import torch.nn as nn
 import argparse
-from model import Model
+from model_new import VehicleControlModel
+import cv2
 
 from environment import PyBulletContinuousEnv
 
 device = torch.device("cuda:0" if torch.cuda.is_available() else "cpu")
 print("Torch Device:", device)
+vel_max = 15
 
 def run_episode(env, agent, max_timesteps=500):
     
@@ -24,9 +26,19 @@ def run_episode(env, agent, max_timesteps=500):
 
     while True:
         # preprocessing 
-        gray = np.dot(state[...,:3], [0.2125, 0.7154, 0.0721])[:84,...]
-        pred = agent(torch.from_numpy(gray[np.newaxis, np.newaxis,...]).type(torch.FloatTensor))
-        a    = pred.detach().numpy().flatten()
+        #gray = np.dot(state[...,:3], [0.2125, 0.7154, 0.0721])[:84,...]
+        #pred = agent(torch.from_numpy(gray[np.newaxis, np.newaxis,...]).type(torch.FloatTensor))
+        #image = cv2.cvtColor(state, cv2.COLOR_RGB2YUV)
+        image = np.transpose(state, (2, 0, 1)) # per avere l'ordine giusto delle dimensioni
+        #print(image.shape)
+        #print(image.shape)
+        # np.newaxis aumenta la dimensione dell'array di 1 (es. se è un array 1D diventa 2D)
+        # torch.from_numpy crea un tensore a partire da un'array numpy
+        # il modello ritorna le azioni (left/right, up, down)
+        #start_time1 = time.time()
+        #prediction = agent(torch.from_numpy(gray[np.newaxis,np.newaxis,...]).type(torch.FloatTensor))
+        prediction = agent(torch.from_numpy(image[np.newaxis,...]).type(torch.FloatTensor))
+        a    = prediction.detach().numpy().flatten()
         print("Action for model: ",a)
 
         # take action, receive new state & reward
@@ -52,9 +64,9 @@ if __name__ == "__main__":
     n_test_episodes = 15                  # number of episodes to test
 
     # TODO: load agent
-    agent = Model()
+    agent = VehicleControlModel(vel_max)
     #print("Loading model {}:".format(args.path))
-    agent.load("dagger_test_models/model_{}.pth".format(3))
+    agent.load("dagger_test_models/model_{}.pth".format(2))
     # agent.load("models/agent.ckpt")
     #env = gym.make('CarRacing-v0').unwrapped
     env = PyBulletContinuousEnv()

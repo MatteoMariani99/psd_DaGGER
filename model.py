@@ -1,5 +1,6 @@
 import torch
 import torch.nn as nn
+from torchsummary import summary
 
 class Model(nn.Module):
 
@@ -53,3 +54,7 @@ class Model(nn.Module):
 
     def save(self, path):
         torch.save(self.state_dict(), path)
+
+# Instantiate the model
+#model = Model()
+#print(summary(model,(1,84,96)))
