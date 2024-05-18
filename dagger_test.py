@@ -23,8 +23,6 @@ import time
 # DOWN: 0 / +1
 
 
-
-
 NUM_ITS = 4 # default è 20. Viene utilizzato 1 lap per iteration. Le iteration rappresentano il
 # numero di volte che noi stoppiamo l'esperto per salvare i dati e fare il training della rete.
 # è un po' come se fosse il numero di episodi.
@@ -33,7 +31,7 @@ beta_i  = 0.9 # parametro usato nella policy PI: tale valore verrà modificato t
 # Inizialmente avremo 0.9^0, poi 0.9^1 poi 0.9^2 e così via il beta diminuirà esponenzialmente.
 # Ciò significa che avremo una probabilità di utilizzare la politica dell'expert che decresce 
 # a mano a mano che si procede con il training.
-T = 100 # ogni iteration contiene N passi
+T = 800 # ogni iteration contiene N passi
 vel_max = 15 # velocità massima macchina
 
 
@@ -117,8 +115,8 @@ if __name__ == "__main__":
     
     episode_rewards = [] # vettore contenente le rewards per ogni episodio
     steps = 0
-    #agent = VehicleControlModel(vel_max) # definisco l'agente dallo script model.py (sarebbe la rete)
-    #agent.save("dagger_test_models/model_0.pth") # salvo il primo modello (vuoto)
+    agent = VehicleControlModel(vel_max) # definisco l'agente dallo script model.py (sarebbe la rete)
+    agent.save("dagger_test_models/model_0.pth") # salvo il primo modello (vuoto)
     model_number = 0 # inizializzo il numero del modello: aumentandolo varierà beta
     old_model_number = 0 # non serve ai fini pratici
 
@@ -138,7 +136,7 @@ if __name__ == "__main__":
 
         episode_reward = 0 # inizializzo le reward
         env.reset() # inizializzo l'ambiente e ottengo le misure dello stato che 
-        state = env.get_observation()
+        state = env.get_observation() 
         # sono immagini 96x96x3
         # pi: input to the environment: è la policy utilizzata per collezionare le traiettorie
         # a : expert input
@@ -199,12 +197,12 @@ if __name__ == "__main__":
             # nel nostro caso l'ambiente va creato from scratch e va implementata la logica
             # per acquisire le immagini e la funzione di ricompense (anche se quest'ultima non
             # è necessaria)
-            next_state, r, done = env.step(pi)
+            next_state, r, done = env.step(pi) # next_state già in formato YUV
             #cv2.imshow("Camera", next_state)
             #cv2.waitKey(0) 
             #env.visualization_image()
 
-            # cv2.imshow('Original', next_state) 
+            #cv2.imshow('Original', next_state) 
             # cv2.waitKey(1) 
             # gray_image = cv2.cvtColor(next_state, cv2.COLOR_BGR2GRAY) 
             #cv2.destroyAllWindows()
@@ -235,16 +233,26 @@ if __name__ == "__main__":
             # gray = cv2.transform(next_state, np.array([[0.2125, 0.7154, 0.0721]]))
             # Crop the image
             #gray = gray[:84, :]
+            
+            # capire quale va usato dei due (due risultati diversi)
+            # quello di opencv difficile da utilizzare in train_agent.py
+            next_state = rgb2yuv(next_state)
+            #next_state = cv2.cvtColor(next_state,cv2.COLOR_RGB2YUV)
+            cv2.imshow("Camera", next_state)
+            cv2.waitKey(0) 
+            
+            next_state = torch.from_numpy(next_state)
+            next_state = (next_state.permute(2,0,1)).unsqueeze(0) # riordino le dimensioni per passarlo a conv2d
 
-            #image = cv2.cvtColor(next_state, cv2.COLOR_RGB2YUV)
-            image = np.transpose(next_state, (2, 0, 1)) # per avere l'ordine giusto delle dimensioni
+            #image = np.transpose(image, (2, 0, 1)) # per avere l'ordine giusto delle dimensioni
+            
             #print(image.shape)
             # np.newaxis aumenta la dimensione dell'array di 1 (es. se è un array 1D diventa 2D)
             # torch.from_numpy crea un tensore a partire da un'array numpy
             # il modello ritorna le azioni (left/right, up, down)
             #start_time1 = time.time()
             #prediction = agent(torch.from_numpy(gray[np.newaxis,np.newaxis,...]).type(torch.FloatTensor))
-            prediction = agent(torch.from_numpy(image[np.newaxis,...]).type(torch.FloatTensor))
+            prediction = agent(next_state.type(torch.FloatTensor))
             #print("--- %s seconds ---" % (time.time() - start_time1))
             # calculate linear combination of expert and network policy
             # pi è la policy: inizialmente ci sarà solo a ovvero le azioni dell'esperto: a mano a mano

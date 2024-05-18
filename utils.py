@@ -13,12 +13,16 @@ action_to_id_dict = {LEFT     : np.array([-1.0, 0.0, 0.0]),
                      STRAIGHT : np.array([0.0, 0.0, 0.0 ])}
 
 CUTOFF = 84 # for pixels                     
-def rgb2gray(rgb):
+def rgb2yuv(rgb):
     """ 
     this method converts rgb images to grayscale.
     """
-    gray = np.dot(rgb[...,:3], [0.2125, 0.7154, 0.0721])
-    return gray.astype('float32') 
+    trans_matrix = np.array([[0.299,-0.16874,0.5],
+                             [0.587,-0.33126,-0.41869],
+                             [0.114,0.5,-0.08131]])
+    yuv = np.dot(rgb[...,:3], trans_matrix)
+    yuv[:,:,:1]+=128.0
+    return yuv.astype('float32') 
 
 def action_to_id(y_samples):
     """

@@ -5,6 +5,7 @@ import pybullet as p
 import pybullet_data
 import cv2
 from itertools import chain
+import torch
 
 
 # dimensioni immagini observation space
@@ -15,7 +16,7 @@ zed_camera_joint = 7 # simplecar
 
 
 class PyBulletContinuousEnv(gym.Env):
-    def __init__(self, total_episode_step=50):
+    def __init__(self, total_episode_step=400):
         super(PyBulletContinuousEnv, self).__init__()
 
         # Connect to PyBullet and set up the environment
@@ -77,6 +78,7 @@ class PyBulletContinuousEnv(gym.Env):
         #print("Posizione e yaw: ",pose_vector)
         rgb_image = self.getCamera_image()
 
+        # immagine in formato YUV
         return rgb_image
 
     def step(self, action):

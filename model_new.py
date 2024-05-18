@@ -62,7 +62,7 @@ class VehicleControlModel(nn.Module):
         x = self.fc5(x)
         # tanh per sterzo (-1,+1)
         # 
-        x = torch.reshape(torch.cat([torch.tanh(x[:, 0]), self.vel_max*torch.tanh(x[:, 1])], dim=0),x.shape)
+        #x = torch.reshape(torch.cat([torch.tanh(x[:, 0]), self.vel_max*torch.tanh(x[:, 1])], dim=0),x.shape)
         
         # Output layer with Tanh activation: tnah per sterzo (-1,+1 destra,sinistra) e per velocità (-1 indietro +1 avanti)
         # moltiplicare il tanh per velocità che si vuole avere con la macchina, per lo sterzo va bene 1;-1

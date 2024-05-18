@@ -66,7 +66,7 @@ if __name__ == "__main__":
     # TODO: load agent
     agent = VehicleControlModel(vel_max)
     #print("Loading model {}:".format(args.path))
-    agent.load("dagger_test_models/model_{}.pth".format(2))
+    agent.load("dagger_test_models/model_{}.pth".format(1))
     # agent.load("models/agent.ckpt")
     #env = gym.make('CarRacing-v0').unwrapped
     env = PyBulletContinuousEnv()
