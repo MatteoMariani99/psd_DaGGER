@@ -5,14 +5,12 @@ from torchsummary import summary
 import cv2
 
 class VehicleControlModel(nn.Module):
-    def __init__(self,vel_max):
+    def __init__(self):
         super(VehicleControlModel, self).__init__()
 
         # per trovare la dimensione in uscita ai layer fare
         #((size - kernel_size) / (stride)) + 1
         # se non si trova un intero, si arrotonda
-
-        self.vel_max = vel_max
         
         # Define convolutional layers
         self.conv1 = nn.Conv2d(in_channels=3, out_channels=24, kernel_size=5, stride=2)

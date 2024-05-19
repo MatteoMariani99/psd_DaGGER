@@ -60,7 +60,7 @@ def preprocessing(X_train, y_train, X_valid, y_valid, history_length=1):
 def train_model(X_train, y_train, X_valid, y_valid, path, num_epochs=50, learning_rate=1e-3, lambda_l2=1e-5, batch_size=16):
     
     print("... train model")
-    model = VehicleControlModel(vel_max)
+    model = VehicleControlModel()
     criterion = torch.nn.MSELoss()
     optimizer = torch.optim.Adam(model.parameters(), lr=learning_rate, weight_decay=lambda_l2) # built-in L2 
     

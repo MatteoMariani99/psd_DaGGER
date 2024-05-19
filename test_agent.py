@@ -10,6 +10,7 @@ import torch.nn as nn
 import argparse
 from model_new import VehicleControlModel
 import cv2
+from utils import *
 
 from environment import PyBulletContinuousEnv
 
@@ -29,16 +30,23 @@ def run_episode(env, agent, max_timesteps=500):
         #gray = np.dot(state[...,:3], [0.2125, 0.7154, 0.0721])[:84,...]
         #pred = agent(torch.from_numpy(gray[np.newaxis, np.newaxis,...]).type(torch.FloatTensor))
         #image = cv2.cvtColor(state, cv2.COLOR_RGB2YUV)
-        image = np.transpose(state, (2, 0, 1)) # per avere l'ordine giusto delle dimensioni
-        #print(image.shape)
-        #print(image.shape)
+        state = rgb2yuv(state)
+        
+        state_torch = torch.from_numpy(state)
+        state_torch = (state_torch.permute(2,0,1)).unsqueeze(0) # riordino le dimensioni per passarlo a conv2d
+        prediction = agent(state_torch.type(torch.FloatTensor))
         # np.newaxis aumenta la dimensione dell'array di 1 (es. se è un array 1D diventa 2D)
         # torch.from_numpy crea un tensore a partire da un'array numpy
         # il modello ritorna le azioni (left/right, up, down)
         #start_time1 = time.time()
         #prediction = agent(torch.from_numpy(gray[np.newaxis,np.newaxis,...]).type(torch.FloatTensor))
-        prediction = agent(torch.from_numpy(image[np.newaxis,...]).type(torch.FloatTensor))
+        #prediction = agent(torch.from_numpy(image[np.newaxis,...]).type(torch.FloatTensor))
         a    = prediction.detach().numpy().flatten()
+        # per far si che le azioni non sforino vel_max
+        if a[1] > 15:
+            a[1] = 15
+        if a[1] < -15:
+            a[1] = -15
         print("Action for model: ",a)
 
         # take action, receive new state & reward
@@ -64,7 +72,7 @@ if __name__ == "__main__":
     n_test_episodes = 15                  # number of episodes to test
 
     # TODO: load agent
-    agent = VehicleControlModel(vel_max)
+    agent = VehicleControlModel()
     #print("Loading model {}:".format(args.path))
     agent.load("dagger_test_models/model_{}.pth".format(1))
     # agent.load("models/agent.ckpt")
