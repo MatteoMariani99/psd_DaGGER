@@ -18,7 +18,7 @@ device = torch.device("cuda:0" if torch.cuda.is_available() else "cpu")
 print("Torch Device:", device)
 vel_max = 15
 
-def run_episode(env, agent, max_timesteps=500):
+def run_episode(env, agent, max_timesteps=2000):
     
     episode_reward = 0
     step = 0
@@ -29,11 +29,14 @@ def run_episode(env, agent, max_timesteps=500):
         # preprocessing 
         #gray = np.dot(state[...,:3], [0.2125, 0.7154, 0.0721])[:84,...]
         #pred = agent(torch.from_numpy(gray[np.newaxis, np.newaxis,...]).type(torch.FloatTensor))
-        #image = cv2.cvtColor(state, cv2.COLOR_RGB2YUV)
-        state = rgb2yuv(state)
-        
+        state = cv2.cvtColor(state, cv2.COLOR_RGB2YUV)
+        #state = rgb2yuv(state)
+        cv2.imshow("Camera", state)
+        cv2.waitKey(1) 
         state_torch = torch.from_numpy(state)
-        state_torch = (state_torch.permute(2,0,1)).unsqueeze(0) # riordino le dimensioni per passarlo a conv2d
+        state_torch = (state_torch.permute(2,0,1)).unsqueeze(0)
+
+        #state_torch = (state_torch.permute(2,0,1)).unsqueeze(0) # riordino le dimensioni per passarlo a conv2d
         prediction = agent(state_torch.type(torch.FloatTensor))
         # np.newaxis aumenta la dimensione dell'array di 1 (es. se è un array 1D diventa 2D)
         # torch.from_numpy crea un tensore a partire da un'array numpy
@@ -74,7 +77,7 @@ if __name__ == "__main__":
     # TODO: load agent
     agent = VehicleControlModel()
     #print("Loading model {}:".format(args.path))
-    agent.load("dagger_test_models/model_{}.pth".format(1))
+    agent.load("dagger_test_models/model_{}.pth".format(5))
     # agent.load("models/agent.ckpt")
     #env = gym.make('CarRacing-v0').unwrapped
     env = PyBulletContinuousEnv()

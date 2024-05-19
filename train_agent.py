@@ -49,29 +49,47 @@ def preprocessing(X_train, y_train, X_valid, y_valid, history_length=1):
     # History:
     # At first you should only use the current image as input to your network to learn the next action. Then the input states
     # have shape (96, 96,1). Later, add a history of the last N images to your state so that a state has shape (96, 96, N).
-    X_train = rgb2yuv(X_train)
-    X_valid = rgb2yuv(X_valid)
+    #X_train = rgb2yuv(X_train)
+    #X_valid = rgb2yuv(X_valid)
+    array_train = []
+    array_valid = []
+    #print(X_valid.shape)
+
+    for i in range(len(X_train)):
+        gray_train = cv2.cvtColor(X_train[i,:,:,:],cv2.COLOR_RGB2YUV)
+        array_train.append(gray_train)   
+        
+    for j in range(len(X_valid)):
+        gray_valid = cv2.cvtColor(X_valid[j,:,:,:],cv2.COLOR_RGB2YUV)
+        array_valid.append(gray_valid)
+        
     #X_train = (X_train)[:,:CUTOFF,:]
     #X_valid = (X_valid)[:,:CUTOFF,:]
+    #samples["state"].append(state)  
+    X_train = np.array(array_train)
+    X_valid = np.array(array_valid)
+    
     print(X_train.shape)
+    print(X_valid.shape)
+    
     return X_train, y_train, X_valid, y_valid
 
 
-def train_model(X_train, y_train, X_valid, y_valid, path, num_epochs=50, learning_rate=1e-3, lambda_l2=1e-5, batch_size=16):
+def train_model(X_train, y_train, X_valid, y_valid, path, num_epochs=50, learning_rate=1e-3, lambda_l2=1e-5, batch_size=32):
     
     print("... train model")
     model = VehicleControlModel()
     criterion = torch.nn.MSELoss()
     optimizer = torch.optim.Adam(model.parameters(), lr=learning_rate, weight_decay=lambda_l2) # built-in L2 
     
-    #X_train = np.transpose(X_train, (0, 3, 1, 2)) # per avere l'ordine giusto delle dimensioni
-    
     X_train_torch = torch.from_numpy(X_train)
     y_train_torch = torch.from_numpy(y_train)
     
+    #print(X_train_torch.shape)
     
     X_train_torch = (X_train_torch.permute(0,3,1,2))
     
+    #print(X_train_torch.shape)
     
 
     for t in tqdm(range(num_epochs)):
@@ -93,14 +111,16 @@ def train_model(X_train, y_train, X_valid, y_valid, path, num_epochs=50, learnin
     model.save(path)
 
 
+# manca la validazione -> basta richiamare il modello e verificare le predizioni ottenute (verifico le predizioni in uscia
+# e le confronto con le y_valid)
 if __name__ == "__main__":
 
     #parser = argparse.ArgumentParser()
     #parser.add_argument('model_name', metavar='M', default='model.pth', type=str, help='model name to save')
     #args = parser.parse_args() 
     # read data    
-    X_train, y_train, X_valid, y_valid = read_data("./data_test", frac=0.9)
-    #print(X_train.shape)
+    X_train, y_train, X_valid, y_valid = read_data("./data_test", frac=0.1)
+    
     
     # preprocess data
     X_train, y_train, X_valid, y_valid = preprocessing(X_train, y_train, X_valid, y_valid, history_length=1)

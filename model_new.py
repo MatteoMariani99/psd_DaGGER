@@ -32,6 +32,7 @@ class VehicleControlModel(nn.Module):
         
         # Normalization layer
         # batch norm2d in quanto entra un tensore quindi di dimensione 4
+        #self.norm = nn.BatchNorm2d(3)
         self.norm = nn.BatchNorm2d(3)
 
     def forward(self, x):

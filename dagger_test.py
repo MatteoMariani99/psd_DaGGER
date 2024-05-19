@@ -23,7 +23,7 @@ import time
 # DOWN: 0 / +1
 
 
-NUM_ITS = 4 # default è 20. Viene utilizzato 1 lap per iteration. Le iteration rappresentano il
+NUM_ITS = 10 # default è 20. Viene utilizzato 1 lap per iteration. Le iteration rappresentano il
 # numero di volte che noi stoppiamo l'esperto per salvare i dati e fare il training della rete.
 # è un po' come se fosse il numero di episodi.
 beta_i  = 0.9 # parametro usato nella policy PI: tale valore verrà modificato tramite la 
@@ -31,7 +31,7 @@ beta_i  = 0.9 # parametro usato nella policy PI: tale valore verrà modificato t
 # Inizialmente avremo 0.9^0, poi 0.9^1 poi 0.9^2 e così via il beta diminuirà esponenzialmente.
 # Ciò significa che avremo una probabilità di utilizzare la politica dell'expert che decresce 
 # a mano a mano che si procede con il training.
-T = 100 # ogni iteration contiene N passi
+T = 2000 # ogni iteration contiene N passi
 vel_max = 15 # velocità massima macchina
 
 
@@ -203,7 +203,7 @@ if __name__ == "__main__":
             #env.visualization_image()
 
             #cv2.imshow('Original', next_state) 
-            # cv2.waitKey(1) 
+            #cv2.waitKey(0) 
             # gray_image = cv2.cvtColor(next_state, cv2.COLOR_BGR2GRAY) 
             #cv2.destroyAllWindows()
 
@@ -228,7 +228,7 @@ if __name__ == "__main__":
             #gray = cv2.cvtColor(next_state, cv2.COLOR_RGB2GRAY)
             #gray = gray[:84, :]
             # oppure
-            # gray = np.dot(next_state[...,:3], [0.2125, 0.7154, 0.0721])[:84,...]
+            #gray = np.dot(next_state[...,:3], [0.2989, 0.5870, 0.1140])
             # oppure
             # gray = cv2.transform(next_state, np.array([[0.2125, 0.7154, 0.0721]]))
             # Crop the image
@@ -236,8 +236,8 @@ if __name__ == "__main__":
             
             # capire quale va usato dei due (due risultati diversi)
             # quello di opencv difficile da utilizzare in train_agent.py
-            next_state = rgb2yuv(next_state)
-            #next_state = cv2.cvtColor(next_state,cv2.COLOR_RGB2YUV)
+            #next_state = rgb2yuv(next_state)
+            next_state = cv2.cvtColor(next_state,cv2.COLOR_RGB2YUV)
             #cv2.imshow("Camera", next_state)
             #cv2.waitKey(0) 
             
@@ -255,7 +255,10 @@ if __name__ == "__main__":
             # torch.from_numpy crea un tensore a partire da un'array numpy
             # il modello ritorna le azioni (left/right, up, down)
             #start_time1 = time.time()
+
+            
             #prediction = agent(torch.from_numpy(gray[np.newaxis,np.newaxis,...]).type(torch.FloatTensor))
+            
             prediction = agent(next_state_torch.type(torch.FloatTensor))
             #print("--- %s seconds ---" % (time.time() - start_time1))
             # calculate linear combination of expert and network policy
@@ -292,9 +295,9 @@ if __name__ == "__main__":
                 # i dati pickle e scomporli in train e validation set
                 X_train, y_train, X_valid, y_valid = train_agent.read_data("./data_test", "data_dagger.pkl.gzip")
                 # funzione di preprocessing per andare a trasformare l'immagine da colori a scala di grigi
-                #X_train, y_train, X_valid, y_valid = train_agent.preprocessing(X_train, y_train, X_valid, y_valid, history_length=1)
-                print(X_train.shape)
-                train_agent.train_model(X_train, y_train, X_valid, y_valid, "dagger_test_models/model_{}.pth".format(model_number+1), num_epochs=50)
+                X_train, y_train, X_valid, y_valid = train_agent.preprocessing(X_train, y_train, X_valid, y_valid, history_length=1)
+                #print(X_train.shape)
+                train_agent.train_model(X_train, y_train, X_valid, y_valid, "dagger_test_models/model_{}.pth".format(model_number+1), num_epochs=10)
                 model_number += 1
                 print("Training complete. Press return to continue to the next iteration")
                 wait()

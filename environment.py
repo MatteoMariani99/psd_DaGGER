@@ -8,15 +8,12 @@ from itertools import chain
 import torch
 
 
-# dimensioni immagini observation space
-STATE_W = 96   
-STATE_H = 96
 zed_camera_joint = 7 # simplecar
 # zed_camera_joint = 5 racecar
 
 
 class PyBulletContinuousEnv(gym.Env):
-    def __init__(self, total_episode_step=50):
+    def __init__(self, total_episode_step=1000):
         super(PyBulletContinuousEnv, self).__init__()
 
         # Connect to PyBullet and set up the environment
@@ -28,11 +25,11 @@ class PyBulletContinuousEnv(gym.Env):
         # Define action and observation space
         # Continuous action space: steer (left/right), up, down compresi tra -1, +1
         #self.action_space = spaces.Box( np.array([-1,0,0]), np.array([+1,+1,+1]), dtype=np.float32)  # steer, gas, brake
-        self.action_space = spaces.Box( np.array([-1,-1]), np.array([+1,+1]), dtype=np.float32)  # steer, gas/brake
+        #self.action_space = spaces.Box( np.array([-1,-1]), np.array([+1,+1]), dtype=np.float32)  # steer, gas/brake
 
 
-        # Sono le immagini di dimensioni 96x96
-        self.observation_space = spaces.Box(low=0, high=255, shape=(STATE_W, STATE_H, 3), dtype=np.uint8)
+        # Sono le immagini di dimensioni 200x66
+        #self.observation_space = spaces.Box(low=0, high=255, shape=(STATE_W, STATE_H, 3), dtype=np.uint8)
 
         self.total_episode_steps = total_episode_step
 
@@ -41,7 +38,7 @@ class PyBulletContinuousEnv(gym.Env):
         # Reset the simulation and the cartpole position
         p.resetSimulation()
         p.setGravity(0, 0, -9.81)
-        p.resetDebugVisualizerCamera(cameraDistance=30, cameraYaw=0, cameraPitch=-89, cameraTargetPosition=[0,8,0])
+        p.resetDebugVisualizerCamera(cameraDistance=20, cameraYaw=0, cameraPitch=-89, cameraTargetPosition=[-4,-2,0])
         #p.loadURDF("plane.urdf",useFixedBase = True)
 
         # for i in range(0,30,1):
@@ -51,8 +48,12 @@ class PyBulletContinuousEnv(gym.Env):
 
         # p.loadURDF("cube/marble_cube.urdf",[29,0,0],useFixedBase = True)
         p.loadSDF("f10_racecar/meshes/barca_track.sdf", globalScaling=1)
+        
+   
 
-        self.car_id = p.loadURDF("f10_racecar/simplecar.urdf", [-15,-11,.3])
+        self.car_id = p.loadURDF("f10_racecar/simplecar.urdf", [-9,-6.5,.3])
+        #print()
+        #print(p.getEulerFromQuaternion(p.getQuaternionFromEuler([0,0,100]))[2]*180/(2*3.14))
         # sphere_color = [1, 0, 0,1]  # Red color
         # sphere_shape = p.createCollisionShape(p.GEOM_CYLINDER, radius=0.2, height=0)
         # sphere_body = p.createMultiBody(baseMass=1, baseCollisionShapeIndex=sphere_shape,basePosition=[-10,8, 0])
@@ -70,6 +71,7 @@ class PyBulletContinuousEnv(gym.Env):
         car_velocity_x, car_angular_velocity_z = self.getVelocity()
 
         _,_,yaw = p.getEulerFromQuaternion(car_orientation)
+        #print(yaw*180/(2*3.14))
 
         velocity_vector.append([car_velocity_x, car_angular_velocity_z])
         pose_vector.append([car_position[0], car_position[1],yaw])
