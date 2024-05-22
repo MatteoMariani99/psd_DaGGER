@@ -30,3 +30,14 @@ WORKFLOW
 5- verificare che lo stato (ovvero le immagini ricevute dalla zed) siano coerenti e della dimensione corretta
 6- copiare il modello di rete definito per il car-racingV0
 7- l'ambiente utilizzato dal dagger.py è lo script car_racing.py -> capire come gestire la tastiera (expert) e la rete -> nel senso capire come switchare dall'uno all'altro come fa lo script. Il tutto dovrebbe già essere gestito con la politica pi in quanto inizialmente il controllo dell'expert è massimo mentre poi diminuisce tramite il beta.
+
+
+
+
+
+
+
+NETWORK 
+La rete ora utilizza immagini in formato YUV (3 canali).
+Il training non è male ma servirebbero molte più iterazioni (fare 1000 in env e in dagger_test farne 4000 in modo che venga allenata dopo aver acquisito un pò di dati).
+

@@ -15,6 +15,9 @@ import pybullet as p
 import time
 
 
+device = torch.device("cuda:0" if torch.cuda.is_available() else "cpu")
+if torch.cuda.is_available():
+    print("Using GPU")
 
 # OBSERVATION SPACE: RGB image 96x96x3
 # ACTION SPACE: [LEFT/RIGHT, UP, DOWN]
@@ -31,7 +34,7 @@ beta_i  = 0.9 # parametro usato nella policy PI: tale valore verrà modificato t
 # Inizialmente avremo 0.9^0, poi 0.9^1 poi 0.9^2 e così via il beta diminuirà esponenzialmente.
 # Ciò significa che avremo una probabilità di utilizzare la politica dell'expert che decresce 
 # a mano a mano che si procede con il training.
-T = 2000 # ogni iteration contiene N passi
+T = 4000 # ogni iteration contiene N passi
 vel_max = 15 # velocità massima macchina
 
 
@@ -117,6 +120,7 @@ if __name__ == "__main__":
     steps = 0
     agent = VehicleControlModel() # definisco l'agente dallo script model.py (sarebbe la rete)
     agent.save("dagger_test_models/model_0.pth") # salvo il primo modello (vuoto)
+    agent.to(device)
     model_number = 0 # inizializzo il numero del modello: aumentandolo varierà beta
     old_model_number = 0 # non serve ai fini pratici
 
@@ -126,6 +130,7 @@ if __name__ == "__main__":
     for iteration in range(NUM_ITS):
         agent = VehicleControlModel() # ridefinisco l'istanza in quanto da questo ciclo non uscirò più
         agent.load("dagger_test_models/model_{}.pth".format(model_number)) # carico l'ultimo modello
+        agent.to(device)
         curr_beta = beta_i ** model_number # calcolo il coefficiente beta
 
         # non serve in pratica
@@ -137,6 +142,8 @@ if __name__ == "__main__":
         episode_reward = 0 # inizializzo le reward
         env.reset() # inizializzo l'ambiente e ottengo le misure dello stato che 
         state = env.get_observation() 
+        #cv2.imshow("Camera", state)
+        #cv2.waitKey(0) 
         # sono immagini 96x96x3
         # pi: input to the environment: è la policy utilizzata per collezionare le traiettorie
         # a : expert input
@@ -192,7 +199,7 @@ if __name__ == "__main__":
 
             
             # la riga 161 del dagger.py deve essere sostituita con questa
-            a = np.array([turn, forward]).astype('float32')
+            a = np.array([turn, 15]).astype('float32')
             # passo di simulazione che restituisce lo stato, reward e il flag done
             # nel nostro caso l'ambiente va creato from scratch e va implementata la logica
             # per acquisire le immagini e la funzione di ricompense (anche se quest'ultima non
@@ -241,7 +248,7 @@ if __name__ == "__main__":
             #cv2.imshow("Camera", next_state)
             #cv2.waitKey(0) 
             
-            next_state_torch = torch.from_numpy(next_state)
+            next_state_torch = torch.from_numpy(next_state).to(device)
             next_state_torch = (next_state_torch.permute(2,0,1)).unsqueeze(0) # riordino le dimensioni per passarlo a conv2d
 
 
@@ -259,15 +266,15 @@ if __name__ == "__main__":
             
             #prediction = agent(torch.from_numpy(gray[np.newaxis,np.newaxis,...]).type(torch.FloatTensor))
             
-            prediction = agent(next_state_torch.type(torch.FloatTensor))
+            prediction = agent(next_state_torch.type(torch.FloatTensor).to(device))
             #print("--- %s seconds ---" % (time.time() - start_time1))
             # calculate linear combination of expert and network policy
             # pi è la policy: inizialmente ci sarà solo a ovvero le azioni dell'esperto: a mano a mano
             # tramite il coefficiente beta, si avrà anche un peso derivante dalle azioni calcolate dalla
             # rete
-            pi = curr_beta * a + (1 - curr_beta) * prediction.detach().numpy().flatten()
+            pi = curr_beta * a + (1 - curr_beta) * prediction.detach().cpu().numpy().flatten()
             #pi = a
-            print("Policy pi: ",pi)
+            print("Policy pred: ",prediction.detach().cpu().numpy().flatten())
             print("Policy a: ",a)
             episode_reward += r
             #print("Episode: ",episode_reward)
@@ -295,9 +302,9 @@ if __name__ == "__main__":
                 # i dati pickle e scomporli in train e validation set
                 X_train, y_train, X_valid, y_valid = train_agent.read_data("./data_test", "data_dagger.pkl.gzip")
                 # funzione di preprocessing per andare a trasformare l'immagine da colori a scala di grigi
-                X_train, y_train, X_valid, y_valid = train_agent.preprocessing(X_train, y_train, X_valid, y_valid, history_length=1)
-                #print(X_train.shape)
-                train_agent.train_model(X_train, y_train, X_valid, y_valid, "dagger_test_models/model_{}.pth".format(model_number+1), num_epochs=10)
+                #X_train, y_train, X_valid, y_valid = train_agent.preprocessing(X_train, y_train, X_valid, y_valid, history_length=1)
+                print(X_train.shape)
+                train_agent.train_model(X_train, y_train, X_valid, y_valid, "dagger_test_models/model_{}.pth".format(model_number+1), num_epochs=30)
                 model_number += 1
                 print("Training complete. Press return to continue to the next iteration")
                 wait()

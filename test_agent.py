@@ -32,24 +32,24 @@ def run_episode(env, agent, max_timesteps=2000):
         state = cv2.cvtColor(state, cv2.COLOR_RGB2YUV)
         #state = rgb2yuv(state)
         cv2.imshow("Camera", state)
-        cv2.waitKey(1) 
-        state_torch = torch.from_numpy(state)
+        cv2.waitKey(0) 
+        state_torch = torch.from_numpy(state).to(device)
         state_torch = (state_torch.permute(2,0,1)).unsqueeze(0)
 
         #state_torch = (state_torch.permute(2,0,1)).unsqueeze(0) # riordino le dimensioni per passarlo a conv2d
-        prediction = agent(state_torch.type(torch.FloatTensor))
+        prediction = agent((state_torch.type(torch.FloatTensor)).to(device))
         # np.newaxis aumenta la dimensione dell'array di 1 (es. se è un array 1D diventa 2D)
         # torch.from_numpy crea un tensore a partire da un'array numpy
         # il modello ritorna le azioni (left/right, up, down)
         #start_time1 = time.time()
         #prediction = agent(torch.from_numpy(gray[np.newaxis,np.newaxis,...]).type(torch.FloatTensor))
         #prediction = agent(torch.from_numpy(image[np.newaxis,...]).type(torch.FloatTensor))
-        a    = prediction.detach().numpy().flatten()
+        a = prediction.detach().cpu().numpy().flatten()
         # per far si che le azioni non sforino vel_max
-        if a[1] > 15:
-            a[1] = 15
-        if a[1] < -15:
-            a[1] = -15
+        # if a[1] > 15:
+        #     a[1] = 15
+        # if a[1] < -15:
+        #     a[1] = -15
         print("Action for model: ",a)
 
         # take action, receive new state & reward
@@ -77,7 +77,8 @@ if __name__ == "__main__":
     # TODO: load agent
     agent = VehicleControlModel()
     #print("Loading model {}:".format(args.path))
-    agent.load("dagger_test_models/model_{}.pth".format(5))
+    agent.load("dagger_test_models/model_{}.pth".format(2))
+    agent.to(device)
     # agent.load("models/agent.ckpt")
     #env = gym.make('CarRacing-v0').unwrapped
     env = PyBulletContinuousEnv()
