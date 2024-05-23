@@ -5,11 +5,12 @@ import pybullet as p
 import pybullet_data
 import cv2
 from itertools import chain
-import torch
+from get_track import *
 
 
 zed_camera_joint = 7 # simplecar
 # zed_camera_joint = 5 racecar
+
 
 
 class PyBulletContinuousEnv(gym.Env):
@@ -21,6 +22,9 @@ class PyBulletContinuousEnv(gym.Env):
         p.setGravity(0, 0, -9.81)
         p.setAdditionalSearchPath(pybullet_data.getDataPath())
         p.setRealTimeSimulation(1)
+        
+        #self.threshold = 0.25 # soglia usata per trovare i punti più vicini alla posizione del robot
+
         
         # Define action and observation space
         # Continuous action space: steer (left/right), up, down compresi tra -1, +1
@@ -49,7 +53,6 @@ class PyBulletContinuousEnv(gym.Env):
         # p.loadURDF("cube/marble_cube.urdf",[29,0,0],useFixedBase = True)
         p.loadSDF("f10_racecar/meshes/barca_track.sdf", globalScaling=1)
         
-   
 
         self.car_id = p.loadURDF("f10_racecar/simplecar.urdf", [-9,-6.5,.3])
         #print()
@@ -63,25 +66,26 @@ class PyBulletContinuousEnv(gym.Env):
     # Le osservazioni sono le immagini 96x96 rgb prese dalla zed
     def get_observation(self):
         
-        velocity_vector = []
-        pose_vector = []
+        #velocity_vector = []
+        #pose_vector = []
 
         # Nel caso in cui servano posizione e velocità rispetto al frame world
-        car_position, car_orientation = p.getBasePositionAndOrientation(self.car_id)
-        car_velocity_x, car_angular_velocity_z = self.getVelocity()
+        #car_position, car_orientation = p.getBasePositionAndOrientation(self.car_id)
+        #car_velocity_x, car_angular_velocity_z = self.getVelocity()
 
-        _,_,yaw = p.getEulerFromQuaternion(car_orientation)
-        #print(yaw*180/(2*3.14))
+        #_,_,yaw = p.getEulerFromQuaternion(car_orientation)
 
-        velocity_vector.append([car_velocity_x, car_angular_velocity_z])
-        pose_vector.append([car_position[0], car_position[1],yaw])
 
-        #print("Velocità(x) e angulare(z): ",velocity_vector)
-        #print("Posizione e yaw: ",pose_vector)
+        #velocity_vector.append([car_velocity_x, car_angular_velocity_z])
+        #pose_vector.append([car_position[0], car_position[1],yaw])
+
         rgb_image = self.getCamera_image()
+        bird_eye_state = self.birdEyeView(rgb_image)
+        
+        # immagine in formato bird-eye -> canny filter
+        
+        return bird_eye_state
 
-        # immagine in formato YUV
-        return rgb_image
 
     def step(self, action):
         self.action = action
@@ -119,8 +123,8 @@ class PyBulletContinuousEnv(gym.Env):
         # p.setJointMotorControl2(self.car_id,2,p.POSITION_CONTROL,targetPosition=-steer)
 
         # Step di simulazione
-        #for _ in range(24):
-        p.stepSimulation()
+        #for _ in range(240):
+        #    p.stepSimulation()
 
         # Ottengo lo stato che sarebbero le ossservazioni (immagine 96x96x3)
         state = self.get_observation()
@@ -155,10 +159,9 @@ class PyBulletContinuousEnv(gym.Env):
         viewMat = p.computeViewMatrix(camPos, camTarget, camUpVec)
         projMat = camInfo[3]
         
-        # ottengo le 3 immagini: rgb, depth, segmentation
-        width, height, rgbImg, depthImg, segImg= p.getCameraImage(200,66,viewMatrix=viewMat,projectionMatrix=projMat, renderer=p.ER_BULLET_HARDWARE_OPENGL)
+        width, height, rgbImg, depthImg, segImg= p.getCameraImage(640,480,viewMatrix=viewMat,projectionMatrix=projMat, renderer=p.ER_BULLET_HARDWARE_OPENGL)
         # faccio un reshape in quanto da sopra ottengo un array di elementi
-        rgb_opengl = np.reshape(rgbImg, (height, width, 4)) 
+        rgb_opengl = np.reshape(rgbImg, (480, 640, 4)) 
 
         # Tolgo il canale alpha e converto da BGRA a RGB per la rete
         rgb_image = cv2.cvtColor(rgb_opengl, cv2.COLOR_BGRA2RGB)
@@ -166,10 +169,6 @@ class PyBulletContinuousEnv(gym.Env):
 
         return rgb_image
 
-        # Per vedere le immagini in opencv
-        # cv2.imshow("Camera", rgb_image)
-        # cv2.waitKey(0) 
-    
 
     # velocità rispetto al frame macchina
     def getVelocity(self):
@@ -270,35 +269,130 @@ class PyBulletContinuousEnv(gym.Env):
 
 
 
+    def getCarPosition(self):
+        car_position, car_orientation = p.getBasePositionAndOrientation(self.car_id)
+        
+        return car_position, car_orientation
+    
+    
+    def wrap2pi(self,angle):
+        return (angle + np.pi) % (2 * np.pi) - np.pi
 
-    # # funzione che permette di ottenere la polica a dell'expert
-    # # per inizializzare li metto nella chiamata
-    # def getAction_expert(self,turn=0,forward=0,backward=0):
-    #     p.setGravity(0,0,-10)
-    #     keys = p.getKeyboardEvents()
 
-    #     # comandi da tastiera per l'expert
-    #     for k,v in keys.items():
+    def rect_to_polar_relative(self,goal):
+        """
+        Funzione usata per la trasformazione in coordinate polari del goal
+        
+        Parameters:
+        - robot_id: id del robot
+        
+        Returns:
+        - r: raggio, ovvero la distanza tra robot e goal
+        - theta: angolo di orientazione del robot rispetto al goal
+        """
+        #print("G; ",goal)
+        # calcolo la posizione correte del robot specificato
+        car_position, car_orientation = self.getCarPosition()
+        print("Posizione: ",car_position)
+        # calcolo l'angolo di yaw
+        _,_,yaw = p.getEulerFromQuaternion(car_orientation)
+        
+        # Calculate the polar coordinates (distance, angle) of the vector
+        vector_to_goal = np.array([goal[0] - car_position[0], goal[1] - car_position[1]])
+        r = np.linalg.norm(vector_to_goal)
+        theta = self.wrap2pi(np.arctan2(vector_to_goal[1], vector_to_goal[0])-self.wrap2pi(yaw))
+        return r, theta
 
-    #             if (k == p.B3G_RIGHT_ARROW and (v&p.KEY_WAS_TRIGGERED)):
-    #                     turn = 0.5
-    #             if (k == p.B3G_RIGHT_ARROW and (v&p.KEY_WAS_RELEASED)):
-    #                     turn = 0
-    #             if (k == p.B3G_LEFT_ARROW and (v&p.KEY_WAS_TRIGGERED)):
-    #                     turn = -0.5
-    #             if (k == p.B3G_LEFT_ARROW and (v&p.KEY_WAS_RELEASED)):
-    #                     turn = 0
 
-    #             if (k == p.B3G_UP_ARROW and (v&p.KEY_WAS_TRIGGERED)):
-    #                     forward=20
-    #             if (k == p.B3G_UP_ARROW and (v&p.KEY_WAS_RELEASED)):
-    #                     forward=0
-    #             if (k == p.B3G_DOWN_ARROW and (v&p.KEY_WAS_TRIGGERED)):
-    #                     backward=20
-    #             if (k == p.B3G_DOWN_ARROW and (v&p.KEY_WAS_RELEASED)):
-    #                     backward=0
+    def choosePositionAndIndex(self,position,index):
+        if len(position!=0):
+            for i,j in zip(range(len(position)),position):
+                r, yaw_error = self.rect_to_polar_relative(j[:2])
+                vel_ang = self.p_control(yaw_error)
+                #print(f"steer {vel_ang} - distance {r}")
+                if vel_ang < 1.5:
+                    positionToStart = j[:2]
+                    indexToStart = index[i]
+                    #done = True
+                else:
+                    positionToStart = []
+                    indexToStart = None
+                    #done = False
+        else:
+            positionToStart = []
+            indexToStart = None
+            #done = False
+        return positionToStart, indexToStart
+    
+    
+    def p_control(self,yaw_error):
+        kp = 0.9
+        output = kp*yaw_error
+        return output
+    
 
-    #     # la riga 161 del dagger.py deve essere sostituita con questa
-    #     action = np.array([turn, forward, backward]).astype('float32')
+    def birdEyeView(self,image):
 
-    #     return action
+        # Setting parameter values 
+        t_lower = 95  # Lower Threshold 
+        t_upper = 105  # Upper threshold 
+        
+        # immagine canny
+        edge = cv2.Canny(image, t_lower, t_upper)
+        
+        # Per colorare gli edge 
+        #y,x = np.where(edge>0)
+        #edges = cv2.cvtColor(edge,cv2.COLOR_GRAY2RGB)
+        #edges[y,x] = [255,0,0]
+  
+
+        #filter1 = cv2.morphologyEx(edge, cv2.MORPH_OPEN, np.ones((1, 3), np.uint8), iterations=1)
+        #filter = cv2.morphologyEx(filter1, cv2.MORPH_CLOSE, np.ones((3, 1), np.uint8), iterations=1)
+        #ret, filtered = cv2.threshold(edges, 5, 255, cv2.THRESH_BINARY)
+        
+        #img = cv2.undistort(image,mtx,dist,None,mtx)
+        img_size = (image.shape[1],image.shape[0])   
+
+        # punti sorgenti da mappare in punti destinazione
+        src = np.float32([[235,368],[465,368],[580,479],[155,479]])
+        dst = np.float32([[0+150,0],[img_size[0]-150,0],[img_size[0]-150,img_size[1]],[0+150,img_size[1]]])
+
+        # con la funzione cv2.getPerspectiveTransform otteniamo la matrice di rotazione che ci porta dai punti
+        # sorgenti a quelli di destinazione
+        M = cv2.getPerspectiveTransform(src,dst)
+
+        # la funzione cv2.warpPerspective viene utilizzata per applicare la Perspective Transform ad un'immagine,
+        # data la matrice di trasformazione
+        # INPUT:
+        # input image
+        # transformation matrix
+        # dimensioni immagine finale
+        # metodo di interpolazione
+        bird_eye = cv2.warpPerspective(edge,M,(640,480),flags=cv2.INTER_LINEAR)
+        
+        reshaped_image = cv2.resize(bird_eye, (200, 66))
+   
+        return reshaped_image
+
+
+    def computeIndexToStart(self, centerLine):
+        positionToStart = []
+        threshold = 0.25
+        car_position, _ = self.getCarPosition()
+    
+        
+        # lista delle possibili posizioni di partenza
+        while len(positionToStart)==0:
+            index,position = getPointToStart(centerLine,car_position[:2], threshold)
+            positionToStart, indexToStart = self.choosePositionAndIndex(position,index)
+            threshold+=0.05
+                
+        print("Pos: ",positionToStart)
+        
+        # creo le liste di indici 
+        indexList_1 = [idx for idx in range(indexToStart,len(centerLine),1)]
+        indexList_2 = [idx for idx in range(0,indexToStart,1)]
+        
+        total_index = indexList_1+indexList_2
+        
+        return total_index

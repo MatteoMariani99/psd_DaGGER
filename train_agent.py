@@ -86,15 +86,15 @@ def train_model(X_train, y_train, X_valid, y_valid, path, num_epochs=50, learnin
     #print(model.get_device())
     criterion = torch.nn.MSELoss()
     optimizer = torch.optim.Adam(model.parameters(), lr=learning_rate, weight_decay=lambda_l2) # built-in L2 
-    #cv2.imshow('Original', X_train[100,:,:,:]) 
-    #cv2.waitKey(0)
-    X_train_torch = torch.from_numpy(X_train).to(device)
+
+    #X_train_torch = torch.from_numpy(X_train).to(device)
+    X_train_torch = torch.from_numpy(X_train[:,np.newaxis,...])
     y_train_torch = torch.from_numpy(y_train).to(device)
     
     
     #print(X_train_torch.shape)
     
-    X_train_torch = (X_train_torch.permute(0,3,1,2))
+    #X_train_torch = (X_train_torch.permute(0,3,1,2))
     
     #print(X_train_torch.shape)
     
@@ -132,6 +132,6 @@ if __name__ == "__main__":
     # preprocess data
     #X_train, y_train, X_valid, y_valid = preprocessing(X_train, y_train, X_valid, y_valid, history_length=1)
     # train model
-    train_model(X_train, y_train, X_valid, y_valid, 'dagger_test_models/model_5.pth', num_epochs=10)
+    train_model(X_train, y_train, X_valid, y_valid, 'dagger_test_models/model_0.pth', num_epochs=10)
  
   
