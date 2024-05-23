@@ -13,7 +13,7 @@ class VehicleControlModel(nn.Module):
         # se non si trova un intero, si arrotonda
         
         # Define convolutional layers
-        self.conv1 = nn.Conv2d(in_channels=3, out_channels=24, kernel_size=5, stride=2)
+        self.conv1 = nn.Conv2d(in_channels=1, out_channels=24, kernel_size=5, stride=2)
         self.conv2 = nn.Conv2d(in_channels=24, out_channels=36, kernel_size=5, stride=2)
         self.conv3 = nn.Conv2d(in_channels=36, out_channels=48, kernel_size=5, stride=2)
         self.conv4 = nn.Conv2d(in_channels=48, out_channels=64, kernel_size=3, stride=1)
@@ -33,7 +33,7 @@ class VehicleControlModel(nn.Module):
         # Normalization layer
         # batch norm2d in quanto entra un tensore quindi di dimensione 4
         #self.norm = nn.BatchNorm2d(3)
-        self.norm = nn.BatchNorm2d(3)
+        self.norm = nn.BatchNorm2d(1)
 
     def forward(self, x):
 

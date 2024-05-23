@@ -203,6 +203,7 @@
     <child link="laser"/>
     <axis xyz="0 0 1"/>
   </joint>
+  
   <!-- zed camera -->
   <link name="zed_camera_link">
     <inertial>
@@ -225,7 +226,7 @@
     </visual>
   </link>
   <joint name="zed_camera_joint" type="fixed">
-    <origin rpy="0 0 0" xyz="0.35 0 0.8"/>
+    <origin rpy="0 0 0" xyz="0.32 0 0.6"/>
     <parent link="base_link"/>
     <child link="zed_camera_link"/>
     <axis xyz="0 0 1"/>

@@ -8,6 +8,7 @@ import cv2
 import torch
 import math
 from get_track import *
+from matplotlib import pyplot as plt
 
 vel_max = 15
 threshold = 0.25
@@ -47,8 +48,33 @@ def birdEyeView(image):
         # Setting parameter values 
         t_lower = 95  # Lower Threshold 
         t_upper = 105  # Upper threshold 
+        
         # immagine canny
         edge = cv2.Canny(image, t_lower, t_upper) 
+        y,x = np.where(edge>0)
+
+        #image_edges = image.copy()
+        
+       
+        
+        edges = cv2.cvtColor(edge,cv2.COLOR_GRAY2RGB)
+        edges[y,x] = [255,255,255]
+  
+        #cv2.imshow("Camera", edges)
+        #cv2.waitKey(0) 
+    
+        
+        #mask = cv2.inRange(image, t_lower, t_upper)
+        #lab_img = cv2.cvtColor(image, cv2.COLOR_RGB2GRAY)
+
+        # Usate per rimuovere il rumore
+        # lower = np.array([0, 140, 140])
+        # upper = np.array([255, 190, 190])
+        # mask = cv2.inRange(lab_img, lower, upper)
+        filter1 = cv2.morphologyEx(edge, cv2.MORPH_OPEN, np.ones((1, 3), np.uint8), iterations=1)
+        filter = cv2.morphologyEx(filter1, cv2.MORPH_CLOSE, np.ones((3, 1), np.uint8), iterations=1)
+        
+        #ret, filtered = cv2.threshold(edges, 5, 255, cv2.THRESH_BINARY)
         
         #img = cv2.undistort(image,mtx,dist,None,mtx)
         img_size = (image.shape[1],image.shape[0])   
@@ -76,8 +102,7 @@ def birdEyeView(image):
         #         print(i)
         #         cv2.circle(image,[int(i[0]),int(i[1])],2,(0,0,255),-1)
                 
-        # cv2.imshow("Camera", image)
-        # cv2.waitKey(0) 
+        
         dst = np.float32([[0+150,0],[img_size[0]-150,0],[img_size[0]-150,img_size[1]],[0+150,img_size[1]]])
 
 
@@ -94,6 +119,10 @@ def birdEyeView(image):
         # dimensioni immagine finale
         # metodo di interpolazione
         bird_eye = cv2.warpPerspective(edge,M,(640,480),flags=cv2.INTER_LINEAR)
+        
+
+        #cv2.imshow("Camera", bird_eye)
+        #cv2.waitKey(0) 
         # viene ritornata anche questa in quanto permette di avere la birdEye view sull'immagine originale
         #warped_original = cv2.warpPerspective(img,M,img_size,flags=cv2.INTER_LINEAR)
 
@@ -166,11 +195,13 @@ model = model_new.VehicleControlModel()
 
 p.connect(p.GUI)
 p.setAdditionalSearchPath(pybullet_data.getDataPath())
-p.resetDebugVisualizerCamera(cameraDistance=22, cameraYaw=0, cameraPitch=-89, cameraTargetPosition=[5,-5,0])
+#p.resetDebugVisualizerCamera(cameraDistance=22, cameraYaw=0, cameraPitch=-89, cameraTargetPosition=[5,-5,0])
+#p.resetDebugVisualizerCamera(cameraDistance=22, cameraYaw=0, cameraPitch=-89, cameraTargetPosition=[0,0,0])
 offset = [0,0,0]
 #p.loadURDF("plane.urdf")
 #turtle = p.loadURDF("f10_racecar/simplecar.urdf", [28,-11,.3])
 turtle = p.loadURDF("f10_racecar/simplecar.urdf", [-9,-6.5,.3])
+#turtle = p.loadURDF("f10_racecar/simplecar.urdf", [0,0,.3])
 track = p.loadSDF("f10_racecar/meshes/barca_track_modified.sdf", globalScaling=1)
 
 # for i in range(0,30,1):
@@ -254,7 +285,7 @@ while (1):
         
         
                 
-        
+        # creo le liste di indici 
         indexList_1 = [idx for idx in range(indexToStart,len(centerLine),1)]
         indexList_2 = [idx for idx in range(0,indexToStart,1)]
         
@@ -277,10 +308,10 @@ while (1):
 
                         reshaped_image = cv2.resize(bird_eye, (200, 66))
 
-
-                        cv2.imshow("Camera", reshaped_image)
+                        cv2.imshow("Camera", bird_eye)
                         
-                        cv2.waitKey(1) 
+                        cv2.waitKey(1)
+ 
                         r, yaw_error = rect_to_polar_relative(goal)
                         vel_ang = p_control(yaw_error)
                         #forward = p_control()
