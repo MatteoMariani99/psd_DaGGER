@@ -6,6 +6,7 @@ from datetime import datetime
 import gzip
 import json
 from model_new import VehicleControlModel
+from model import Model
 import train_agent
 from utils import *
 import torch
@@ -26,7 +27,7 @@ if torch.cuda.is_available():
 # DOWN: 0 / +1
 
 
-NUM_ITS = 10 # default è 20. Viene utilizzato 1 lap per iteration. Le iteration rappresentano il
+NUM_ITS = 20 # default è 20. Viene utilizzato 1 lap per iteration. Le iteration rappresentano il
 # numero di volte che noi stoppiamo l'esperto per salvare i dati e fare il training della rete.
 # è un po' come se fosse il numero di episodi.
 beta_i  = 0.9 # parametro usato nella policy PI: tale valore verrà modificato tramite la 
@@ -99,7 +100,7 @@ if __name__ == "__main__":
     if not os.path.exists("dagger_test_models"):
         os.mkdir("dagger_test_models")
  
-    # è ciò che strapoliamo dall'ambiente con l'aggiunta delle azioni e dell'azione terminale di done
+    # è ciò che estrapoliamo dall'ambiente con l'aggiunta delle azioni e dell'azione terminale di done
     samples = {
         "state": [],
         "next_state": [],
@@ -115,7 +116,8 @@ if __name__ == "__main__":
     
     episode_rewards = [] # vettore contenente le rewards per ogni episodio
     steps = 0
-    agent = VehicleControlModel() # definisco l'agente dallo script model.py (sarebbe la rete)
+    #agent = VehicleControlModel() # definisco l'agente dallo script model.py (sarebbe la rete)
+    agent = Model()
     agent.save("dagger_test_models/model_0.pth") # salvo il primo modello (vuoto)
     agent.to(device)
     model_number = 0 # inizializzo il numero del modello: aumentandolo varierà beta
@@ -125,7 +127,8 @@ if __name__ == "__main__":
     # qui inizia il vero e proprio algoritmo: num di iterazioni è il numero di episodi che vogliamo
     
     for iteration in range(NUM_ITS):
-        agent = VehicleControlModel() # ridefinisco l'istanza in quanto da questo ciclo non uscirò più
+        #agent = VehicleControlModel() # ridefinisco l'istanza in quanto da questo ciclo non uscirò più
+        agent = Model()
         agent.load("dagger_test_models/model_{}.pth".format(model_number)) # carico l'ultimo modello
         agent.to(device)
         curr_beta = beta_i ** model_number # calcolo il coefficiente beta
@@ -170,8 +173,8 @@ if __name__ == "__main__":
         for i in total_index:
             goal = centerLine[i][:2] # non prendo la z
             r, yaw_error = env.rect_to_polar_relative(goal)
-            print(f"goal {goal},distance {r}")
-            print("cambio")
+            #print(f"goal {goal},distance {r}")
+            #print("cambio")
             if done:
                 break
             while r>0.5:
@@ -180,7 +183,7 @@ if __name__ == "__main__":
                 #cv2.waitKey(1)
 
                 r, yaw_error = env.rect_to_polar_relative(goal)
-                print(f"goal {goal},distance {r} ,yaw_error{yaw_error}")
+                #print(f"goal {goal},distance {r} ,yaw_error{yaw_error}")
                 vel_ang = env.p_control(yaw_error)
 
                 if 199<i<210:
@@ -218,8 +221,8 @@ if __name__ == "__main__":
                 # rete
                 pi = curr_beta * a + (1 - curr_beta) * prediction.detach().cpu().numpy().flatten()
                 #print("Policy pi: ",pi)
-                #print("Policy pred: ",prediction.detach().cpu().numpy().flatten())
-                #print("Policy a: ",a)
+                print("Policy pred: ",prediction.detach().cpu().numpy().flatten())
+                print("Policy a: ",a)
                 #episode_reward += r
 
                 samples["state"].append(state)            # state has shape (96, 96, 3)
@@ -246,7 +249,7 @@ if __name__ == "__main__":
                     # funzione di preprocessing per andare a trasformare l'immagine da colori a scala di grigi
                     #X_train, y_train, X_valid, y_valid = train_agent.preprocessing(X_train, y_train, X_valid, y_valid, history_length=1)
                     print(X_train.shape)
-                    train_agent.train_model(X_train, y_train, X_valid, y_valid, "dagger_test_models/model_{}.pth".format(model_number+1), num_epochs=30)
+                    train_agent.train_model(X_train, y_train, X_valid, y_valid, "dagger_test_models/model_{}.pth".format(model_number+1), num_epochs=10)
                     model_number += 1
                     print("Training complete. Press return to continue to the next iteration")
                     wait()

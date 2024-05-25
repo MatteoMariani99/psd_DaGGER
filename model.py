@@ -14,7 +14,7 @@ class Model(nn.Module):
         self.norm3 = nn.BatchNorm2d(16)
         self.lin1  = nn.Linear(768,64)
         self.lin2  = nn.Linear(64,16)
-        self.lin3  = nn.Linear(16,3)
+        self.lin3  = nn.Linear(16,2)
 
         self.maxpool = nn.MaxPool2d(2)
         self.dropout = nn.Dropout2d(0.1)
@@ -50,7 +50,7 @@ class Model(nn.Module):
         return self.lin3(x)
     
     def load(self, path):
-        self.load_state_dict(torch.load(path))
+        self.load_state_dict(torch.load(path,map_location="cuda:0"))
 
     def save(self, path):
         torch.save(self.state_dict(), path)

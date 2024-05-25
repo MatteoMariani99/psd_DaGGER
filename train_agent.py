@@ -7,9 +7,11 @@ import gzip
 from tqdm import tqdm
 
 from model_new import VehicleControlModel
+from model import Model
 from utils import *
 import torch
 import cv2
+from torch.utils.data import DataLoader
 
 device = torch.device("cuda:0" if torch.cuda.is_available() else "cpu")
 vel_max = 15
@@ -32,6 +34,8 @@ def read_data(datasets_dir="./data_test", path='data_dagger.pkl.gzip', frac = 0.
 
     # split data into training and validation set
     n_samples = len(data["state"])
+    
+    
     # il 90% dei dati viene usato per il training e il 10% per la validation
     X_train, y_train = X[:int((1-frac) * n_samples)], y[:int((1-frac) * n_samples)]
     X_valid, y_valid = X[int((1-frac) * n_samples):], y[int((1-frac) * n_samples):]
@@ -78,14 +82,17 @@ def preprocessing(X_train, y_train, X_valid, y_valid, history_length=1):
     return X_train, y_train, X_valid, y_valid
 
 
-def train_model(X_train, y_train, X_valid, y_valid, path, num_epochs=50, learning_rate=3e-4, lambda_l2=1e-5, batch_size=32):
+def train_model(X_train, y_train, X_valid, y_valid, path, num_epochs=50, learning_rate=1e-3, lambda_l2=1e-5, batch_size=32):
     
     print("... train model")
-    model = VehicleControlModel()
+    #model = VehicleControlModel()
+    model = Model()
     model.to(device)
-    #print(model.get_device())
+        
+    loader = DataLoader(dataset=list(zip(X_train, y_train)),batch_size=16,shuffle=True)
+
     criterion = torch.nn.MSELoss()
-    optimizer = torch.optim.Adam(model.parameters(), lr=learning_rate, weight_decay=lambda_l2) # built-in L2 
+    optimizer = torch.optim.SGD(model.parameters(), lr=learning_rate) # built-in L2 
 
     #X_train_torch = torch.from_numpy(X_train).to(device)
     X_train_torch = torch.from_numpy(X_train[:,np.newaxis,...])
@@ -99,29 +106,44 @@ def train_model(X_train, y_train, X_valid, y_valid, path, num_epochs=50, learnin
     #print(X_train_torch.shape)
     
 
-    for t in tqdm(range(num_epochs)):
-      #print("[EPOCH]: %i" % (t), end='\r')
-      for i in range(0,len(X_train_torch),batch_size):
-        curr_X = X_train_torch[i:i+batch_size]
+    # for t in tqdm(range(num_epochs)):
+    #   #print("[EPOCH]: %i" % (t), end='\r')
+    #   for i in range(0,len(X_train_torch),batch_size):
+    #     curr_X = X_train_torch[i:i+batch_size]
         
-        curr_Y = y_train_torch[i:i+batch_size]
+    #     curr_Y = y_train_torch[i:i+batch_size]
 
-        preds  = model(curr_X.type(torch.FloatTensor).to(device))
-        #print(f"Action prede: {preds} Action curr: {curr_Y}")
+    #     preds  = model(curr_X.type(torch.FloatTensor).to(device))
+    #     #print(f"Action prede: {preds} Action curr: {curr_Y}")
         
-        loss   = criterion(preds, curr_Y)
+    #     loss   = criterion(preds, curr_Y)
+    #     print("Loss: ",loss)
+    #     optimizer.zero_grad()
+    #     loss.backward()
+    #     optimizer.step()
+    loss_vector = []
+    for t in tqdm(range(num_epochs)):
+      for X_batch, y_batch in loader:
+        preds  = model(X_batch[:,np.newaxis,...].type(torch.FloatTensor).to(device))
+        
+        loss   = criterion(preds, y_batch.to(device))
         #print("Loss: ",loss)
         optimizer.zero_grad()
         loss.backward()
         optimizer.step()
-        
+        loss_vector.append(loss)
+    
+    print("Loss mean: ",(sum(loss_vector)/len(loss_vector)).detach().cpu().numpy().flatten())
     model.save(path)
+    
 
 
 # manca la validazione -> basta richiamare il modello e verificare le predizioni ottenute (verifico le predizioni in uscia
 # e le confronto con le y_valid)
 if __name__ == "__main__":
-
+    #model = VehicleControlModel()
+    model = Model()
+    model.to(device)
     #parser = argparse.ArgumentParser()
     #parser.add_argument('model_name', metavar='M', default='model.pth', type=str, help='model name to save')
     #args = parser.parse_args() 
@@ -132,6 +154,17 @@ if __name__ == "__main__":
     # preprocess data
     #X_train, y_train, X_valid, y_valid = preprocessing(X_train, y_train, X_valid, y_valid, history_length=1)
     # train model
-    train_model(X_train, y_train, X_valid, y_valid, 'dagger_test_models/model_0.pth', num_epochs=10)
+    train_model(X_train, y_train, X_valid, y_valid, 'dagger_test_models/model_2.pth', num_epochs=10)
  
-  
+    model.eval()
+    # print(X_valid.shape)
+    y_pred  = model(torch.from_numpy(X_valid[:,np.newaxis,...]).type(torch.FloatTensor).to(device))
+    
+    for i,j in zip(y_pred,y_valid):
+        #if i==j:
+        print("i: ",i)
+        print("j: ",j)
+        #acc = (y_pred == y_valid)
+    # print(acc)
+    # #acc = float(acc)
+    # print("Model accuracy: %.2f%%" % (acc*100))

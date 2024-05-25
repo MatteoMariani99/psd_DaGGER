@@ -51,7 +51,7 @@ class PyBulletContinuousEnv(gym.Env):
         #     p.loadURDF("cube/marble_cube.urdf",[l,1.5,0],useFixedBase = True)
 
         # p.loadURDF("cube/marble_cube.urdf",[29,0,0],useFixedBase = True)
-        p.loadSDF("f10_racecar/meshes/barca_track.sdf", globalScaling=1)
+        p.loadSDF("f10_racecar/meshes/barca_track_modified.sdf", globalScaling=1)
         
 
         self.car_id = p.loadURDF("f10_racecar/simplecar.urdf", [-9,-6.5,.3])
@@ -159,9 +159,9 @@ class PyBulletContinuousEnv(gym.Env):
         viewMat = p.computeViewMatrix(camPos, camTarget, camUpVec)
         projMat = camInfo[3]
         
-        width, height, rgbImg, depthImg, segImg= p.getCameraImage(640,480,viewMatrix=viewMat,projectionMatrix=projMat, renderer=p.ER_BULLET_HARDWARE_OPENGL)
+        width, height, rgbImg, depthImg, segImg= p.getCameraImage(96,96,viewMatrix=viewMat,projectionMatrix=projMat, renderer=p.ER_BULLET_HARDWARE_OPENGL)
         # faccio un reshape in quanto da sopra ottengo un array di elementi
-        rgb_opengl = np.reshape(rgbImg, (480, 640, 4)) 
+        rgb_opengl = np.reshape(rgbImg, (96, 96, 4)) 
 
         # Tolgo il canale alpha e converto da BGRA a RGB per la rete
         rgb_image = cv2.cvtColor(rgb_opengl, cv2.COLOR_BGRA2RGB)
@@ -293,7 +293,7 @@ class PyBulletContinuousEnv(gym.Env):
         #print("G; ",goal)
         # calcolo la posizione correte del robot specificato
         car_position, car_orientation = self.getCarPosition()
-        print("Posizione: ",car_position)
+        #print("Posizione: ",car_position)
         # calcolo l'angolo di yaw
         _,_,yaw = p.getEulerFromQuaternion(car_orientation)
         
@@ -334,11 +334,28 @@ class PyBulletContinuousEnv(gym.Env):
     def birdEyeView(self,image):
 
         # Setting parameter values 
-        t_lower = 95  # Lower Threshold 
-        t_upper = 105  # Upper threshold 
+        t_lower = 330  # Lower Threshold 
+        t_upper = 350  # Upper threshold 
         
         # immagine canny
-        edge = cv2.Canny(image, t_lower, t_upper)
+        #edge = cv2.Canny(image, t_lower, t_upper)
+        abs_sobel = np.absolute(cv2.Sobel(image, cv2.CV_64F, 0, 1))
+        scaled_sobel = np.uint8(255*abs_sobel/np.max(abs_sobel))
+        edge = cv2.Canny(scaled_sobel, t_lower, t_upper)
+        
+        # # blur
+        #blur = cv2.GaussianBlur(edge, (0,0), sigmaX=33, sigmaY=33)
+
+        # # divide
+        # divide = cv2.divide(edge, blur, scale=255)
+
+        # # otsu threshold
+        # thresh = cv2.threshold(divide, 0, 255, cv2.THRESH_BINARY+cv2.THRESH_OTSU)[1]
+
+        # # apply morphology
+        # kernel = cv2.getStructuringElement(cv2.MORPH_RECT, (3,3))
+        # morph = cv2.morphologyEx(thresh, cv2.MORPH_CLOSE, kernel)
+
         
         # Per colorare gli edge 
         #y,x = np.where(edge>0)
@@ -368,9 +385,11 @@ class PyBulletContinuousEnv(gym.Env):
         # transformation matrix
         # dimensioni immagine finale
         # metodo di interpolazione
+
         bird_eye = cv2.warpPerspective(edge,M,(640,480),flags=cv2.INTER_LINEAR)
-        
-        reshaped_image = cv2.resize(bird_eye, (200, 66))
+        reshaped_image = cv2.resize(edge, (96, 84))
+        #cv2.imshow("Camera", reshaped_image)
+        #cv2.waitKey(1) 
    
         return reshaped_image
 
@@ -387,7 +406,7 @@ class PyBulletContinuousEnv(gym.Env):
             positionToStart, indexToStart = self.choosePositionAndIndex(position,index)
             threshold+=0.05
                 
-        print("Pos: ",positionToStart)
+        #print("Pos: ",positionToStart)
         
         # creo le liste di indici 
         indexList_1 = [idx for idx in range(indexToStart,len(centerLine),1)]

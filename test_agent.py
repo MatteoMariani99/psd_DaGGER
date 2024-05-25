@@ -9,6 +9,7 @@ import torch
 import torch.nn as nn
 import argparse
 from model_new import VehicleControlModel
+from model import Model
 import cv2
 from utils import *
 
@@ -16,7 +17,7 @@ from environment import PyBulletContinuousEnv
 
 device = torch.device("cuda:0" if torch.cuda.is_available() else "cpu")
 print("Torch Device:", device)
-vel_max = 15
+vel_max = 10
 
 def run_episode(env, agent, max_timesteps=2000):
     
@@ -29,21 +30,20 @@ def run_episode(env, agent, max_timesteps=2000):
         # preprocessing 
         #gray = np.dot(state[...,:3], [0.2125, 0.7154, 0.0721])[:84,...]
         #pred = agent(torch.from_numpy(gray[np.newaxis, np.newaxis,...]).type(torch.FloatTensor))
-        state = cv2.cvtColor(state, cv2.COLOR_RGB2YUV)
+        #state = cv2.cvtColor(state, cv2.COLOR_RGB2YUV)
         #state = rgb2yuv(state)
-        cv2.imshow("Camera", state)
-        cv2.waitKey(0) 
-        state_torch = torch.from_numpy(state).to(device)
-        state_torch = (state_torch.permute(2,0,1)).unsqueeze(0)
+        #cv2.imshow("Camera", state)
+        #cv2.waitKey(0) 
+        #state_torch = torch.from_numpy(state).to(device)
+        #state_torch = (state_torch.permute(2,0,1)).unsqueeze(0)
 
         #state_torch = (state_torch.permute(2,0,1)).unsqueeze(0) # riordino le dimensioni per passarlo a conv2d
-        prediction = agent((state_torch.type(torch.FloatTensor)).to(device))
+        prediction = agent(torch.from_numpy(state[np.newaxis,np.newaxis,...]).type(torch.FloatTensor).to(device))
         # np.newaxis aumenta la dimensione dell'array di 1 (es. se è un array 1D diventa 2D)
         # torch.from_numpy crea un tensore a partire da un'array numpy
         # il modello ritorna le azioni (left/right, up, down)
         #start_time1 = time.time()
-        #prediction = agent(torch.from_numpy(gray[np.newaxis,np.newaxis,...]).type(torch.FloatTensor))
-        #prediction = agent(torch.from_numpy(image[np.newaxis,...]).type(torch.FloatTensor))
+
         a = prediction.detach().cpu().numpy().flatten()
         # per far si che le azioni non sforino vel_max
         # if a[1] > 15:
@@ -53,8 +53,8 @@ def run_episode(env, agent, max_timesteps=2000):
         print("Action for model: ",a)
 
         # take action, receive new state & reward
-        next_state, r, done = env.step(a)   
-        episode_reward += r       
+        next_state, reward, done = env.step(a)   
+        #episode_reward += reward       
         state = next_state
         step += 1
 
@@ -75,9 +75,10 @@ if __name__ == "__main__":
     n_test_episodes = 15                  # number of episodes to test
 
     # TODO: load agent
-    agent = VehicleControlModel()
+    #agent = VehicleControlModel()
+    agent = Model()
     #print("Loading model {}:".format(args.path))
-    agent.load("dagger_test_models/model_{}.pth".format(2))
+    agent.load("dagger_test_models/model_{}.pth".format(5))
     agent.to(device)
     # agent.load("models/agent.ckpt")
     #env = gym.make('CarRacing-v0').unwrapped

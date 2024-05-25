@@ -46,23 +46,27 @@ def getCamera_image():
 def birdEyeView(image):
 
 	# Setting parameter values 
-	t_lower = 95  # Lower Threshold 
-	t_upper = 105  # Upper threshold 
+	t_lower = 120  # Lower Threshold 
+	t_upper = 210  # Upper threshold 
 	
 	# immagine canny
 	edge = cv2.Canny(image, t_lower, t_upper) 
-	y,x = np.where(edge>0)
+	#y,x = np.where(edge>0)
 
 	#image_edges = image.copy()
 	
 	
 	
-	edges = cv2.cvtColor(edge,cv2.COLOR_GRAY2RGB)
-	edges[y,x] = [255,255,255]
+	#edges = cv2.cvtColor(edge,cv2.COLOR_GRAY2RGB)
+	#edges[y,x] = [255,255,255]
 
 	#cv2.imshow("Camera", edges)
 	#cv2.waitKey(0) 
 
+	#abs_sobel = np.absolute(cv2.Sobel(image, cv2.CV_64F, 1, 0))
+	#abs_sobel = np.absolute(cv2.Sobel(image, cv2.CV_64F, 0, 1))
+	#scaled_sobel = np.uint8(255*abs_sobel/np.max(abs_sobel))
+	#edge = cv2.Canny(scaled_sobel, 330, 350)
 	
 	#mask = cv2.inRange(image, t_lower, t_upper)
 	#lab_img = cv2.cvtColor(image, cv2.COLOR_RGB2GRAY)
@@ -71,11 +75,22 @@ def birdEyeView(image):
 	# lower = np.array([0, 140, 140])
 	# upper = np.array([255, 190, 190])
 	# mask = cv2.inRange(lab_img, lower, upper)
-	filter1 = cv2.morphologyEx(edge, cv2.MORPH_OPEN, np.ones((1, 3), np.uint8), iterations=1)
-	filter = cv2.morphologyEx(filter1, cv2.MORPH_CLOSE, np.ones((3, 1), np.uint8), iterations=1)
+	#filter1 = cv2.morphologyEx(abs_sobel, cv2.MORPH_OPEN, np.ones((1, 5), np.uint8), iterations=1)
+	#filter = cv2.morphologyEx(filter1, cv2.MORPH_CLOSE, np.ones((5, 1), np.uint8), iterations=1)
 	
 	#ret, filtered = cv2.threshold(edges, 5, 255, cv2.THRESH_BINARY)
-	
+	# blur = cv2.GaussianBlur(edge, (0,0), sigmaX=33, sigmaY=33)
+
+	# # # divide
+	# divide = cv2.divide(edge, blur, scale=255)
+
+	# # # otsu threshold
+	# thresh = cv2.threshold(divide, 0, 255, cv2.THRESH_BINARY+cv2.THRESH_OTSU)[1]
+
+	# # # apply morphology
+	# kernel = cv2.getStructuringElement(cv2.MORPH_RECT, (3,3))
+	# morph = cv2.morphologyEx(thresh, cv2.MORPH_CLOSE, kernel)
+
 	#img = cv2.undistort(image,mtx,dist,None,mtx)
 	img_size = (image.shape[1],image.shape[0])   
 	
@@ -121,12 +136,11 @@ def birdEyeView(image):
 	bird_eye = cv2.warpPerspective(edge,M,(640,480),flags=cv2.INTER_LINEAR)
 	
 
-	#cv2.imshow("Camera", bird_eye)
-	#cv2.waitKey(0) 
+
 	# viene ritornata anche questa in quanto permette di avere la birdEye view sull'immagine originale
 	#warped_original = cv2.warpPerspective(img,M,img_size,flags=cv2.INTER_LINEAR)
 
-	return bird_eye
+	return edge
 
 
 def wrap2pi(angle):
@@ -304,7 +318,7 @@ while (1):
 
 			reshaped_image = cv2.resize(bird_eye, (200, 66))
 			print(reshaped_image.shape)
-			cv2.imshow("Camera", bird_eye)
+			cv2.imshow("Camera", reshaped_image)
 			
 			cv2.waitKey(1)
 
