@@ -14,7 +14,7 @@ zed_camera_joint = 7 # simplecar
 
 
 class PyBulletContinuousEnv(gym.Env):
-    def __init__(self, total_episode_step=1000):
+    def __init__(self, total_episode_step=2500):
         super(PyBulletContinuousEnv, self).__init__()
 
         # Connect to PyBullet and set up the environment
@@ -55,6 +55,7 @@ class PyBulletContinuousEnv(gym.Env):
         
 
         self.car_id = p.loadURDF("f10_racecar/simplecar.urdf", [-9,-6.5,.3])
+        #self.car_id = p.loadURDF("f10_racecar/simplecar.urdf", [-15,-11,.3])
         #print()
         #print(p.getEulerFromQuaternion(p.getQuaternionFromEuler([0,0,100]))[2]*180/(2*3.14))
         # sphere_color = [1, 0, 0,1]  # Red color

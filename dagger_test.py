@@ -35,7 +35,7 @@ beta_i  = 0.9 # parametro usato nella policy PI: tale valore verrà modificato t
 # Inizialmente avremo 0.9^0, poi 0.9^1 poi 0.9^2 e così via il beta diminuirà esponenzialmente.
 # Ciò significa che avremo una probabilità di utilizzare la politica dell'expert che decresce 
 # a mano a mano che si procede con il training.
-T = 4000 # ogni iteration contiene N passi
+T = 10000 # ogni iteration contiene N passi
 vel_max = 15 # velocità massima macchina
 
 
