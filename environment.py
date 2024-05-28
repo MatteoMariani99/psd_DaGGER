@@ -4,8 +4,8 @@ import numpy as np
 import pybullet as p
 import pybullet_data
 import cv2
-from itertools import chain
 from get_track import *
+import random
 
 
 zed_camera_joint = 7 # simplecar
@@ -14,7 +14,7 @@ zed_camera_joint = 7 # simplecar
 
 
 class PyBulletContinuousEnv(gym.Env):
-    def __init__(self, total_episode_step=2500):
+    def __init__(self, total_episode_step=2000):
         super(PyBulletContinuousEnv, self).__init__()
 
         # Connect to PyBullet and set up the environment
@@ -36,13 +36,14 @@ class PyBulletContinuousEnv(gym.Env):
         #self.observation_space = spaces.Box(low=0, high=255, shape=(STATE_W, STATE_H, 3), dtype=np.uint8)
 
         self.total_episode_steps = total_episode_step
+        self.HomoMat = None
 
     def reset(self):
         self.current_steps = 0
         # Reset the simulation and the cartpole position
         p.resetSimulation()
         p.setGravity(0, 0, -9.81)
-        p.resetDebugVisualizerCamera(cameraDistance=20, cameraYaw=0, cameraPitch=-89, cameraTargetPosition=[-4,-2,0])
+        p.resetDebugVisualizerCamera(cameraDistance=20, cameraYaw=0, cameraPitch=-89, cameraTargetPosition=[4,-2,0])
         #p.loadURDF("plane.urdf",useFixedBase = True)
 
         # for i in range(0,30,1):
@@ -53,15 +54,18 @@ class PyBulletContinuousEnv(gym.Env):
         # p.loadURDF("cube/marble_cube.urdf",[29,0,0],useFixedBase = True)
         p.loadSDF("f10_racecar/meshes/barca_track_modified.sdf", globalScaling=1)
         
+        env1 = [[-10,1,.3], p.getQuaternionFromEuler([0,0,np.deg2rad(180)])]
+        env2 = [[-12,-11,.3], p.getQuaternionFromEuler([0,0,np.deg2rad(180)])]
+        env3 = [[-9,-6.5,.3], p.getQuaternionFromEuler([0,0,np.deg2rad(0)])]
+        env4 = [[0,0,.3], p.getQuaternionFromEuler([0,0,np.deg2rad(55)])]
+        env5 = [[35.5,2,.3], p.getQuaternionFromEuler([0,0,np.deg2rad(-90)])]
 
-        self.car_id = p.loadURDF("f10_racecar/simplecar.urdf", [-9,-6.5,.3])
-        #self.car_id = p.loadURDF("f10_racecar/simplecar.urdf", [-15,-11,.3])
-        #print()
-        #print(p.getEulerFromQuaternion(p.getQuaternionFromEuler([0,0,100]))[2]*180/(2*3.14))
-        # sphere_color = [1, 0, 0,1]  # Red color
-        # sphere_shape = p.createCollisionShape(p.GEOM_CYLINDER, radius=0.2, height=0)
-        # sphere_body = p.createMultiBody(baseMass=1, baseCollisionShapeIndex=sphere_shape,basePosition=[-10,8, 0])
-        # p.changeVisualShape(sphere_body, -1, rgbaColor=sphere_color)
+        env_list = [env1,env2,env3,env4,env5]
+        index_env = random.randint(0,len(env_list)-1)
+        self.car_id = p.loadURDF("f10_racecar/simplecar.urdf", env_list[index_env][0],env_list[index_env][1])
+
+                
+
 
 
     # Le osservazioni sono le immagini 96x96 rgb prese dalla zed
@@ -160,15 +164,10 @@ class PyBulletContinuousEnv(gym.Env):
         viewMat = p.computeViewMatrix(camPos, camTarget, camUpVec)
         projMat = camInfo[3]
         
-        width, height, rgbImg, depthImg, segImg= p.getCameraImage(96,96,viewMatrix=viewMat,projectionMatrix=projMat, renderer=p.ER_BULLET_HARDWARE_OPENGL)
-        # faccio un reshape in quanto da sopra ottengo un array di elementi
-        rgb_opengl = np.reshape(rgbImg, (96, 96, 4)) 
+        width, height, rgbImg, depthImg, segImg= p.getCameraImage(640,480,viewMatrix=viewMat,projectionMatrix=projMat, renderer=p.ER_BULLET_HARDWARE_OPENGL)
 
-        # Tolgo il canale alpha e converto da BGRA a RGB per la rete
-        rgb_image = cv2.cvtColor(rgb_opengl, cv2.COLOR_BGRA2RGB)
-        #print("Reshaped RGB image size:", rgb_image.shape)
-
-        return rgb_image
+        imgHSV = cv2.cvtColor(rgbImg[:,:,:3], cv2.COLOR_RGB2HSV)
+        return imgHSV
 
 
     # velocità rispetto al frame macchina
@@ -332,52 +331,7 @@ class PyBulletContinuousEnv(gym.Env):
         return output
     
 
-    def birdEyeView(self,image):
-
-        # Setting parameter values 
-        t_lower = 330  # Lower Threshold 
-        t_upper = 350  # Upper threshold 
-        
-        # immagine canny
-        #edge = cv2.Canny(image, t_lower, t_upper)
-        abs_sobel = np.absolute(cv2.Sobel(image, cv2.CV_64F, 0, 1))
-        scaled_sobel = np.uint8(255*abs_sobel/np.max(abs_sobel))
-        edge = cv2.Canny(scaled_sobel, t_lower, t_upper)
-        
-        # # blur
-        #blur = cv2.GaussianBlur(edge, (0,0), sigmaX=33, sigmaY=33)
-
-        # # divide
-        # divide = cv2.divide(edge, blur, scale=255)
-
-        # # otsu threshold
-        # thresh = cv2.threshold(divide, 0, 255, cv2.THRESH_BINARY+cv2.THRESH_OTSU)[1]
-
-        # # apply morphology
-        # kernel = cv2.getStructuringElement(cv2.MORPH_RECT, (3,3))
-        # morph = cv2.morphologyEx(thresh, cv2.MORPH_CLOSE, kernel)
-
-        
-        # Per colorare gli edge 
-        #y,x = np.where(edge>0)
-        #edges = cv2.cvtColor(edge,cv2.COLOR_GRAY2RGB)
-        #edges[y,x] = [255,0,0]
-  
-
-        #filter1 = cv2.morphologyEx(edge, cv2.MORPH_OPEN, np.ones((1, 3), np.uint8), iterations=1)
-        #filter = cv2.morphologyEx(filter1, cv2.MORPH_CLOSE, np.ones((3, 1), np.uint8), iterations=1)
-        #ret, filtered = cv2.threshold(edges, 5, 255, cv2.THRESH_BINARY)
-        
-        #img = cv2.undistort(image,mtx,dist,None,mtx)
-        img_size = (image.shape[1],image.shape[0])   
-
-        # punti sorgenti da mappare in punti destinazione
-        src = np.float32([[235,368],[465,368],[580,479],[155,479]])
-        dst = np.float32([[0+150,0],[img_size[0]-150,0],[img_size[0]-150,img_size[1]],[0+150,img_size[1]]])
-
-        # con la funzione cv2.getPerspectiveTransform otteniamo la matrice di rotazione che ci porta dai punti
-        # sorgenti a quelli di destinazione
-        M = cv2.getPerspectiveTransform(src,dst)
+    def birdEyeView(self,imgHSV):
 
         # la funzione cv2.warpPerspective viene utilizzata per applicare la Perspective Transform ad un'immagine,
         # data la matrice di trasformazione
@@ -386,9 +340,41 @@ class PyBulletContinuousEnv(gym.Env):
         # transformation matrix
         # dimensioni immagine finale
         # metodo di interpolazione
+        
+        # Tolgo il canale alpha e converto da RGB a HSV per la rete
+        
+        skyMsk = cv2.inRange(imgHSV[:,:,0], 115,125) # maschera del cielo
+        greenMsk = cv2.inRange(imgHSV[:,:,0], 55,65) # maschera del prato
+    
+        # rimuovo il rumore 
+        greenMsk = cv2.morphologyEx(greenMsk, cv2.MORPH_OPEN, cv2.getStructuringElement(cv2.MORPH_RECT,(1,3)), iterations=2)
+        skyMsk = cv2.morphologyEx(skyMsk, cv2.MORPH_OPEN, cv2.getStructuringElement(cv2.MORPH_RECT,(1,3)), iterations=4)
+        
+        # trovo in automatico i punti sorgenti per la bird eye: dove i pixel sono neri -> 255
+        #findEdge = lambda x, line: np.argwhere(np.abs(np.diff(x[line,:].astype(np.int16)))==255)
+        #topEdge = findEdge(greenMsk,320).flatten()
+        #botEdge = findEdge(greenMsk, 460).flatten()
 
-        bird_eye = cv2.warpPerspective(edge,M,(640,480),flags=cv2.INTER_LINEAR)
-        reshaped_image = cv2.resize(edge, (96, 84))
+        # calcolo l'omografia una sola volta
+        # if self.HomoMat is None and len(topEdge)==2 and len(botEdge)==2:
+        #     origPts = np.array([[topEdge[0], 320],[topEdge[1], 320],[botEdge[1], 460],[botEdge[0], 460]]).astype(np.float32)
+        #     destPts = np.array([[250,360],[390,360],[390,460],[250,460]]).astype(np.float32)
+        #     self.HomoMat =cv2.getPerspectiveTransform(origPts, destPts)
+        
+        # HomoMat calcolata sola la prima volta
+        self.HomoMat = np.array([[-2.98962782e-01, -1.24344112e+00,  3.93075046e+02],
+            [-3.38241831e-15, -2.16351434e+00,  5.70860281e+02],
+            [-8.01126080e-18, -4.17937767e-03,  1.00000000e+00]])
+    
+        # birdeye togliendo il cielo e il prato
+        # cielo e prato neri e la strada bianca
+        bird_eye = cv2.warpPerspective(255-(greenMsk+skyMsk), self.HomoMat, (640,480),flags=cv2.INTER_LINEAR)[::3,::3]
+        
+        reshaped_image = cv2.resize(bird_eye, (96, 84)) # larghezza, altezza
+        
+        #print(colorOnly.shape)
+        #cv2.imshow('testIMAGE', imgHSV)
+        #cv2.imshow('rectified', bird_eye )
         #cv2.imshow("Camera", reshaped_image)
         #cv2.waitKey(1) 
    

@@ -27,7 +27,7 @@ if torch.cuda.is_available():
 # DOWN: 0 / +1
 
 
-NUM_ITS = 20 # default è 20. Viene utilizzato 1 lap per iteration. Le iteration rappresentano il
+NUM_ITS = 30 # default è 20. Viene utilizzato 1 lap per iteration. Le iteration rappresentano il
 # numero di volte che noi stoppiamo l'esperto per salvare i dati e fare il training della rete.
 # è un po' come se fosse il numero di episodi.
 beta_i  = 0.9 # parametro usato nella policy PI: tale valore verrà modificato tramite la 
@@ -36,8 +36,6 @@ beta_i  = 0.9 # parametro usato nella policy PI: tale valore verrà modificato t
 # Ciò significa che avremo una probabilità di utilizzare la politica dell'expert che decresce 
 # a mano a mano che si procede con il training.
 T = 10000 # ogni iteration contiene N passi
-vel_max = 15 # velocità massima macchina
-
 
 s = """  ____    _                         
  |  _ \  / \   __ _  __ _  ___ _ __ 
@@ -173,21 +171,14 @@ if __name__ == "__main__":
         for i in total_index:
             goal = centerLine[i][:2] # non prendo la z
             r, yaw_error = env.rect_to_polar_relative(goal)
-            #print(f"goal {goal},distance {r}")
-            #print("cambio")
+
             if done:
                 break
             while r>0.5:
-                # state è l'immagine birdeye
-                #cv2.imshow("Camera", state)
-                #cv2.waitKey(1)
 
                 r, yaw_error = env.rect_to_polar_relative(goal)
                 #print(f"goal {goal},distance {r} ,yaw_error{yaw_error}")
                 vel_ang = env.p_control(yaw_error)
-
-                if 199<i<210:
-                    forward = 2
                         
                 # la riga 161 del dagger.py deve essere sostituita con questa
                 a = np.array([vel_ang, forward]).astype('float32')
@@ -251,7 +242,8 @@ if __name__ == "__main__":
                     print(X_train.shape)
                     train_agent.train_model(X_train, y_train, X_valid, y_valid, "dagger_test_models/model_{}.pth".format(model_number+1), num_epochs=10)
                     model_number += 1
-                    print("Training complete. Press return to continue to the next iteration")
+                    train_agent.validate_model(X_valid,y_valid, agent)
+                    print("Training and validation complete. Press return to continue to the next iteration")
                     wait()
                     break
 

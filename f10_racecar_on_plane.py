@@ -5,13 +5,17 @@ import numpy as np
 from environment import PyBulletContinuousEnv
 import model_new
 import cv2
-import torch
-import math
+import random
 from get_track import *
 from matplotlib import pyplot as plt
 
 vel_max = 15
 threshold = 0.25
+#						          UL        UR          LR        LL
+#roadPts4Homography = np.array([[214,355], [487,355], [632,472], [89,472] ]).astype(np.float32)
+#roadDesiredPts     = np.array([[ 150,355], [500,355], [500,472], [150,472]  ]).astype(np.float32)
+#HomoMat =cv2.getPerspectiveTransform(roadPts4Homography[:,::1], roadDesiredPts[:,::1])
+HomoMat = None
 
 def getCamera_image():
 	camInfo = p.getDebugVisualizerCamera()
@@ -32,15 +36,42 @@ def getCamera_image():
 	# ottengo le 3 immagini: rgb, depth, segmentation
 	width, height, rgbImg, depthImg, segImg= p.getCameraImage(640,480,viewMatrix=viewMat,projectionMatrix=projMat, renderer=p.ER_BULLET_HARDWARE_OPENGL)
 	# faccio un reshape in quanto da sopra ottengo un array di elementi
-	rgb_opengl = np.reshape(rgbImg, (480, 640, 4)) 
 	
 
 	# Tolgo il canale alpha e converto da BGRA a RGB per la rete
-	rgb_image = cv2.cvtColor(rgb_opengl, cv2.COLOR_BGRA2RGB)
+	imgHSV = cv2.cvtColor(rgbImg[:,:,:3], cv2.COLOR_RGB2HSV)
+	skyMsk = cv2.inRange(imgHSV[:,:,0], 115,125)
+	greenMsk = cv2.inRange(imgHSV[:,:,0], 55,65)
+ 
+
+ 
+	greenMsk = cv2.morphologyEx(greenMsk, cv2.MORPH_OPEN, cv2.getStructuringElement(cv2.MORPH_RECT,(1,3)), iterations=2)
+	skyMsk = cv2.morphologyEx(skyMsk, cv2.MORPH_OPEN, cv2.getStructuringElement(cv2.MORPH_RECT,(1,3)), iterations=4)
 	
+	findEdge = lambda x, line: np.argwhere(np.abs(np.diff(x[line,:].astype(np.int16)))==255)
+	topEdge = findEdge(greenMsk,320).flatten()
+	botEdge = findEdge(greenMsk, 460).flatten()
+ 
+#	print(f'BOT{botEdge}')
+#	print(f'TOP{topEdge}')
+	# global HomoMat
+	# if HomoMat is None and len(topEdge)==2 and len(botEdge)==2:
+	# 	origPts = np.array([[topEdge[0], 320],[topEdge[1], 320],[botEdge[1], 460],[botEdge[0], 460]]).astype(np.float32)
+	# 	destPts = np.array([[250,360],[390,360],[390,460],[250,460]]).astype(np.float32)
+	# 	HomoMat =cv2.getPerspectiveTransform(origPts, destPts)
+
+	HomoMat = np.array([[-2.98962782e-01, -1.24344112e+00,  3.93075046e+02],
+	[-3.38241831e-15, -2.16351434e+00,  5.70860281e+02],
+	[-8.01126080e-18, -4.17937767e-03,  1.00000000e+00]])
+	
+	#print(colorOnly.shape)
+	cv2.imshow('testIMAGE', imgHSV)
+
+	cv2.imshow('rectified', cv2.warpPerspective(255-(greenMsk+skyMsk), HomoMat, (640,480),flags=cv2.INTER_LINEAR)[::3,::3])
+	cv2.waitKey(1)
 	#print("Reshaped RGB image size:", rgb_image.shape)
 
-	return rgb_image
+	return greenMsk
 
 					
 def birdEyeView(image):
@@ -50,7 +81,7 @@ def birdEyeView(image):
 	t_upper = 210  # Upper threshold 
 	
 	# immagine canny
-	edge = cv2.Canny(image, t_lower, t_upper) 
+	#edge = cv2.Canny(image, t_lower, t_upper) 
 	#y,x = np.where(edge>0)
 
 	#image_edges = image.copy()
@@ -66,7 +97,8 @@ def birdEyeView(image):
 	#abs_sobel = np.absolute(cv2.Sobel(image, cv2.CV_64F, 1, 0))
 	#abs_sobel = np.absolute(cv2.Sobel(image, cv2.CV_64F, 0, 1))
 	#scaled_sobel = np.uint8(255*abs_sobel/np.max(abs_sobel))
-	#edge = cv2.Canny(scaled_sobel, 330, 350)
+	#print(scaled_sobel)
+	#edge = cv2.Canny(img, 300, 355,L2gradient=True)
 	
 	#mask = cv2.inRange(image, t_lower, t_upper)
 	#lab_img = cv2.cvtColor(image, cv2.COLOR_RGB2GRAY)
@@ -74,7 +106,7 @@ def birdEyeView(image):
 	# Usate per rimuovere il rumore
 	# lower = np.array([0, 140, 140])
 	# upper = np.array([255, 190, 190])
-	# mask = cv2.inRange(lab_img, lower, upper)
+	#mask = cv2.inRange(lab_img, lower, upper)
 	#filter1 = cv2.morphologyEx(abs_sobel, cv2.MORPH_OPEN, np.ones((1, 5), np.uint8), iterations=1)
 	#filter = cv2.morphologyEx(filter1, cv2.MORPH_CLOSE, np.ones((5, 1), np.uint8), iterations=1)
 	
@@ -165,7 +197,7 @@ def rect_to_polar_relative(goal):
 	
 	# calcolo la posizione correte del robot specificato
 	robPos, car_orientation = p.getBasePositionAndOrientation(turtle)
-	print("pos: ",robPos)
+	#print("pos: ",robPos)
 	# calcolo l'angolo di yaw
 	_,_,yaw = p.getEulerFromQuaternion(car_orientation)
 	
@@ -209,15 +241,38 @@ model = model_new.VehicleControlModel()
 
 p.connect(p.GUI)
 p.setAdditionalSearchPath(pybullet_data.getDataPath())
-#p.resetDebugVisualizerCamera(cameraDistance=22, cameraYaw=0, cameraPitch=-89, cameraTargetPosition=[5,-5,0])
+p.resetDebugVisualizerCamera(cameraDistance=22, cameraYaw=0, cameraPitch=-89, cameraTargetPosition=[4,-2,0])
 #p.resetDebugVisualizerCamera(cameraDistance=22, cameraYaw=0, cameraPitch=-89, cameraTargetPosition=[0,0,0])
 
 #p.loadURDF("plane.urdf")
-#turtle = p.loadURDF("f10_racecar/simplecar.urdf", [28,-11,.3])
-turtle = p.loadURDF("f10_racecar/simplecar.urdf", [-9,-6.5,.3])
-#turtle = p.loadURDF("f10_racecar/simplecar.urdf", [0,0,.3])
+
+#turtle = p.loadURDF("f10_racecar/simplecar.urdf", [-10,1,.3], p.getQuaternionFromEuler([0,0,np.deg2rad(180)]))
+#turtle = p.loadURDF("f10_racecar/simplecar.urdf", [-12,-11,.3], p.getQuaternionFromEuler([0,0,np.deg2rad(180)]))
+#turtle = p.loadURDF("f10_racecar/simplecar.urdf", [-9,-6.5,.3])
+#turtle = p.loadURDF("f10_racecar/simplecar.urdf", [0,0,.3],  p.getQuaternionFromEuler([0,0,np.deg2rad(55)]))
+turtle = p.loadURDF("f10_racecar/simplecar.urdf", [35.5,2,.3], p.getQuaternionFromEuler([0,0,np.deg2rad(-90)]))
 track = p.loadSDF("f10_racecar/meshes/barca_track_modified.sdf", globalScaling=1)
 
+
+env1 = [[-10,1,.3], p.getQuaternionFromEuler([0,0,np.deg2rad(180)])]
+env2 = [[-12,-11,.3], p.getQuaternionFromEuler([0,0,np.deg2rad(180)])]
+env3 = [[-9,-6.5,.3], p.getQuaternionFromEuler([0,0,np.deg2rad(0)])]
+env4 = [[0,0,.3], p.getQuaternionFromEuler([0,0,np.deg2rad(55)])]
+env5 = [[35,2,.3], p.getQuaternionFromEuler([0,0,np.deg2rad(-90)])]
+
+env_list = [env1,env2,env3,env4,env5]
+index_env = random.randint(0,len(env_list)-1)
+print(index_env)
+#turtle = p.loadURDF("f10_racecar/simplecar.urdf", env_list[index_env][0],env_list[index_env][1])
+#turtle = p.loadURDF("f10_racecar/simplecar.urdf", [-12,2,.3], p.getQuaternionFromEuler([0,0,np.deg2rad(-90)]))
+
+
+
+robPos, car_orientation = p.getBasePositionAndOrientation(turtle)
+
+# calcolo l'angolo di yaw
+_,_,yaw = p.getEulerFromQuaternion(car_orientation)
+#print("yaw: ",yaw)
 	   
 #turtle = p.loadURDF("f10_racecar/simplecar.urdf", [0,0,.3])
 #turtle = p.loadURDF("f10_racecar/simplecar.urdf", [0,0,.3])
@@ -286,11 +341,11 @@ while (1):
 	while len(positionToStart)==0:
 		index,position = getPointToStart(centerLine,car_position[:2], threshold)
 		positionToStart, indexToStart, done = choosePositionAndIndex(position,index)
-		#print(position)
+		print(position)
 		threshold+=0.05
 			
 	
-	print("Pos: ",positionToStart)
+	#print("Pos: ",positionToStart)
 	
 	
 			
@@ -308,22 +363,26 @@ while (1):
 		#print("Goal: ",goal)
 		r, yaw_error = rect_to_polar_relative(goal)
 		print(f"goal {goal},distance {r}")
-		print("cambio")
+		#print("cambio")
 		
 		while r>0.5:
 			img = getCamera_image()
 			
-			bird_eye = birdEyeView(img)
-			
+			#bird_eye = birdEyeView(img)
 
-			reshaped_image = cv2.resize(bird_eye, (200, 66))
-			print(reshaped_image.shape)
-			cv2.imshow("Camera", reshaped_image)
+
+			reshaped_image = cv2.resize(img, (96, 84))
+			#print(reshaped_image.shape)
+			#no_greeen = cv2.inRange(img,np.array([136,169,60]),np.array([141,171,60]))
+			#no_greeen = cv2.inRange(img,np.array([80,8,120]),np.array([90,5,150]))
+			#cv2.imshow("Camera", no_greeen)
 			
-			cv2.waitKey(1)
+   			
+			
+			#cv2.waitKey(1)
 
 			r, yaw_error = rect_to_polar_relative(goal)
-			print(f"goal {goal},distance {r} ,yaw_error{yaw_error}")
+			#print(f"goal {goal},distance {r} ,yaw_error{yaw_error}")
 			vel_ang = p_control(yaw_error)
 			#forward = p_control()
 			#print(f"steer {vel_ang} - distance {r}")
@@ -331,10 +390,10 @@ while (1):
 			forward = 10
 			# if 154<i<164:
 			#         forward = 4
-			if 199<i<210:
-				print("vel_ang; ",vel_ang)
-				print(yaw_error)
-				forward = 2
+			# if 199<i<210:
+			# 	print("vel_ang; ",vel_ang)
+			# 	print(yaw_error)
+			# 	forward = 2
 			
 			#print("Velocità: ",forward)
 			# F10 RACECAR

@@ -49,7 +49,7 @@ def computeTrack(debug=True):
 def getPointToStart(cLine,target,threshold):
 
     # verifico che la posizone non sia vuota e aumento la threshold
-    index = [index for index,pos in enumerate(cLine) if abs(pos[0]-(target[0]))<threshold and abs(pos[1]-(target[1]))<threshold and pos[2]==0]
+    index = [index for index,pos in enumerate(cLine) if abs(pos[0]-(target[0]))<threshold and abs(pos[1]-(target[1]))<threshold]
     position = cLine[index]
     
     return index, position

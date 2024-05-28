@@ -1,5 +1,5 @@
 from __future__ import print_function
-import argparse
+import optuna
 import pickle
 import numpy as np
 import os
@@ -13,8 +13,10 @@ import torch
 import cv2
 from torch.utils.data import DataLoader
 
+from sklearn.metrics import accuracy_score
+
+
 device = torch.device("cuda:0" if torch.cuda.is_available() else "cpu")
-vel_max = 15
 
 def read_data(datasets_dir="./data_test", path='data_dagger.pkl.gzip', frac = 0.1):
     """
@@ -42,69 +44,24 @@ def read_data(datasets_dir="./data_test", path='data_dagger.pkl.gzip', frac = 0.
     return X_train, y_train, X_valid, y_valid
 
 
-def preprocessing(X_train, y_train, X_valid, y_valid, history_length=1):
 
-    # TODO: preprocess your data here.
-    # 1. convert the images in X_train/X_valid to gray scale. If you use rgb2gray() from utils.py, the output shape (96, 96, 1)
-    # 2. you can either train your model with continous actions (as you get them from read_data) using regression
-    #    or you discretize the action space using action_to_id() from utils.py. If you discretize them, you'll maybe find one_hot() 
-    #    useful and you may want to return X_train_unhot ... as well.
-    #print(X_train.shape)
-    
-    # History:
-    # At first you should only use the current image as input to your network to learn the next action. Then the input states
-    # have shape (96, 96,1). Later, add a history of the last N images to your state so that a state has shape (96, 96, N).
-    #X_train = rgb2yuv(X_train)
-    #X_valid = rgb2yuv(X_valid)
-    array_train = []
-    array_valid = []
-    #print(X_valid.shape)
-
-    for i in range(len(X_train)):
-        gray_train = cv2.cvtColor(X_train[i,:,:,:],cv2.COLOR_RGB2YUV)
-        cv2.imshow('Original', gray_train) 
-        cv2.waitKey(1)
-        array_train.append(gray_train)   
-        
-    for j in range(len(X_valid)):
-        gray_valid = cv2.cvtColor(X_valid[j,:,:,:],cv2.COLOR_RGB2YUV)
-        array_valid.append(gray_valid)
-        
-    #X_train = (X_train)[:,:CUTOFF,:]
-    #X_valid = (X_valid)[:,:CUTOFF,:]
-    #samples["state"].append(state)  
-    X_train = np.array(array_train)
-    X_valid = np.array(array_valid)
-    
-    #print(X_train.shape)
-    #print(X_valid.shape)
-    
-    return X_train, y_train, X_valid, y_valid
-
-
-def train_model(X_train, y_train, X_valid, y_valid, path, num_epochs=50, learning_rate=1e-3, lambda_l2=1e-5, batch_size=32):
+def train_model(X_train, y_train, X_valid, y_valid, path, optimizer, num_epochs=50, learning_rate=1e-3, batch_size=32):
     
     print("... train model")
-    #model = VehicleControlModel()
     model = Model()
     model.to(device)
-        
-    loader = DataLoader(dataset=list(zip(X_train, y_train)),batch_size=16,shuffle=True)
+      
+    loader = DataLoader(dataset=list(zip(X_train, y_train)),batch_size=batch_size,shuffle=True)
 
     criterion = torch.nn.MSELoss()
-    optimizer = torch.optim.SGD(model.parameters(), lr=learning_rate) # built-in L2 
+    optimizer = torch.optim.SGD(model.parameters(), lr=learning_rate, momentum=0.9) # built-in L2 
 
     #X_train_torch = torch.from_numpy(X_train).to(device)
-    X_train_torch = torch.from_numpy(X_train[:,np.newaxis,...])
-    y_train_torch = torch.from_numpy(y_train).to(device)
-    
-    
-    #print(X_train_torch.shape)
-    
-    #X_train_torch = (X_train_torch.permute(0,3,1,2))
-    
-    #print(X_train_torch.shape)
-    
+    #X_train_torch = torch.from_numpy(X_train[:,np.newaxis,...])
+    #y_train_torch = torch.from_numpy(y_train).to(device)
+
+    #X_valid = torch.from_numpy(X_valid[:,np.newaxis,...])
+    #y_valid = torch.from_numpy(y_valid).to(device)
 
     # for t in tqdm(range(num_epochs)):
     #   #print("[EPOCH]: %i" % (t), end='\r')
@@ -135,7 +92,65 @@ def train_model(X_train, y_train, X_valid, y_valid, path, num_epochs=50, learnin
     
     print("Loss mean: ",(sum(loss_vector)/len(loss_vector)).detach().cpu().numpy().flatten())
     model.save(path)
+    return (sum(loss_vector)/len(loss_vector)).detach().cpu().numpy().flatten()
+    #validate_model(X_valid, y_valid, model)
     
+    
+def validate_model(X_valid, y_valid, model):
+    
+    X_valid = torch.from_numpy(X_valid[:,np.newaxis,...])
+    y_valid = torch.from_numpy(y_valid).to(device)
+    vel_pred = []
+    steer_pred = []
+    print("... validate model")
+    
+    with torch.no_grad():
+        for i,j in zip(X_valid,y_valid):
+            y_preds  = model(i[:,np.newaxis,...].type(torch.FloatTensor).to(device))
+
+            #pred_vector.append(y_preds.detach().cpu().numpy()[0]==j.cpu().numpy())
+            y_pred_detach = y_preds.detach().cpu().numpy()[0]
+            #y_pred_round.append[round(y_pred_detach[0],2), round(y_pred_detach[1],2)]
+            corr_detach = j.cpu().numpy()
+            #corr_round.apppend[round(corr_detach[0],2), round(corr_detach[1],2)]
+            #print(y_pred_detach)
+            #print("j, ",corr_detach)
+            #print(round(y_pred_detach[0],2), round(corr_detach[0],2))
+            if round(y_pred_detach[0],2)==round(corr_detach[0],2):
+                steer_pred.append(True)
+            else:
+                steer_pred.append(False)
+                
+            if round(y_pred_detach[1],1)==round(corr_detach[1],1):
+                vel_pred.append(True)
+            else:
+                vel_pred.append(False)
+                
+        counter_steer = steer_pred.count(True)
+        counter_vel = vel_pred.count(True)
+        #print(counter_steer)
+        #print(counter_vel)
+        accuracy_steer = counter_steer/y_valid.shape[0]
+        accuracy_vel = counter_vel/y_valid.shape[0]
+        
+    
+    print(f"Accuracy steer: {round(accuracy_steer,3)*100}%, Accuracy vel: {round(accuracy_vel,3)*100}%")
+
+
+def objective(trial):
+    l_r = trial.suggest_float('learning_rate',1e-4,1e-1,log=True)
+    batch_size = trial.suggest_categorical('batch_size',[16,32,64])
+    num_epochs = trial.suggest_int('num_epochs',5,30)
+    model = Model()
+    model.to(device)
+        
+    #loader = DataLoader(dataset=list(zip(X_train, y_train)),batch_size=batch_size,shuffle=True)
+
+    #criterion = torch.nn.MSELoss()
+    #optimizer = torch.optim.SGD(model.parameters(), lr=l_r, momentum=0.9) # built-in L2
+    
+    loss = train_model(X_train, y_train, X_valid, y_valid, 'dagger_test_models/model_0.pth', num_epochs=num_epochs, learning_rate=l_r,batch_size=batch_size)
+    return loss
 
 
 # manca la validazione -> basta richiamare il modello e verificare le predizioni ottenute (verifico le predizioni in uscia
@@ -150,21 +165,11 @@ if __name__ == "__main__":
     # read data    
     X_train, y_train, X_valid, y_valid = read_data("./data_test", frac=0.1)
     
-    
+    study = optuna.create_study(direction='minimize')
+    study.optimize(objective,n_trials=20)
+    print(f'Best: {study.best_params}')
     # preprocess data
     #X_train, y_train, X_valid, y_valid = preprocessing(X_train, y_train, X_valid, y_valid, history_length=1)
     # train model
-    train_model(X_train, y_train, X_valid, y_valid, 'dagger_test_models/model_2.pth', num_epochs=10)
- 
-    model.eval()
-    # print(X_valid.shape)
-    y_pred  = model(torch.from_numpy(X_valid[:,np.newaxis,...]).type(torch.FloatTensor).to(device))
-    
-    for i,j in zip(y_pred,y_valid):
-        #if i==j:
-        print("i: ",i)
-        print("j: ",j)
-        #acc = (y_pred == y_valid)
-    # print(acc)
-    # #acc = float(acc)
-    # print("Model accuracy: %.2f%%" % (acc*100))
+    #train_model(X_train, y_train, X_valid, y_valid, 'dagger_test_models/model_5.pth', num_epochs=10)
+    #validate_model(X_valid,y_valid, model)

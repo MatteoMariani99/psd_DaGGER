@@ -19,7 +19,7 @@ device = torch.device("cuda:0" if torch.cuda.is_available() else "cpu")
 print("Torch Device:", device)
 vel_max = 10
 
-def run_episode(env, agent, max_timesteps=2000):
+def run_episode(env, agent, max_timesteps=2500):
     
     episode_reward = 0
     step = 0
@@ -78,7 +78,7 @@ if __name__ == "__main__":
     #agent = VehicleControlModel()
     agent = Model()
     #print("Loading model {}:".format(args.path))
-    agent.load("dagger_test_models/model_{}.pth".format(5))
+    agent.load("dagger_test_models/model_{}.pth".format(6))
     agent.to(device)
     # agent.load("models/agent.ckpt")
     #env = gym.make('CarRacing-v0').unwrapped
