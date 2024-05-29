@@ -45,7 +45,7 @@ def read_data(datasets_dir="./data_test", path='data_dagger.pkl.gzip', frac = 0.
 
 
 
-def train_model(X_train, y_train, X_valid, y_valid, path, optimizer, num_epochs=50, learning_rate=1e-3, batch_size=32):
+def train_model(X_train, y_train, path, optimizer, num_epochs=50, learning_rate=1e-3, batch_size=32):
     
     print("... train model")
     model = Model()
@@ -56,28 +56,6 @@ def train_model(X_train, y_train, X_valid, y_valid, path, optimizer, num_epochs=
     criterion = torch.nn.MSELoss()
     optimizer = torch.optim.SGD(model.parameters(), lr=learning_rate, momentum=0.9) # built-in L2 
 
-    #X_train_torch = torch.from_numpy(X_train).to(device)
-    #X_train_torch = torch.from_numpy(X_train[:,np.newaxis,...])
-    #y_train_torch = torch.from_numpy(y_train).to(device)
-
-    #X_valid = torch.from_numpy(X_valid[:,np.newaxis,...])
-    #y_valid = torch.from_numpy(y_valid).to(device)
-
-    # for t in tqdm(range(num_epochs)):
-    #   #print("[EPOCH]: %i" % (t), end='\r')
-    #   for i in range(0,len(X_train_torch),batch_size):
-    #     curr_X = X_train_torch[i:i+batch_size]
-        
-    #     curr_Y = y_train_torch[i:i+batch_size]
-
-    #     preds  = model(curr_X.type(torch.FloatTensor).to(device))
-    #     #print(f"Action prede: {preds} Action curr: {curr_Y}")
-        
-    #     loss   = criterion(preds, curr_Y)
-    #     print("Loss: ",loss)
-    #     optimizer.zero_grad()
-    #     loss.backward()
-    #     optimizer.step()
     loss_vector = []
     for t in tqdm(range(num_epochs)):
       for X_batch, y_batch in loader:
@@ -93,7 +71,7 @@ def train_model(X_train, y_train, X_valid, y_valid, path, optimizer, num_epochs=
     print("Loss mean: ",(sum(loss_vector)/len(loss_vector)).detach().cpu().numpy().flatten())
     model.save(path)
     return (sum(loss_vector)/len(loss_vector)).detach().cpu().numpy().flatten()
-    #validate_model(X_valid, y_valid, model)
+    
     
     
 def validate_model(X_valid, y_valid, model):
@@ -143,33 +121,26 @@ def objective(trial):
     num_epochs = trial.suggest_int('num_epochs',5,30)
     model = Model()
     model.to(device)
-        
-    #loader = DataLoader(dataset=list(zip(X_train, y_train)),batch_size=batch_size,shuffle=True)
 
-    #criterion = torch.nn.MSELoss()
-    #optimizer = torch.optim.SGD(model.parameters(), lr=l_r, momentum=0.9) # built-in L2
-    
     loss = train_model(X_train, y_train, X_valid, y_valid, 'dagger_test_models/model_0.pth', num_epochs=num_epochs, learning_rate=l_r,batch_size=batch_size)
     return loss
 
 
-# manca la validazione -> basta richiamare il modello e verificare le predizioni ottenute (verifico le predizioni in uscia
-# e le confronto con le y_valid)
 if __name__ == "__main__":
     #model = VehicleControlModel()
     model = Model()
     model.to(device)
-    #parser = argparse.ArgumentParser()
-    #parser.add_argument('model_name', metavar='M', default='model.pth', type=str, help='model name to save')
-    #args = parser.parse_args() 
-    # read data    
+ 
     X_train, y_train, X_valid, y_valid = read_data("./data_test", frac=0.1)
     
     study = optuna.create_study(direction='minimize')
     study.optimize(objective,n_trials=20)
     print(f'Best: {study.best_params}')
-    # preprocess data
-    #X_train, y_train, X_valid, y_valid = preprocessing(X_train, y_train, X_valid, y_valid, history_length=1)
-    # train model
-    #train_model(X_train, y_train, X_valid, y_valid, 'dagger_test_models/model_5.pth', num_epochs=10)
-    #validate_model(X_valid,y_valid, model)
+    
+    
+    
+    # migliore:
+    #l_r = 0.0191517753209496
+    # batch_size = 16
+    # num_epochs = 20
+

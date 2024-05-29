@@ -1,15 +1,5 @@
 CONSIDERAZIONI
 
-1Nel caso in esame è già implementata in automatico (all'interno della classe env della gym library) l'acquisizione immagini da parte dell'expert e anche lo spawning dei comandi di velocità (azioni dell'expert).
-Le immagini vengono prese con vista dall'alto ma penso sia possibile anche prendere quelle davanti a se.
-
-
-### TO DO ###
-Va scelto l'expert (PID, MPC...) e l'ambiente (es. PyBullet) per gestire la creazione dei percorsi (quando completo un giro creo un nuovo percorso).
-E' quindi necessario aver a disposizione dei percorsi che vengono selezionati poi casualmente per il training.
-la funzione che carica il percorso va inserita nella funzione reset dell'ambiente.
-
-
 
 ## DAGGER ##
 Creare un env con la macchina (utilizzare la racecar o la simple car) e un circuito se possibile.
@@ -33,11 +23,29 @@ WORKFLOW
 
 
 
+OPTUNA
+utilizzo di optuna per trovare gli hyperparametri ottimi. Questa ottimizzazione va fatta dopo aver raccolto tutti i dati per il training (quindi sul dataset finale) oppure ad ogni step prima del training in modo poi da passare i valori ottimi.
 
+PYTROCH LIGHTNING
+semplica e automatizza la procedura di training e validazione con possibilità di visualizzare i risultati su tensorboard.
+possibile scale del batch size e del learning rate tramite il tuner 
 
-
-
-NETWORK 
-La rete ora utilizza immagini in formato YUV (3 canali).
-Il training non è male ma servirebbero molte più iterazioni (fare 1000 in env e in dagger_test farne 4000 in modo che venga allenata dopo aver acquisito un pò di dati).
-
+ INTEGRAZIONE OPTUNA PYTORCH LIGTHNING
+ ho integrato i due in modo che ci sia, sia una ricerca dei parametri ottimi, sia un training loop automatico.
+ 
+ In questo modo dopo n_trials, vengono restituiti i parametri ottimi di:
+ - learning rate
+ - batch_size
+ - numero di epoche
+ 
+ Una volta ottenuta dovrà essere eseguito il training con i parametri ottimi.
+ 
+ Quindi, si procede con il dagger e pytroch lightning online.
+ 
+ Una volta concluse le iterazioni, si chiama optuna e si cercano i parametri ottimi per l'ultimo dataset ottenuto con la simulazione.
+ 
+ Si fa nuovamente il training dell'ultima parte e si salva il modello.
+ 
+ I parametri per ogni esecuzione sono in: tb_logs/my_model -> hparams.yaml
+ 
+ OPTUNA esegue il pruned in maniera automatica quando ritiene che il trial che sta eseguendo non è promettente (è un early stopping automatico)

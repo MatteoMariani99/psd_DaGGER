@@ -240,7 +240,7 @@ if __name__ == "__main__":
                     # funzione di preprocessing per andare a trasformare l'immagine da colori a scala di grigi
                     #X_train, y_train, X_valid, y_valid = train_agent.preprocessing(X_train, y_train, X_valid, y_valid, history_length=1)
                     print(X_train.shape)
-                    train_agent.train_model(X_train, y_train, X_valid, y_valid, "dagger_test_models/model_{}.pth".format(model_number+1), num_epochs=10)
+                    train_agent.train_model(X_train, y_train, "dagger_test_models/model_{}.pth".format(model_number+1), num_epochs=10)
                     model_number += 1
                     train_agent.validate_model(X_valid,y_valid, agent)
                     print("Training and validation complete. Press return to continue to the next iteration")

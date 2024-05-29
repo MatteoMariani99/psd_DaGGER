@@ -1,0 +1,3 @@
+batch_size: 64
+l_r: 0.07202044585669605
+num_epochs: 13

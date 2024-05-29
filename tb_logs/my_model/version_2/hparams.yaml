@@ -1,0 +1,3 @@
+batch_size: 16
+l_r: 0.04412119601590924
+num_epochs: 7
