@@ -6,7 +6,6 @@ import gzip
 from tqdm import tqdm
 
 from model import Model
-from utils import *
 import torch
 import lightning.pytorch as pl
 #from pytorch_lightning import LightningModule, Trainer
@@ -57,14 +56,13 @@ class LitAgentTrain(pl.LightningModule):
         self.train_dataset = dataset_train
         self.val_dataset = dataset_val
         self.batch_size = batch_size
-        #self.accuracy = accuracy_score(np.zeros(2),np.zeros(2))
         
     def training_step(self,batch,batch_idx):
         x,y = batch
         preds = self.model(x[:,np.newaxis,...].type(torch.FloatTensor).to(device))
         criterion = torch.nn.MSELoss()
         loss   = criterion(preds, y)
-        self.log("train_loss", loss, on_step=True, on_epoch=True, prog_bar=True, logger=True)
+        self.log("train_loss", loss, on_epoch=True, prog_bar=True)
         return loss
         
     def validation_step(self, batch, batch_idx):
@@ -72,12 +70,7 @@ class LitAgentTrain(pl.LightningModule):
         preds = self.model(x[:,np.newaxis,...].type(torch.FloatTensor).to(device))
         criterion = torch.nn.MSELoss()
         val_loss   = criterion(preds, y)
-        #print(type(preds))
-        #print(type(y))
-        #print("ok!", list(chain(*preds.detach().cpu().numpy().astype(int))))
-        #print("o",list(chain(*y.detach().cpu().numpy().astype(int))))
         self.log("val_loss", val_loss, prog_bar=True)
-        #self.log("accuracy", self.accuracy(list(chain(*preds.detach().cpu().numpy().astype(int))),list(chain(*y.detach().cpu().numpy().astype(int)))), prog_bar=True)
         
     def predict_step(self, batch):
         x, y = batch
@@ -95,70 +88,17 @@ class LitAgentTrain(pl.LightningModule):
 
 
 
-def train_model(X_train, y_train, path, optimizer, num_epochs=50, learning_rate=1e-3, batch_size=32):
-    
-    print("... train model")
-    model = Model()
-    model.to(device)
-      
-    loader = DataLoader(dataset=list(zip(X_train, y_train)),batch_size=batch_size,shuffle=True)
-
-    criterion = torch.nn.MSELoss()
-    optimizer = torch.optim.SGD(model.parameters(), lr=learning_rate, momentum=0.9) # built-in L2 
-
-    loss_vector = []
-    for t in tqdm(range(num_epochs)):
-      for X_batch, y_batch in loader:
-        preds  = model(X_batch[:,np.newaxis,...].type(torch.FloatTensor).to(device))
-        
-        loss   = criterion(preds, y_batch.to(device))
-        #print("Loss: ",loss)
-        optimizer.zero_grad()
-        loss.backward()
-        optimizer.step()
-        loss_vector.append(loss)
-    
-    print("Loss mean: ",(sum(loss_vector)/len(loss_vector)).detach().cpu().numpy().flatten())
-    model.save(path)
-    return (sum(loss_vector)/len(loss_vector)).detach().cpu().numpy().flatten()
-    
-    
-class ModelProva(pl.LightningModule):
-    def __init__(self, learning_rate=1e-3):
-        super(ModelProva, self).__init__()
-        self.model = Model()  # Replace with your actual model class
-        self.criterion = torch.nn.MSELoss()
-        self.learning_rate = learning_rate
-
-    def forward(self, x):
-        return self.model(x)
-    
-    def training_step(self, batch, batch_idx):
-        X_batch, y_batch = batch
-        preds = self.model(X_batch[:, np.newaxis, ...].type(torch.FloatTensor).to(self.device))
-        loss = self.criterion(preds, y_batch.to(self.device))
-        self.log('train_loss', loss)
-        return loss
-    
-    def configure_optimizers(self):
-        optimizer = torch.optim.SGD(self.parameters(), lr=self.learning_rate, momentum=0.9)
-        return optimizer
-
-
 def objective(trial):
     l_r = trial.suggest_float('learning_rate',1e-4,1e-1,log=True)
     batch_size = trial.suggest_categorical('batch_size',[16,32,64])
     num_epochs = trial.suggest_int('num_epochs',5,20)
-    #model = Model()
-    #model.to(device)
-    #X_train, y_train, X_valid, y_valid = read_data("./data_test", frac=0.1)
     
     light = LitAgentTrain(learning_rate=l_r, batch_size=batch_size, dataset_train=list(zip(X_train, y_train)), dataset_val=list(zip(X_valid, y_valid)))
 
     logger = TensorBoardLogger("tb_logs", name="my_model")
     trainer = pl.Trainer(max_epochs=num_epochs, 
                       accelerator='gpu', 
-                      logger=logger, 
+                      #logger=logger, 
                       enable_checkpointing='False',
                       callbacks=[PyTorchLightningPruningCallback(trial,monitor="train_loss")])
     
@@ -186,14 +126,12 @@ if __name__ == "__main__":
     #loader_train = DataLoader(dataset=list(zip(X_train, y_train)),shuffle=True)
     #loader_val = DataLoader(dataset=list(zip(X_valid, y_valid)),shuffle=True)
 
-    # light = LitAgentTrain(learning_rate=1e-3, batch_size=32, dataset_train=list(zip(X_train, y_train)), dataset_val=list(zip(X_valid, y_valid)))
+    # light = LitAgentTrain(learning_rate=1e-2, batch_size=16, dataset_train=list(zip(X_train, y_train)), dataset_val=list(zip(X_valid, y_valid)))
 
     # logger = TensorBoardLogger("tb_logs", name="my_model")
-    # trainer = Trainer(max_epochs=10, 
+    # trainer = pl.Trainer(max_epochs=20, 
     #                   accelerator='gpu', 
-    #                   logger=logger, 
-    #                   callbacks=EarlyStopping(monitor="val_loss"),
-    #                   enable_progress_bar=True)
+    #                   logger=logger)
     
     # trainer.fit(model=light)
     # tuner = Tuner(trainer)

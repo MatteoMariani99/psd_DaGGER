@@ -49,3 +49,40 @@ possibile scale del batch size e del learning rate tramite il tuner
  I parametri per ogni esecuzione sono in: tb_logs/my_model -> hparams.yaml
  
  OPTUNA esegue il pruned in maniera automatica quando ritiene che il trial che sta eseguendo non è promettente (è un early stopping automatico)
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ WORKFLOW
+ 
+ yOLOV8: input(image zed depth image), output(coordinate x,y del centro cono bounding box)
+ 
+ vector_coordinate: input(coordinate x,y del centro dei coni visti bounding box)
+ 
+ immagine HSV per togliere tutto eccetto i coni
+ 
+ birdeye; input(image_hsv), output(black/white image resize 96,84)
+ 
+ fit_lines: pts = cv2.fillPoly(img, [pts], 255) -> definisce un poligono tramite l'insieme di punti e lo riempie
+ 				[pts]= (np.array(vector_coordinate])
+ 				img = birdeye
+		
+
+ 
+ 
+ 
+ 
+ 

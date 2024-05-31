@@ -5,10 +5,11 @@ import os
 from datetime import datetime
 import gzip
 import json
-from model_new import VehicleControlModel
+from train_agent_lite import LitAgentTrain
+from lightning.pytorch.loggers import TensorBoardLogger
+import lightning.pytorch as pl
 from model import Model
 import train_agent
-from utils import *
 import torch
 import cv2
 from environment import PyBulletContinuousEnv
@@ -237,9 +238,24 @@ if __name__ == "__main__":
                     # viene richiamata la funzione train_agent.read_data() che permette di leggere
                     # i dati pickle e scomporli in train e validation set
                     X_train, y_train, X_valid, y_valid = train_agent.read_data("./data_test", "data_dagger.pkl.gzip")
-                    # funzione di preprocessing per andare a trasformare l'immagine da colori a scala di grigi
-                    #X_train, y_train, X_valid, y_valid = train_agent.preprocessing(X_train, y_train, X_valid, y_valid, history_length=1)
+
                     print(X_train.shape)
+                    
+                    #? USANDO PYTORCH LIGHTNING
+                    # definisco il modello pytorch lightning
+                    # light_model = LitAgentTrain(learning_rate=1e-3, batch_size=16, dataset_train=list(zip(X_train, y_train)), dataset_val=list(zip(X_valid, y_valid)))
+
+                    # logger = TensorBoardLogger("tb_logs", name="my_model")
+                    # trainer = pl.Trainer(max_epochs=10, 
+                    #                 accelerator='gpu', 
+                    #                 logger=logger)
+                    
+                    # # training modello con pytorch lightning
+                    # trainer.fit(model=light_model)
+                    
+                    # agent.save("dagger_test_models/model_{}.pth".format(model_number+1))
+                    
+                    
                     train_agent.train_model(X_train, y_train, "dagger_test_models/model_{}.pth".format(model_number+1), num_epochs=10)
                     model_number += 1
                     train_agent.validate_model(X_valid,y_valid, agent)

@@ -232,6 +232,8 @@
     <child link="zed_camera_link"/>
     <axis xyz="0 0 1"/>
   </joint>
+
+  
   <!-- zed camera lenses -->
   <!-- It seems these have to have a non-zero mass to have a camera attached? -->
   <link name="camera_link">

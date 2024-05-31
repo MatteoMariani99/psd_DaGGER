@@ -8,7 +8,6 @@ from tqdm import tqdm
 
 from model_new import VehicleControlModel
 from model import Model
-from utils import *
 import torch
 import cv2
 from torch.utils.data import DataLoader
@@ -45,7 +44,7 @@ def read_data(datasets_dir="./data_test", path='data_dagger.pkl.gzip', frac = 0.
 
 
 
-def train_model(X_train, y_train, path, optimizer, num_epochs=50, learning_rate=1e-3, batch_size=32):
+def train_model(X_train, y_train, path, num_epochs=50, learning_rate=1e-3, batch_size=32):
     
     print("... train model")
     model = Model()
@@ -54,7 +53,8 @@ def train_model(X_train, y_train, path, optimizer, num_epochs=50, learning_rate=
     loader = DataLoader(dataset=list(zip(X_train, y_train)),batch_size=batch_size,shuffle=True)
 
     criterion = torch.nn.MSELoss()
-    optimizer = torch.optim.SGD(model.parameters(), lr=learning_rate, momentum=0.9) # built-in L2 
+    #optimizer = torch.optim.SGD(model.parameters(), lr=learning_rate, momentum=0.9) # built-in L2 
+    optimizer = torch.optim.AdamW(model.parameters(), lr=learning_rate, weight_decay=1e-5) # built-in L2 
 
     loss_vector = []
     for t in tqdm(range(num_epochs)):
@@ -106,8 +106,7 @@ def validate_model(X_valid, y_valid, model):
                 
         counter_steer = steer_pred.count(True)
         counter_vel = vel_pred.count(True)
-        #print(counter_steer)
-        #print(counter_vel)
+
         accuracy_steer = counter_steer/y_valid.shape[0]
         accuracy_vel = counter_vel/y_valid.shape[0]
         
@@ -116,13 +115,13 @@ def validate_model(X_valid, y_valid, model):
 
 
 def objective(trial):
-    l_r = trial.suggest_float('learning_rate',1e-4,1e-1,log=True)
+    l_r = trial.suggest_float('learning_rate',1e-4,1e-1, log=True)
     batch_size = trial.suggest_categorical('batch_size',[16,32,64])
-    num_epochs = trial.suggest_int('num_epochs',5,30)
+    num_epochs = trial.suggest_int('num_epochs',5,20)
     model = Model()
     model.to(device)
 
-    loss = train_model(X_train, y_train, X_valid, y_valid, 'dagger_test_models/model_0.pth', num_epochs=num_epochs, learning_rate=l_r,batch_size=batch_size)
+    loss = train_model(X_train, y_train, 'dagger_test_models/model_6.pth', num_epochs=num_epochs, learning_rate=l_r,batch_size=batch_size)
     return loss
 
 
@@ -132,15 +131,17 @@ if __name__ == "__main__":
     model.to(device)
  
     X_train, y_train, X_valid, y_valid = read_data("./data_test", frac=0.1)
+    loss = train_model(X_train, y_train, 'dagger_test_models/model_6.pth', num_epochs=20, learning_rate=0.012619655753594696,batch_size=16)
     
-    study = optuna.create_study(direction='minimize')
-    study.optimize(objective,n_trials=20)
-    print(f'Best: {study.best_params}')
+    #? for optimization hyperparams
+    #study = optuna.create_study(storage="sqlite:///db.sqlite3",direction='minimize')
+    #study.optimize(objective,n_trials=20)
+    #print(f'Best: {study.best_params}')
     
-    
+    #optuna-dashboard sqlite:///db.sqlite3
     
     # migliore:
-    #l_r = 0.0191517753209496
-    # batch_size = 16
-    # num_epochs = 20
+    # Best: {'learning_rate': 0.012619655753594696, 
+    # 'batch_size': 16, 
+    # 'num_epochs': 20}
 

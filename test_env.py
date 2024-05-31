@@ -42,12 +42,13 @@ while not done:
             if (k == p.B3G_DOWN_ARROW and (v&p.KEY_WAS_RELEASED)):
                     backward=0
 
-    # la riga 161 del dagger.py deve essere sostituita con questa
-    action = np.array([turn, forward, backward]).astype('float32')
-    #obs = env.get_observation()
-    obs, reward, done = env.step(action)
-    image = env.visualization_image()
-    cv2.imshow("Camera", image)
-    cv2.waitKey(1) 
+        p.setJointMotorControl2(turtle,0,p.POSITION_CONTROL,targetPosition=turn)
+        p.setJointMotorControl2(turtle,2,p.POSITION_CONTROL,targetPosition=turn)
+        p.setJointMotorControl2(turtle,1,p.VELOCITY_CONTROL,targetVelocity=forward)
+        p.setJointMotorControl2(turtle,3,p.VELOCITY_CONTROL,targetVelocity=forward)
+        p.setJointMotorControl2(turtle,4,p.VELOCITY_CONTROL,targetVelocity=forward)
+        p.setJointMotorControl2(turtle,5,p.VELOCITY_CONTROL,targetVelocity=forward)
+
+
 
 env.close()

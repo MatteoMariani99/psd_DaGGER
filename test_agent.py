@@ -2,16 +2,12 @@ from __future__ import print_function
 
 from datetime import datetime
 import numpy as np
-import gym
-import os
+
 import json
 import torch
-import torch.nn as nn
-import argparse
-from model_new import VehicleControlModel
+
 from model import Model
-import cv2
-from utils import *
+
 
 from environment import PyBulletContinuousEnv
 
@@ -46,10 +42,10 @@ def run_episode(env, agent, max_timesteps=2500):
 
         a = prediction.detach().cpu().numpy().flatten()
         # per far si che le azioni non sforino vel_max
-        # if a[1] > 15:
-        #     a[1] = 15
-        # if a[1] < -15:
-        #     a[1] = -15
+        # if a[1] > 10:
+        #     a[1] = 10
+        # if a[1] < -10:
+        #     a[1] = -10
         print("Action for model: ",a)
 
         # take action, receive new state & reward
