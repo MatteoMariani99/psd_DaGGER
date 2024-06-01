@@ -63,6 +63,8 @@ class PyBulletContinuousEnv(gym.Env):
         env_list = [env1,env2,env3,env4,env5]
         index_env = random.randint(0,len(env_list)-1)
         self.car_id = p.loadURDF("f10_racecar/simplecar.urdf", env_list[index_env][0],env_list[index_env][1])
+        
+        #self.car_id = p.loadURDF("f10_racecar/simplecar.urdf", [21,0,.3],  p.getQuaternionFromEuler([0,0,np.deg2rad(-55)]))
 
                 
 
@@ -85,11 +87,11 @@ class PyBulletContinuousEnv(gym.Env):
         #pose_vector.append([car_position[0], car_position[1],yaw])
 
         rgb_image = self.getCamera_image()
-        bird_eye_state = self.birdEyeView(rgb_image)
+        reshaped_bird_eye = self.birdEyeView(rgb_image)
         
         # immagine in formato bird-eye -> canny filter
         
-        return bird_eye_state
+        return reshaped_bird_eye
 
 
     def step(self, action):
@@ -309,19 +311,19 @@ class PyBulletContinuousEnv(gym.Env):
             for i,j in zip(range(len(position)),position):
                 r, yaw_error = self.rect_to_polar_relative(j[:2])
                 vel_ang = self.p_control(yaw_error)
-                #print(f"steer {vel_ang} - distance {r}")
+                
                 if vel_ang < 1.5:
                     positionToStart = j[:2]
                     indexToStart = index[i]
-                    #done = True
+                    
                 else:
                     positionToStart = []
                     indexToStart = None
-                    #done = False
+                    
         else:
             positionToStart = []
             indexToStart = None
-            #done = False
+            
         return positionToStart, indexToStart
     
     
@@ -340,8 +342,6 @@ class PyBulletContinuousEnv(gym.Env):
         # transformation matrix
         # dimensioni immagine finale
         # metodo di interpolazione
-        
-        # Tolgo il canale alpha e converto da RGB a HSV per la rete
         
         skyMsk = cv2.inRange(imgHSV[:,:,0], 115,125) # maschera del cielo
         greenMsk = cv2.inRange(imgHSV[:,:,0], 55,65) # maschera del prato
@@ -367,12 +367,11 @@ class PyBulletContinuousEnv(gym.Env):
             [-8.01126080e-18, -4.17937767e-03,  1.00000000e+00]])
     
         # birdeye togliendo il cielo e il prato
-        # cielo e prato neri e la strada bianca
+        # risultato: cielo e prato neri e la strada bianca
         bird_eye = cv2.warpPerspective(255-(greenMsk+skyMsk), self.HomoMat, (640,480),flags=cv2.INTER_LINEAR)[::3,::3]
         
         reshaped_image = cv2.resize(bird_eye, (96, 84)) # larghezza, altezza
         
-        #print(colorOnly.shape)
         #cv2.imshow('testIMAGE', imgHSV)
         #cv2.imshow('rectified', bird_eye )
         #cv2.imshow("Camera", reshaped_image)

@@ -44,7 +44,7 @@ def read_data(datasets_dir="./data_test", path='data_dagger.pkl.gzip', frac = 0.
 
 
 
-def train_model(X_train, y_train, path, num_epochs=50, learning_rate=1e-3, batch_size=32):
+def train_model(X_train, y_train, path, num_epochs=20, learning_rate=1e-3, batch_size=32):
     
     print("... train model")
     model = Model()
@@ -62,7 +62,7 @@ def train_model(X_train, y_train, path, num_epochs=50, learning_rate=1e-3, batch
         preds  = model(X_batch[:,np.newaxis,...].type(torch.FloatTensor).to(device))
         
         loss   = criterion(preds, y_batch.to(device))
-        #print("Loss: ",loss)
+        
         optimizer.zero_grad()
         loss.backward()
         optimizer.step()
@@ -73,7 +73,7 @@ def train_model(X_train, y_train, path, num_epochs=50, learning_rate=1e-3, batch
     return (sum(loss_vector)/len(loss_vector)).detach().cpu().numpy().flatten()
     
     
-    
+# valutare se calcolare la loss della validation: cerca costruzione early stop manuale 
 def validate_model(X_valid, y_valid, model):
     
     X_valid = torch.from_numpy(X_valid[:,np.newaxis,...])
@@ -86,14 +86,9 @@ def validate_model(X_valid, y_valid, model):
         for i,j in zip(X_valid,y_valid):
             y_preds  = model(i[:,np.newaxis,...].type(torch.FloatTensor).to(device))
 
-            #pred_vector.append(y_preds.detach().cpu().numpy()[0]==j.cpu().numpy())
             y_pred_detach = y_preds.detach().cpu().numpy()[0]
-            #y_pred_round.append[round(y_pred_detach[0],2), round(y_pred_detach[1],2)]
             corr_detach = j.cpu().numpy()
-            #corr_round.apppend[round(corr_detach[0],2), round(corr_detach[1],2)]
-            #print(y_pred_detach)
-            #print("j, ",corr_detach)
-            #print(round(y_pred_detach[0],2), round(corr_detach[0],2))
+
             if round(y_pred_detach[0],2)==round(corr_detach[0],2):
                 steer_pred.append(True)
             else:
@@ -126,17 +121,19 @@ def objective(trial):
 
 
 if __name__ == "__main__":
-    #model = VehicleControlModel()
+
     model = Model()
     model.to(device)
  
     X_train, y_train, X_valid, y_valid = read_data("./data_test", frac=0.1)
-    loss = train_model(X_train, y_train, 'dagger_test_models/model_6.pth', num_epochs=20, learning_rate=0.012619655753594696,batch_size=16)
+    
+    # utilizzo di params ottimi
+    loss = train_model(X_train, y_train, 'dagger_test_models/model_optim_params.pth', num_epochs=20, learning_rate=0.012619655753594696,batch_size=16)
     
     #? for optimization hyperparams
-    #study = optuna.create_study(storage="sqlite:///db.sqlite3",direction='minimize')
-    #study.optimize(objective,n_trials=20)
-    #print(f'Best: {study.best_params}')
+    # study = optuna.create_study(storage="sqlite:///db.sqlite3",direction='minimize')
+    # study.optimize(objective,n_trials=20)
+    # print(f'Best: {study.best_params}')
     
     #optuna-dashboard sqlite:///db.sqlite3
     

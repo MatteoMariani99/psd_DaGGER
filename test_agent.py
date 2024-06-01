@@ -2,34 +2,47 @@ from __future__ import print_function
 
 from datetime import datetime
 import numpy as np
-
+import draw_steering_angle
 import json
 import torch
-
+import cv2
 from model import Model
+import math
 
 
 from environment import PyBulletContinuousEnv
 
 device = torch.device("cuda:0" if torch.cuda.is_available() else "cpu")
 print("Torch Device:", device)
-vel_max = 10
 
-def run_episode(env, agent, max_timesteps=2500):
+
+
+def run_episode(env:PyBulletContinuousEnv, agent, max_timesteps=2500):
     
     episode_reward = 0
     step = 0
     env.reset()
-    state = env.get_observation()
+    state= env.get_observation()
+    
 
     while True:
-        # preprocessing 
-        #gray = np.dot(state[...,:3], [0.2125, 0.7154, 0.0721])[:84,...]
-        #pred = agent(torch.from_numpy(gray[np.newaxis, np.newaxis,...]).type(torch.FloatTensor))
-        #state = cv2.cvtColor(state, cv2.COLOR_RGB2YUV)
-        #state = rgb2yuv(state)
-        #cv2.imshow("Camera", state)
-        #cv2.waitKey(0) 
+
+        state= env.get_observation()
+        colorHSV = env.getCamera_image()
+        bird_eye = cv2.resize(colorHSV, (480, 320))
+        
+        pts = np.array([[0, 0], [480, 0],
+                [480, 70], [0, 70]],
+               np.int32)
+ 
+        pts = pts.reshape((-1, 1, 2))
+
+        cv2.fillPoly(bird_eye, pts=[pts], color=(0, 0, 0))
+
+            
+        steering_wheel = draw_steering_angle.SteeringWheel(bird_eye)
+        
+        
         #state_torch = torch.from_numpy(state).to(device)
         #state_torch = (state_torch.permute(2,0,1)).unsqueeze(0)
 
@@ -41,11 +54,17 @@ def run_episode(env, agent, max_timesteps=2500):
         #start_time1 = time.time()
 
         a = prediction.detach().cpu().numpy().flatten()
+
+        result_image = steering_wheel.draw_steering_wheel_on_image(a[0]*180/math.pi,(20,10))
+        
+        
+        vel_image = steering_wheel.update_frame_with_bar(a[1])
+        
+        #img = cv2.cvtColor(result_image, cv2.COLOR_GRAY2RGB)
+        cv2.imshow("Camera2", vel_image)
+        cv2.waitKey(1) 
         # per far si che le azioni non sforino vel_max
-        # if a[1] > 10:
-        #     a[1] = 10
-        # if a[1] < -10:
-        #     a[1] = -10
+
         print("Action for model: ",a)
 
         # take action, receive new state & reward
@@ -70,14 +89,12 @@ if __name__ == "__main__":
     
     n_test_episodes = 15                  # number of episodes to test
 
-    # TODO: load agent
-    #agent = VehicleControlModel()
+
     agent = Model()
-    #print("Loading model {}:".format(args.path))
-    agent.load("dagger_test_models/model_{}.pth".format(6))
+
+    agent.load("dagger_test_models/model_optim_params.pth")
     agent.to(device)
-    # agent.load("models/agent.ckpt")
-    #env = gym.make('CarRacing-v0').unwrapped
+
     env = PyBulletContinuousEnv()
 
     episode_rewards = []
@@ -97,3 +114,7 @@ if __name__ == "__main__":
             
     env.close()
     print('... finished')
+
+
+
+# provo a fare un rettangolo in basso in modo da farci stare il volante e la parte di velocità

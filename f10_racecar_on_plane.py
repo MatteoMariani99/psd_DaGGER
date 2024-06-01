@@ -1,13 +1,10 @@
 import pybullet as p
-import time
 import pybullet_data
 import numpy as np
 from environment import PyBulletContinuousEnv
-import model_new
 import cv2
 import random
 from get_track import *
-from matplotlib import pyplot as plt
 
 vel_max = 15
 threshold = 0.25
@@ -165,14 +162,14 @@ def birdEyeView(image):
 	# transformation matrix
 	# dimensioni immagine finale
 	# metodo di interpolazione
-	bird_eye = cv2.warpPerspective(edge,M,(640,480),flags=cv2.INTER_LINEAR)
+	bird_eye = cv2.warpPerspective(img,M,(640,480),flags=cv2.INTER_LINEAR)
 	
 
 
 	# viene ritornata anche questa in quanto permette di avere la birdEye view sull'immagine originale
 	#warped_original = cv2.warpPerspective(img,M,img_size,flags=cv2.INTER_LINEAR)
 
-	return edge
+	return bird_eye
 
 
 def wrap2pi(angle):
@@ -237,7 +234,7 @@ def choosePositionAndIndex(position,index):
 
 
 
-model = model_new.VehicleControlModel()
+
 
 p.connect(p.GUI)
 p.setAdditionalSearchPath(pybullet_data.getDataPath())
@@ -249,10 +246,10 @@ p.loadURDF("plane.urdf")
 #turtle = p.loadURDF("f10_racecar/simplecar.urdf", [-10,1,.3], p.getQuaternionFromEuler([0,0,np.deg2rad(180)]))
 #turtle = p.loadURDF("f10_racecar/simplecar.urdf", [-12,-11,.3], p.getQuaternionFromEuler([0,0,np.deg2rad(180)]))
 #turtle = p.loadURDF("f10_racecar/simplecar.urdf", [-9,-6.5,.3])
-turtle = p.loadURDF("f10_racecar/simplecar.urdf", [-1,0,.3],  p.getQuaternionFromEuler([0,0,np.deg2rad(55)]))
+turtle = p.loadURDF("f10_racecar/simplecar.urdf", [21,0,.3],  p.getQuaternionFromEuler([0,0,np.deg2rad(-55)]))
 #turtle = p.loadURDF("f10_racecar/simplecar.urdf", [35.5,2,.3], p.getQuaternionFromEuler([0,0,np.deg2rad(-90)]))
-track = p.loadSDF("f10_racecar/meshes/prova.sdf")
-#track = p.loadSDF("world/track_cones.sdf", globalScaling=1)
+#track = p.loadSDF("f10_racecar/meshes/prova.sdf")
+track = p.loadSDF("world/track_cones.sdf", globalScaling=1)
 #track = p.loadSDF("f10_racecar/meshes/barca_track_modified.sdf", globalScaling=1)
 
 
