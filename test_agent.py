@@ -1,5 +1,4 @@
-from __future__ import print_function
-
+import time
 from datetime import datetime
 import numpy as np
 import draw_steering_angle
@@ -54,21 +53,31 @@ def run_episode(env:PyBulletContinuousEnv, agent, max_timesteps=2500):
         #start_time1 = time.time()
 
         a = prediction.detach().cpu().numpy().flatten()
-
-        result_image = steering_wheel.draw_steering_wheel_on_image(a[0]*180/math.pi,(20,10))
-        
-        
-        vel_image = steering_wheel.update_frame_with_bar(a[1])
-        
-        #img = cv2.cvtColor(result_image, cv2.COLOR_GRAY2RGB)
-        cv2.imshow("Camera2", vel_image)
-        cv2.waitKey(1) 
-        # per far si che le azioni non sforino vel_max
-
-        print("Action for model: ",a)
-
         # take action, receive new state & reward
         next_state, reward, done = env.step(a)   
+
+        start_time = time.time()
+        # disegno il volante per lo sterzo 
+        steering_wheel.draw_steering_wheel_on_image(a[0]*180/math.pi,(20,10))
+        # aggiungo la barra verticale per la veocità
+        vel_image = steering_wheel.update_frame_with_bar(a[1])
+        
+        text = " rad/s"
+        full_text = f"{str(round(a[0],3))}{text}" 
+        text1 = " m/s"
+        full_text1 = f"{str(round(a[1],2))}{text1}" 
+        
+        # Display del testo a video
+        final_image = cv2.putText(vel_image, full_text, (90,40), cv2.FONT_HERSHEY_SIMPLEX,  
+                        0.6, (255,255,255), 1, cv2.LINE_AA) 
+        final_image = cv2.putText(final_image, full_text1, (360,40), cv2.FONT_HERSHEY_SIMPLEX,  
+                        0.6, (255,255,255), 1, cv2.LINE_AA) 
+
+        
+        #img = cv2.cvtColor(result_image, cv2.COLOR_GRAY2RGB)
+        cv2.imshow("Camera2", final_image)
+        cv2.waitKey(1) 
+        print("--- %s seconds ---" % (time.time() - start_time))
         #episode_reward += reward       
         state = next_state
         step += 1

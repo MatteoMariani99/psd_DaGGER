@@ -5,9 +5,7 @@ import os
 from datetime import datetime
 import gzip
 import json
-from train_agent_lite import LitAgentTrain
-from lightning.pytorch.loggers import TensorBoardLogger
-import lightning.pytorch as pl
+
 from model import Model
 import train_agent
 import torch
@@ -28,7 +26,7 @@ if torch.cuda.is_available():
 # DOWN: 0 / +1
 
 
-NUM_ITS = 30 # default è 20. Viene utilizzato 1 lap per iteration. Le iteration rappresentano il
+NUM_ITS = 40 # default è 20. Viene utilizzato 1 lap per iteration. Le iteration rappresentano il
 # numero di volte che noi stoppiamo l'esperto per salvare i dati e fare il training della rete.
 # è un po' come se fosse il numero di episodi.
 beta_i  = 0.9 # parametro usato nella policy PI: tale valore verrà modificato tramite la 

@@ -116,7 +116,7 @@ def objective(trial):
     model = Model()
     model.to(device)
 
-    loss = train_model(X_train, y_train, 'dagger_test_models/model_6.pth', num_epochs=num_epochs, learning_rate=l_r,batch_size=batch_size)
+    loss = train_model(X_train, y_train, 'dagger_test_models/model_try_optim.pth', num_epochs=num_epochs, learning_rate=l_r,batch_size=batch_size)
     return loss
 
 
@@ -128,7 +128,7 @@ if __name__ == "__main__":
     X_train, y_train, X_valid, y_valid = read_data("./data_test", frac=0.1)
     
     # utilizzo di params ottimi
-    loss = train_model(X_train, y_train, 'dagger_test_models/model_optim_params.pth', num_epochs=20, learning_rate=0.012619655753594696,batch_size=16)
+    loss = train_model(X_train, y_train, 'dagger_test_models/model_optim_params.pth', num_epochs=20, learning_rate=0.009877483354814679,batch_size=16)
     
     #? for optimization hyperparams
     # study = optuna.create_study(storage="sqlite:///db.sqlite3",direction='minimize')
@@ -138,7 +138,8 @@ if __name__ == "__main__":
     #optuna-dashboard sqlite:///db.sqlite3
     
     # migliore:
-    # Best: {'learning_rate': 0.012619655753594696, 
-    # 'batch_size': 16, 
-    # 'num_epochs': 20}
+    #Best: {
+        # 'learning_rate': 0.009877483354814679, 
+        # 'batch_size': 16, 
+        # 'num_epochs': 20}
 

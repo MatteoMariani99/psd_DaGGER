@@ -5,7 +5,7 @@ import numpy as np
 class SteeringWheel():
     def __init__(self, background_image):
         self.background_image = background_image
-        self.wheel_path = 'steer_prova.png'
+        self.wheel_path = 'steer.png'
 
     def load_image(self,image_path):
         image = cv2.imread(image_path, cv2.IMREAD_UNCHANGED)
@@ -42,7 +42,6 @@ class SteeringWheel():
         
         # Place the modified ROI back into the background image
         self.background_image[y:y+h, x:x+w] = roi
-        return self.background_image
 
 
     def draw_steering_wheel_on_image(self, steer_angle, position):
@@ -54,22 +53,31 @@ class SteeringWheel():
         rotated_wheel = self.rotate_image(steering_wheel, steer_angle)
         
         # Overlay the rotated steering wheel on the background
-        result_image = self.overlay_image(rotated_wheel, position[0], position[1])
+        self.overlay_image(rotated_wheel, position[0], position[1])
         
-        return result_image
+        #return result_image
     
     def draw_vertical_bar(self, image, value):
         """Draw a vertical bar on the image."""
         # Calculate the current height of the bar based on the value
-        current_height = int((10/value))
+        if value!=0 and value<=10:
+            current_height = int((10/value))*4
+        elif value > 10:
+            current_height = 4
+        else:
+            current_height = 40
         
-        pts = np.array([[400, 30+current_height], [440, 30+current_height],
-                [440, 60], [400, 60]],
+        pts = np.array([[300, 15+current_height], [340, 15+current_height],
+                [340, 55], [300, 55]],
                np.int32)
  
         pts = pts.reshape((-1, 1, 2))
         # Draw the bar
         cv2.fillPoly(image, pts=[pts], color=(255, 255, 255))
+        cv2.putText(image, "10", (280,19), cv2.FONT_HERSHEY_SIMPLEX,  
+                        0.3, (255,255,255), 1, cv2.LINE_AA) 
+        cv2.putText(image, "0", (285,58), cv2.FONT_HERSHEY_SIMPLEX,  
+                        0.3, (255,255,255), 1, cv2.LINE_AA)
         #cv2.rectangle(image, (400, 10), (410, 10-current_height), color, -1)
         
         return image
