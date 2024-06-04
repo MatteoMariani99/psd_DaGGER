@@ -68,7 +68,7 @@ def getCamera_image():
 	cv2.waitKey(1)
 	#print("Reshaped RGB image size:", rgb_image.shape)
 
-	return greenMsk
+	return rgbImg
 
 					
 def birdEyeView(image):
@@ -207,15 +207,23 @@ def rect_to_polar_relative(goal):
 
 def p_control(yaw_error):
 	kp = 0.9
-	output = kp*yaw_error
-	return output
+	kv = 0.5
+	vel_ang = kp*yaw_error
+	vel_lin = 10	
+ 
+	if abs(yaw_error)>0.1:
+		vel_lin = (2.3-abs(vel_ang))*4.3
+ 
+	return vel_ang, vel_lin
+
+
 
 
 def choosePositionAndIndex(position,index):
 	if len(position!=0):
 		for i,j in zip(range(len(position)),position):
 			r, yaw_error = rect_to_polar_relative(j[:2])
-			vel_ang = p_control(yaw_error)
+			vel_ang,_ = p_control(yaw_error)
 			print(f"steer {vel_ang} - distance {r}")
 			if vel_ang < 1.5:
 				positionToStart = j[:2]
@@ -238,20 +246,26 @@ def choosePositionAndIndex(position,index):
 
 p.connect(p.GUI)
 p.setAdditionalSearchPath(pybullet_data.getDataPath())
-p.resetDebugVisualizerCamera(cameraDistance=22, cameraYaw=0, cameraPitch=-89, cameraTargetPosition=[4,-2,0])
+p.resetDebugVisualizerCamera(cameraDistance=20, cameraYaw=0, cameraPitch=-89, cameraTargetPosition=[3,3,0])
 #p.resetDebugVisualizerCamera(cameraDistance=22, cameraYaw=0, cameraPitch=-89, cameraTargetPosition=[0,0,0])
 
-p.loadURDF("plane.urdf")
+p.loadURDF("plane.urdf", useFixedBase = True)
 
-#turtle = p.loadURDF("f10_racecar/simplecar.urdf", [-10,1,.3], p.getQuaternionFromEuler([0,0,np.deg2rad(180)]))
+turtle = p.loadURDF("f10_racecar/simplecar.urdf", [0,2,.3], p.getQuaternionFromEuler([0,0,np.deg2rad(180)]))
 #turtle = p.loadURDF("f10_racecar/simplecar.urdf", [-12,-11,.3], p.getQuaternionFromEuler([0,0,np.deg2rad(180)]))
 #turtle = p.loadURDF("f10_racecar/simplecar.urdf", [-9,-6.5,.3])
-turtle = p.loadURDF("f10_racecar/simplecar.urdf", [21,0,.3],  p.getQuaternionFromEuler([0,0,np.deg2rad(-55)]))
+#turtle = p.loadURDF("f10_racecar/simplecar.urdf", [21,0,.3],  p.getQuaternionFromEuler([0,0,np.deg2rad(-55)]))
 #turtle = p.loadURDF("f10_racecar/simplecar.urdf", [35.5,2,.3], p.getQuaternionFromEuler([0,0,np.deg2rad(-90)]))
 #track = p.loadSDF("f10_racecar/meshes/prova.sdf")
-track = p.loadSDF("world/track_cones.sdf", globalScaling=1)
-#track = p.loadSDF("f10_racecar/meshes/barca_track_modified.sdf", globalScaling=1)
 
+# carica i coni fino L 190 COMPRESO
+
+
+p.loadSDF("world/cones_blue.sdf",globalScaling = 1)
+p.loadSDF("world/cones_yellow.sdf",globalScaling = 1)
+
+#coni = p.loadURDF("world/test.urdf")
+#[p.changeDynamics(idx,-1, mass=0) for idx in track]
 
 env1 = [[-10,1,.3], p.getQuaternionFromEuler([0,0,np.deg2rad(180)])]
 env2 = [[-12,-11,.3], p.getQuaternionFromEuler([0,0,np.deg2rad(180)])]
@@ -261,7 +275,7 @@ env5 = [[35,2,.3], p.getQuaternionFromEuler([0,0,np.deg2rad(-90)])]
 
 env_list = [env1,env2,env3,env4,env5]
 index_env = random.randint(0,len(env_list)-1)
-print(index_env)
+
 #turtle = p.loadURDF("f10_racecar/simplecar.urdf", env_list[index_env][0],env_list[index_env][1])
 #turtle = p.loadURDF("f10_racecar/simplecar.urdf", [-12,2,.3], p.getQuaternionFromEuler([0,0,np.deg2rad(-90)]))
 
@@ -291,6 +305,7 @@ p.setRealTimeSimulation(1)
 
 #print(prediction)
 p.setGravity(0,0,-9.81)
+
 # sphere_color = [1, 0, 0,1]  # Red color
 # sphere_shape = p.createCollisionShape(p.GEOM_CYLINDER, radius=0.2, height=0)
 # sphere_body = p.createMultiBody(baseMass=1, baseCollisionShapeIndex=sphere_shape,basePosition=[0,1,0 ])
@@ -342,11 +357,7 @@ while (1):
 		positionToStart, indexToStart, done = choosePositionAndIndex(position,index)
 		print(position)
 		threshold+=0.05
-			
-	
-	#print("Pos: ",positionToStart)
-	
-	
+
 			
 	# creo le liste di indici 
 	indexList_1 = [idx for idx in range(indexToStart,len(centerLine),1)]
@@ -361,57 +372,35 @@ while (1):
 		goal = centerLine[i][:2] # non prendo la z
 		#print("Goal: ",goal)
 		r, yaw_error = rect_to_polar_relative(goal)
-		print(f"goal {goal},distance {r}")
+		#print(f"goal {goal},distance {r}")
 		#print("cambio")
 		
 		while r>0.5:
 			img = getCamera_image()
-			
+			cv2.imshow('IMAGE', img)
 			#bird_eye = birdEyeView(img)
 
 
 			reshaped_image = cv2.resize(img, (96, 84))
-			#print(reshaped_image.shape)
-			#no_greeen = cv2.inRange(img,np.array([136,169,60]),np.array([141,171,60]))
-			#no_greeen = cv2.inRange(img,np.array([80,8,120]),np.array([90,5,150]))
-			#cv2.imshow("Camera", no_greeen)
-			
-   			
-			
-			#cv2.waitKey(1)
 
 			r, yaw_error = rect_to_polar_relative(goal)
 			#print(f"goal {goal},distance {r} ,yaw_error{yaw_error}")
-			vel_ang = p_control(yaw_error)
-			#forward = p_control()
-			#print(f"steer {vel_ang} - distance {r}")
+			vel_ang,vel_lin = p_control(yaw_error)
+			forward = vel_lin
+			print(f"steer {vel_ang} - vel {vel_lin}")
 
-			forward = 10
-			# if 154<i<164:
-			#         forward = 4
-			# if 199<i<210:
-			# 	print("vel_ang; ",vel_ang)
-			# 	print(yaw_error)
-			# 	forward = 2
 			
-			#print("Velocità: ",forward)
-			# F10 RACECAR
-			# p.setJointMotorControl2(turtle,1,p.VELOCITY_CONTROL,targetVelocity=forward)
-			# p.setJointMotorControl2(turtle,3,p.VELOCITY_CONTROL,targetVelocity=forward)
-			# p.setJointMotorControl2(turtle,12,p.VELOCITY_CONTROL,targetVelocity=forward)
-			# p.setJointMotorControl2(turtle,14,p.VELOCITY_CONTROL,targetVelocity=forward)
-			# p.setJointMotorControl2(turtle,0,p.POSITION_CONTROL,targetPosition=-turn)
-			# p.setJointMotorControl2(turtle,2,p.POSITION_CONTROL,targetPosition=-turn)
-
+			
 			# SIMPLE CAR
 			# turn positivo giro a sinistra
 			# turn negativo giro a destra
-			# p.setJointMotorControl2(turtle,0,p.POSITION_CONTROL,targetPosition=vel_ang)
-			# p.setJointMotorControl2(turtle,2,p.POSITION_CONTROL,targetPosition=vel_ang)
-			# p.setJointMotorControl2(turtle,1,p.VELOCITY_CONTROL,targetVelocity=forward)
-			# p.setJointMotorControl2(turtle,3,p.VELOCITY_CONTROL,targetVelocity=forward)
-			# p.setJointMotorControl2(turtle,4,p.VELOCITY_CONTROL,targetVelocity=forward)
-			# p.setJointMotorControl2(turtle,5,p.VELOCITY_CONTROL,targetVelocity=forward)
+			forward = 10
+			p.setJointMotorControl2(turtle,0,p.POSITION_CONTROL,targetPosition=vel_ang)
+			p.setJointMotorControl2(turtle,2,p.POSITION_CONTROL,targetPosition=vel_ang)
+			p.setJointMotorControl2(turtle,1,p.VELOCITY_CONTROL,targetVelocity=forward)
+			p.setJointMotorControl2(turtle,3,p.VELOCITY_CONTROL,targetVelocity=forward)
+			p.setJointMotorControl2(turtle,4,p.VELOCITY_CONTROL,targetVelocity=forward)
+			p.setJointMotorControl2(turtle,5,p.VELOCITY_CONTROL,targetVelocity=forward)
 
 
 

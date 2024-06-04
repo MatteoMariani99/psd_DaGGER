@@ -2,10 +2,21 @@
 <sdf version="1.9">
   <model name="Cone">
     <link name="link">
+      <inertial>
+			<mass>0</mass>
+			<inertia>
+			<ixx>0.166667</ixx>
+			<ixy>0</ixy>
+			<ixz>0</ixz>
+			<iyy>0.166667</iyy>
+			<iyz>0</iyz>
+			<izz>0.166667</izz>
+			</inertia>
+			</inertial>
       <collision name="collision">
         <geometry>
           <mesh>
-            <scale>1 1 1</scale>
+            <scale>0.001 0.001 0.001</scale>
             <uri>model://cone/meshes/cone.stl</uri>
           </mesh>
         </geometry>
@@ -13,11 +24,19 @@
       <visual name="visual">
         <geometry>
           <mesh>
-            <scale>1 1 1</scale>
+            <scale>0.001 0.001 0.001</scale>
             <uri>model://cone/meshes/cone.stl</uri>
           </mesh>
         </geometry>
+        <material>
+            <ambient>1 1 0 1</ambient>
+            <diffuse>1 1 0 1</diffuse>
+            <specular>1 1 0 1</specular>
+          </material>
       </visual>
+      
     </link>
+    <pose>6.562635671015661 4.149845757593543 0.0 1.57 0 0</pose>
+    <static>true</static>
   </model>
 </sdf>

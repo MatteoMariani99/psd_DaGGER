@@ -25,9 +25,10 @@ def splitTrack(vn, skew=6):
     leftSide=vn[:nVertex]
     rightSide=vn[nVertex:]
     cline = np.zeros(leftSide.shape, dtype=np.float32)
-    
+
     for idx, lpt in enumerate(leftSide[:,:]):
         lpt=lpt.reshape((1,3))
+
         rdist = scipy.spatial.distance.cdist(lpt, rightSide)
         closerIdx = np.argmin(rdist)
         cline[idx,:] = (lpt + rightSide[closerIdx,:]) /2

@@ -1,5 +1,3 @@
-import time
-from datetime import datetime
 import numpy as np
 import draw_steering_angle
 import json
@@ -16,12 +14,12 @@ print("Torch Device:", device)
 
 
 
-def run_episode(env:PyBulletContinuousEnv, agent, max_timesteps=2500):
+def run_episode(env:PyBulletContinuousEnv, agent, max_timesteps=1000000):
     
-    episode_reward = 0
+    #episode_reward = 0
     step = 0
     env.reset()
-    state= env.get_observation()
+    #state= env.get_observation()
     
 
     while True:
@@ -30,6 +28,7 @@ def run_episode(env:PyBulletContinuousEnv, agent, max_timesteps=2500):
         colorHSV = env.getCamera_image()
         bird_eye = cv2.resize(colorHSV, (480, 320))
         
+        # punti per volante e barra verticale
         pts = np.array([[0, 0], [480, 0],
                 [480, 70], [0, 70]],
                np.int32)
@@ -38,14 +37,8 @@ def run_episode(env:PyBulletContinuousEnv, agent, max_timesteps=2500):
 
         cv2.fillPoly(bird_eye, pts=[pts], color=(0, 0, 0))
 
-            
         steering_wheel = draw_steering_angle.SteeringWheel(bird_eye)
-        
-        
-        #state_torch = torch.from_numpy(state).to(device)
-        #state_torch = (state_torch.permute(2,0,1)).unsqueeze(0)
-
-        #state_torch = (state_torch.permute(2,0,1)).unsqueeze(0) # riordino le dimensioni per passarlo a conv2d
+    
         prediction = agent(torch.from_numpy(state[np.newaxis,np.newaxis,...]).type(torch.FloatTensor).to(device))
         # np.newaxis aumenta la dimensione dell'array di 1 (es. se è un array 1D diventa 2D)
         # torch.from_numpy crea un tensore a partire da un'array numpy
@@ -53,10 +46,7 @@ def run_episode(env:PyBulletContinuousEnv, agent, max_timesteps=2500):
         #start_time1 = time.time()
 
         a = prediction.detach().cpu().numpy().flatten()
-        # take action, receive new state & reward
-        next_state, reward, done = env.step(a)   
-
-        start_time = time.time()
+           
         # disegno il volante per lo sterzo 
         steering_wheel.draw_steering_wheel_on_image(a[0]*180/math.pi,(20,10))
         # aggiungo la barra verticale per la veocità
@@ -73,11 +63,17 @@ def run_episode(env:PyBulletContinuousEnv, agent, max_timesteps=2500):
         final_image = cv2.putText(final_image, full_text1, (360,40), cv2.FONT_HERSHEY_SIMPLEX,  
                         0.6, (255,255,255), 1, cv2.LINE_AA) 
 
-        
-        #img = cv2.cvtColor(result_image, cv2.COLOR_GRAY2RGB)
-        cv2.imshow("Camera2", final_image)
+        image_obs = state
+        image_obs = cv2.resize(image_obs, (480, 320))
+        image_obs = cv2.cvtColor(image_obs, cv2.COLOR_GRAY2BGR)
+
+        cv2.imshow("Camera2", cv2.vconcat([final_image, image_obs]))
         cv2.waitKey(1) 
-        print("--- %s seconds ---" % (time.time() - start_time))
+
+        
+        # take action, receive new state & reward
+        next_state, reward, done = env.step(a)
+        
         #episode_reward += reward       
         state = next_state
         step += 1
@@ -88,42 +84,37 @@ def run_episode(env:PyBulletContinuousEnv, agent, max_timesteps=2500):
     return episode_reward
 
 
-if __name__ == "__main__":
-    #parser = argparse.ArgumentParser()
-    #parser.add_argument("-p","--path", required=True, type=str, help="Path to PyTorch model")
-    #args = parser.parse_args()
-
-    # important: don't set rendering to False for evaluation (you may get corrupted state images from gym)
-    #rendering = True                      
+if __name__ == "__main__":                
     
-    n_test_episodes = 15                  # number of episodes to test
+    # numero di episodi 
+    n_test_episodes = 15                  
 
-
+    # istanza del modello
     agent = Model()
 
-    agent.load("dagger_test_models/model_optim_params.pth")
+    # carico il modello ottimo ottenuto
+    agent.load("dagger_test_models/modelli ottimi/vel10_variabile.pth")
     agent.to(device)
 
+    # se voglio fargli fare il giro della pista basta che modifico le iterazioni nell env
     env = PyBulletContinuousEnv()
 
-    episode_rewards = []
+    #episode_rewards = []
     for i in range(n_test_episodes):
         episode_reward = run_episode(env, agent)
-        episode_rewards.append(episode_reward)
+        #episode_rewards.append(episode_reward)
 
     # save results in a dictionary and write them into a .json file
-    results = dict()
-    results["episode_rewards"] = episode_rewards
-    results["mean"] = np.array(episode_rewards).mean()
-    results["std"] = np.array(episode_rewards).std()
+    # results = dict()
+    # results["episode_rewards"] = episode_rewards
+    # results["mean"] = np.array(episode_rewards).mean()
+    # results["std"] = np.array(episode_rewards).std()
  
-    fname = "results/results_bc_agent-%s.json" % datetime.now().strftime("%Y%m%d-%H%M%S")
-    fh = open(fname, "w")
-    json.dump(results, fh)
+    # fname = "results/results_bc_agent-%s.json" % datetime.now().strftime("%Y%m%d-%H%M%S")
+    # fh = open(fname, "w")
+    # json.dump(results, fh)
             
     env.close()
     print('... finished')
 
 
-
-# provo a fare un rettangolo in basso in modo da farci stare il volante e la parte di velocità

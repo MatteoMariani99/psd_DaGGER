@@ -1,18 +1,14 @@
-from __future__ import print_function
 import optuna
 import pickle
 import numpy as np
 import os
 import gzip
-from tqdm import tqdm
-
-from model_new import VehicleControlModel
-from model import Model
 import torch
-import cv2
+from tqdm import tqdm
+from model import Model
+
 from torch.utils.data import DataLoader
 
-from sklearn.metrics import accuracy_score
 
 
 device = torch.device("cuda:0" if torch.cuda.is_available() else "cpu")
@@ -110,7 +106,7 @@ def validate_model(X_valid, y_valid, model):
 
 
 def objective(trial):
-    l_r = trial.suggest_float('learning_rate',1e-4,1e-1, log=True)
+    l_r = trial.suggest_float('learning_rate',1e-4,1e-1, log=True) # log= True in modo che varia il valore logaritmicamente
     batch_size = trial.suggest_categorical('batch_size',[16,32,64])
     num_epochs = trial.suggest_int('num_epochs',5,20)
     model = Model()
@@ -124,22 +120,28 @@ if __name__ == "__main__":
 
     model = Model()
     model.to(device)
+    
+    optimize = False
  
     X_train, y_train, X_valid, y_valid = read_data("./data_test", frac=0.1)
     
-    # utilizzo di params ottimi
-    loss = train_model(X_train, y_train, 'dagger_test_models/model_optim_params.pth', num_epochs=20, learning_rate=0.009877483354814679,batch_size=16)
     
-    #? for optimization hyperparams
-    # study = optuna.create_study(storage="sqlite:///db.sqlite3",direction='minimize')
-    # study.optimize(objective,n_trials=20)
-    # print(f'Best: {study.best_params}')
+    if not optimize:
+        # utilizzo di params ottimi
+        loss = train_model(X_train, y_train, 'dagger_test_models/model_optim_params.pth', num_epochs=19, learning_rate= 0.003877987515407548,batch_size=16)
+    
+    else:
+        #? for optimization hyperparams
+        study = optuna.create_study(storage="sqlite:///db.sqlite3",direction='minimize')
+        study.optimize(objective,n_trials=40)
+        print(f'Best: {study.best_params}')
+    
     
     #optuna-dashboard sqlite:///db.sqlite3
     
     # migliore:
     #Best: {
-        # 'learning_rate': 0.009877483354814679, 
+        # 'learning_rate': 0.003877987515407548, 
         # 'batch_size': 16, 
-        # 'num_epochs': 20}
+        # 'num_epochs': 19}
 

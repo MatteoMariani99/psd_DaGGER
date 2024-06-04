@@ -1,17 +1,14 @@
-from __future__ import print_function
 import numpy as np
 import pickle
 import os
 from datetime import datetime
 import gzip
 import json
-
-from model import Model
 import train_agent
 import torch
-import cv2
+from model import Model
+
 from environment import PyBulletContinuousEnv
-import pybullet as p
 from get_track import *
 
 
@@ -22,8 +19,8 @@ if torch.cuda.is_available():
 # OBSERVATION SPACE: RGB image 96x96x3
 # ACTION SPACE: [LEFT/RIGHT, UP, DOWN]
 # LEFT/RIGHT: -1, +1
-# UP: 0 / +1
-# DOWN: 0 / +1
+# UP/DOWN: -1 / +1
+
 
 
 NUM_ITS = 40 # default è 20. Viene utilizzato 1 lap per iteration. Le iteration rappresentano il
@@ -106,39 +103,39 @@ if __name__ == "__main__":
         "terminal" : [],
     }
 
-    #env = gym.make('CarRacing-v0').unwrapped # utilizzo di unwrapped in modo da agire sull'ambiente
+    # istanza dell'ambiente
     env = PyBulletContinuousEnv()
-    # e modificare i parametri dell'ambiente già costruito di default
-
+    
+    # istanza del modello
+    agent = Model()
+    agent.save("dagger_test_models/model_0.pth") # salvo il primo modello (vuoto)
+    agent.to(device) # passo alla gpu
     
     episode_rewards = [] # vettore contenente le rewards per ogni episodio
     steps = 0
-    #agent = VehicleControlModel() # definisco l'agente dallo script model.py (sarebbe la rete)
-    agent = Model()
-    agent.save("dagger_test_models/model_0.pth") # salvo il primo modello (vuoto)
-    agent.to(device)
     model_number = 0 # inizializzo il numero del modello: aumentandolo varierà beta
     old_model_number = 0 # non serve ai fini pratici
-    forward = 10 # 10 m/s
+    
+
 
     # qui inizia il vero e proprio algoritmo: num di iterazioni è il numero di episodi che vogliamo
-    
     for iteration in range(NUM_ITS):
-        #agent = VehicleControlModel() # ridefinisco l'istanza in quanto da questo ciclo non uscirò più
+        
+        # reinizializzo il modello in quanto da questo ciclo poi non uscirò più
         agent = Model()
         agent.load("dagger_test_models/model_{}.pth".format(model_number)) # carico l'ultimo modello
         agent.to(device)
         curr_beta = beta_i ** model_number # calcolo il coefficiente beta
 
-        # non serve in pratica
+        # stampo a video il numero di modello utilizzato e il coefficiente beta
         if model_number != old_model_number:
             print("Using model : {}".format(model_number))
             print("Beta value: {}".format(curr_beta))
             old_model_number = model_number
 
         episode_reward = 0 # inizializzo le reward
-        env.reset() # inizializzo l'ambiente e ottengo le misure dello stato che 
-        state = env.get_observation() 
+        env.reset() # inizializzo l'ambiente
+        state = env.get_observation() # ottengo le osservazioni ovvero le immagini 84x96x1 che andranno poi passate alla rete
 
         # pi: input to the environment: è la policy utilizzata per collezionare le traiettorie
         # a : expert input
@@ -148,39 +145,42 @@ if __name__ == "__main__":
         # 2- train di una policy che meglio imita l'expert su queste traiettorie
         # 3- uso la politica allenata e insieme anche l'expert per collezionare nuove traiettorie
         # e allenare una nuova rete.
-        # inizializzato così vuol dire vai dritto (da capire se c'è già una velocità minima
-        # oppure è ferma la macchina)
+        # inizializzato ferma la macchina
         pi = np.array([0.0, 0.0]).astype('float32') # inizializzo la policy
         a = np.zeros_like(pi) # inizializzo la policy dell'expert
-
-        # ciclo while che permette di eseguire gli step di simulazione fino a che non si raggiungono
-        # gli step massimi di simulazioni scelti pari a 4000: oltre questo valore, si entra nell'if
-        # si salvano i dati e si allena la rete. Poi si esc3e dal while in modo da aggiornare il modello
-        # di agente considerato.
-        #start_time = time.time()
         
-        
-        #while True:
-        p.setGravity(0,0,-10)
-        
+ 
+        # ottengo i punti centrali della strada
         _,_,centerLine = computeTrack(debug=False)
+        # assemblo la lista dei punti a partire dal punto che mi serve
+        # es. se parto dalla posizione (10,10) posso trovarmi a metà lista: in questo modo faccio si che 
+        # la posizione (10,10) sia quella in testa alla lista in quanto sarà quella da cui parto
+        # e di resto andranno tutti gli altri punti
         total_index = env.computeIndexToStart(centerLine)
         done = False
 
+        # per ogni indice nella lista seguo il punto tramite il controllore P
         for i in total_index:
             goal = centerLine[i][:2] # non prendo la z
             r, yaw_error = env.rect_to_polar_relative(goal)
 
+            # viene messo sia qui che sotto in modo da uscire prima dal ciclo for e poi dal while
+            # done = True quando abbiamo completato il numero di step in env
             if done:
                 break
+            
+            # quando la distanza verso il punto diventa minore di 0.5 passo al punto successivo
             while r>0.5:
 
+                # calcolo le coordinate polari dalla macchina al punto che devo raggiungere ottenendo in uscita distanza (m) e angolo (rad)
                 r, yaw_error = env.rect_to_polar_relative(goal)
-                #print(f"goal {goal},distance {r} ,yaw_error{yaw_error}")
-                vel_ang = env.p_control(yaw_error)
+                
+                # chiamo in causa il controllore P che dato l'errore sull'angolo di orientazione della macchina rispetto al goal
+                # mappa l'output in velocità angolare da comandare al veicolo
+                vel_ang,vel_lin = env.p_control(yaw_error)
                         
-                # la riga 161 del dagger.py deve essere sostituita con questa
-                a = np.array([vel_ang, forward]).astype('float32')
+                # definisco le azioni dell'esperto come vel_ang in uscita al controllore e forward costante a 10
+                a = np.array([vel_ang, vel_lin]).astype('float32')
                 
                 # passo di simulazione che restituisce lo stato, reward e il flag done
                 # nel nostro caso l'ambiente va creato from scratch e va implementata la logica
