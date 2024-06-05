@@ -11,7 +11,10 @@ Il primo passo è stato quello di studiare lo stato dell’arte in modo da reper
 La repository è così strutturata:
 - **Materiale**: racchiude gli articoli dello stato dell'arte per lo studio del problema;
 - **World&car**: racchiude tutti i file urdf e sdf per il caricamento dell'auto e del tracciato;
-- **Scripts**: TO DO.
+- **Scripts**: TO DO;
+- **data_test**: contiene tutte le imamgini ottenute (dataset aggregato);
+- **dagger_test_models**: contiene i modelli allenati durante la procedura di training;
+- **world**: contiene il tracciato dei coni.
 
 
 
@@ -19,16 +22,12 @@ La repository è così strutturata:
 L’articolo scelto presenta descrive una policy denominata Dagger (Dataset Aggregation) un algoritmo iterativo che allena una policy deterministica basandosi sulle osservazioni ottenute dalla guida di un esperto (umano, p, mpc...).
 Inizialmente si crea un dataset collezionando immagini dall'ambiente (sotto la policy del solo expert). Dopo aver collezionato N immagini, si procede con un primo training della policy per aggiornare i pesi della rete e minimizzare la loss tramite MSE (azioni expert - azioni predette).
 Una volta allenata la prima policy, le azioni intraprese sull'ambiente non saranno date solo dall'esperto ma in parte anche dalla rete, spiegazione:
+
 policy = a * beta + predette * (1-beta)
+
 dove a rappresenta le azioni dell'expert e predette quelle della rete; il coefficiente beta rappresenta una sorta di peso (inizialmente beta = 1 e quindi abbiamo solo azioni dell'expert: finito il primo training beta = 0.9 e così via). 
 Se si vogliono eseguire un numero elevato di iterazioni, alla fine beta sarà pari a 0 e ci saranno solo le azioni della rete a comandare l'auto.
 
-![Immagine classi](https://github.com/MatteoMariani99/psd_DaGGER/blob/main/Materiale/dagger.png)
+![Immagine dagger](https://github.com/MatteoMariani99/psd_DaGGER/blob/main/materiale/dagger.png)
 
-## Installazione
-Dopo aver scaricato l'intera cartella eseguire il comando:
-```bash
-pip install -r requirements.txt
-```
-In questo modo vengono installate tutte le dipendenze necessarie per il funzionamento del codice.
 
