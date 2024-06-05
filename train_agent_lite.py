@@ -8,9 +8,9 @@ from tqdm import tqdm
 from model import Model
 import torch
 import lightning.pytorch as pl
-#from pytorch_lightning import LightningModule, Trainer
+
 from torch.utils.data import DataLoader
-#from lightning.pytorch.tuner import Tuner
+
 from lightning.pytorch.loggers import TensorBoardLogger
 from pytorch_lightning.callbacks.early_stopping import EarlyStopping
 
@@ -84,7 +84,7 @@ class LitAgentTrain(pl.LightningModule):
 
     
     def configure_optimizers(self):
-        return torch.optim.SGD(self.model.parameters(), lr=self.learning_rate, momentum=0.9)
+        return torch.optim.AdamW(self.model.parameters(), lr=self.learning_rate, weight_decay=1e-5)
 
 
 
@@ -95,7 +95,7 @@ def objective(trial):
     
     light = LitAgentTrain(learning_rate=l_r, batch_size=batch_size, dataset_train=list(zip(X_train, y_train)), dataset_val=list(zip(X_valid, y_valid)))
 
-    logger = TensorBoardLogger("tb_logs", name="my_model")
+    #logger = TensorBoardLogger("tb_logs", name="my_model")
     trainer = pl.Trainer(max_epochs=num_epochs, 
                       accelerator='gpu', 
                       #logger=logger, 
@@ -134,13 +134,4 @@ if __name__ == "__main__":
     #                   logger=logger)
     
     # trainer.fit(model=light)
-    # tuner = Tuner(trainer)
-    #tuner.scale_batch_size(light,mode='power',init_val=16)
-    #tuner.lr_find(light,min_lr=1e-5, max_lr=1e-2)
-    # lr_finder = trainer.tuner.lr_find(light)
-    # new_lr = lr_finder.suggestion()
-    # light.learning_rate = new_lr
     
-    # # Find optimal batch size
-    # new_batch_size = trainer.tuner.scale_batch_size(light)
-    # light.batch_size = new_batch_size

@@ -5,7 +5,7 @@ import numpy as np
 class SteeringWheel():
     def __init__(self, background_image):
         self.background_image = background_image
-        self.wheel_path = 'steer.png'
+        self.wheel_path = 'materiale/steer.png'
 
     def load_image(self,image_path):
         image = cv2.imread(image_path, cv2.IMREAD_UNCHANGED)
@@ -59,22 +59,23 @@ class SteeringWheel():
     
     def draw_vertical_bar(self, image, value):
         """Draw a vertical bar on the image."""
+        
         # Calculate the current height of the bar based on the value
         if value!=0 and value<=10:
-            current_height = int((10/value))*4
+            current_height = (10-value)*5
         elif value > 10:
-            current_height = 4
+            current_height = 0
         else:
-            current_height = 40
+            current_height = 50
         
-        pts = np.array([[300, 15+current_height], [340, 15+current_height],
+        pts = np.array([[300, 5+current_height], [340, 5+current_height],
                 [340, 55], [300, 55]],
                np.int32)
  
         pts = pts.reshape((-1, 1, 2))
         # Draw the bar
         cv2.fillPoly(image, pts=[pts], color=(255, 255, 255))
-        cv2.putText(image, "10", (280,19), cv2.FONT_HERSHEY_SIMPLEX,  
+        cv2.putText(image, "10", (280,10), cv2.FONT_HERSHEY_SIMPLEX,  
                         0.3, (255,255,255), 1, cv2.LINE_AA) 
         cv2.putText(image, "0", (285,58), cv2.FONT_HERSHEY_SIMPLEX,  
                         0.3, (255,255,255), 1, cv2.LINE_AA)

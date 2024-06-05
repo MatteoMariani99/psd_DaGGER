@@ -16,8 +16,8 @@ device = torch.device("cuda:0" if torch.cuda.is_available() else "cpu")
 if torch.cuda.is_available():
     print("Using GPU")
 
-# OBSERVATION SPACE: RGB image 96x96x3
-# ACTION SPACE: [LEFT/RIGHT, UP, DOWN]
+# OBSERVATION SPACE: bird eye image 96x96x1
+# ACTION SPACE: [LEFT/RIGHT, UP/DOWN]
 # LEFT/RIGHT: -1, +1
 # UP/DOWN: -1 / +1
 
@@ -42,7 +42,7 @@ s = """  ____    _
 
 """
 
-# funzioni utili per muovere la macchina tramite tastiera
+# funzione che attende l'input da parte dell'utente
 def wait():
     _ = input()
 
@@ -82,9 +82,8 @@ def save_results(episode_rewards, results_dir="./results_test"):
 if __name__ == "__main__":
 
     print(s)
-    print("Welcome to the DAgger Algorithm for CarRacing-v0!")
-    print("Drive the car using the arrow keys.")
-    print("After every {} timesteps, the game will freeze and train the agent using the collected data.".format(T))
+    print("Welcome to the DAgger Algorithm")
+    print("After every {} timesteps, the simulation will freeze and train the agent using the collected data.".format(T))
     print("After each training loop, the previously trained network will have more control of the action taken.")
     print("Trained models will be saved in the dagger_models directory.")
     print("Press any key to begin driving!")
@@ -176,7 +175,7 @@ if __name__ == "__main__":
                 r, yaw_error = env.rect_to_polar_relative(goal)
                 
                 # chiamo in causa il controllore P che dato l'errore sull'angolo di orientazione della macchina rispetto al goal
-                # mappa l'output in velocità angolare da comandare al veicolo
+                # mappa l'output in velocità angolare e lineare da comandare al veicolo
                 vel_ang,vel_lin = env.p_control(yaw_error)
                         
                 # definisco le azioni dell'esperto come vel_ang in uscita al controllore e forward costante a 10
@@ -186,31 +185,23 @@ if __name__ == "__main__":
                 # nel nostro caso l'ambiente va creato from scratch e va implementata la logica
                 # per acquisire le immagini e la funzione di ricompense (anche se quest'ultima non
                 # è necessaria)
-                # next_state è già bird-eye in formato canny filter
                 next_state, rewards, done = env.step(pi) # next_state già in formato YUV
 
                 # preprocess image and find prediction ->  policy(state)
-                # passo alla rete lo stato (image) e ottengo le predizioni è come se fosse:
-                # action = PPO(state)
+                # passo alla rete lo stato (image) e ottengo le predizioni.
                 
-                #next_state_torch = torch.from_numpy(next_state).to(device)
-                #next_state_torch = (next_state_torch.permute(2,0,1)).unsqueeze(0) # riordino le dimensioni per passarlo a conv2d
-
                 # np.newaxis aumenta la dimensione dell'array di 1 (es. se è un array 1D diventa 2D)
                 # torch.from_numpy crea un tensore a partire da un'array numpy
-                # il modello ritorna le azioni (left/right, up, down)
-                #start_time1 = time.time()
+                # il modello ritorna le azioni (left/right, up/down)
                 
                 prediction = agent(torch.from_numpy(next_state[np.newaxis,np.newaxis,...]).type(torch.FloatTensor).to(device))
                 
-                #prediction = agent(next_state_torch.type(torch.FloatTensor).to(device))
-                #print("--- %s seconds ---" % (time.time() - start_time1))
                 # calculate linear combination of expert and network policy
                 # pi è la policy: inizialmente ci sarà solo a ovvero le azioni dell'esperto: a mano a mano
                 # tramite il coefficiente beta, si avrà anche un peso derivante dalle azioni calcolate dalla
                 # rete
                 pi = curr_beta * a + (1 - curr_beta) * prediction.detach().cpu().numpy().flatten()
-                #print("Policy pi: ",pi)
+
                 print("Policy pred: ",prediction.detach().cpu().numpy().flatten())
                 print("Policy a: ",a)
                 #episode_reward += r

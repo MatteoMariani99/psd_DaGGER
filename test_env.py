@@ -15,14 +15,14 @@ turn=0
 forward=0
 backward=0
 p.resetDebugVisualizerCamera(cameraDistance=22, cameraYaw=0, cameraPitch=-89, cameraTargetPosition=[4,-2,0])
-turtle = p.loadURDF("f10_racecar/simplecar.urdf", [-10,1,.3], p.getQuaternionFromEuler([0,0,np.deg2rad(180)]))
+turtle = p.loadURDF("world&car/simplecar.urdf", [-10,1,.3], p.getQuaternionFromEuler([0,0,np.deg2rad(180)]))
 #turtle = p.loadURDF("f10_racecar/simplecar.urdf", [-12,-11,.3], p.getQuaternionFromEuler([0,0,np.deg2rad(180)]))
 #turtle = p.loadURDF("f10_racecar/simplecar.urdf", [-9,-6.5,.3])
 #turtle = p.loadURDF("f10_racecar/simplecar.urdf", [21,0,.3],  p.getQuaternionFromEuler([0,0,np.deg2rad(-55)]))
 #turtle = p.loadURDF("f10_racecar/simplecar.urdf", [35.5,2,.3], p.getQuaternionFromEuler([0,0,np.deg2rad(-90)]))
 #track = p.loadSDF("f10_racecar/meshes/prova.sdf")
 #track = p.loadSDF("world/track_cones.sdf", globalScaling=1)
-track = p.loadSDF("f10_racecar/meshes/barca_track_modified.sdf", globalScaling=1)
+track = p.loadSDF("world&car/meshes/barca_track_modified.sdf", globalScaling=1)
 
 # dopo 1000 step done diventa True
 while not done:
@@ -42,11 +42,11 @@ while not done:
 			turn = 0
 
 		if (k == p.B3G_UP_ARROW and (v&p.KEY_WAS_TRIGGERED)):
-			forward=15
+			forward=40
 		if (k == p.B3G_UP_ARROW and (v&p.KEY_WAS_RELEASED)):
 			forward=0
 		if (k == p.B3G_DOWN_ARROW and (v&p.KEY_WAS_TRIGGERED)):
-			backward=15
+			backward=40
 		if (k == p.B3G_DOWN_ARROW and (v&p.KEY_WAS_RELEASED)):
 			backward=0
 

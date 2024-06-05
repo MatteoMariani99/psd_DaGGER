@@ -1,6 +1,5 @@
 import numpy as np
 import draw_steering_angle
-import json
 import torch
 import cv2
 from model import Model
@@ -19,8 +18,6 @@ def run_episode(env:PyBulletContinuousEnv, agent, max_timesteps=1000000):
     #episode_reward = 0
     step = 0
     env.reset()
-    #state= env.get_observation()
-    
 
     while True:
 
@@ -42,8 +39,7 @@ def run_episode(env:PyBulletContinuousEnv, agent, max_timesteps=1000000):
         prediction = agent(torch.from_numpy(state[np.newaxis,np.newaxis,...]).type(torch.FloatTensor).to(device))
         # np.newaxis aumenta la dimensione dell'array di 1 (es. se è un array 1D diventa 2D)
         # torch.from_numpy crea un tensore a partire da un'array numpy
-        # il modello ritorna le azioni (left/right, up, down)
-        #start_time1 = time.time()
+        # il modello ritorna le azioni (left/right, up/down)
 
         a = prediction.detach().cpu().numpy().flatten()
            
@@ -81,7 +77,7 @@ def run_episode(env:PyBulletContinuousEnv, agent, max_timesteps=1000000):
         if done or step > max_timesteps: 
             break
 
-    return episode_reward
+    #return episode_reward
 
 
 if __name__ == "__main__":                
@@ -101,7 +97,7 @@ if __name__ == "__main__":
 
     #episode_rewards = []
     for i in range(n_test_episodes):
-        episode_reward = run_episode(env, agent)
+        run_episode(env, agent)
         #episode_rewards.append(episode_reward)
 
     # save results in a dictionary and write them into a .json file

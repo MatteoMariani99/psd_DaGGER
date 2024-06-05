@@ -85,6 +85,9 @@ class PyBulletContinuousEnv(gym.Env):
         p.setJointMotorControl2(self.car_id,0,p.POSITION_CONTROL,targetPosition=steer)
         p.setJointMotorControl2(self.car_id,2,p.POSITION_CONTROL,targetPosition=steer)
 
+        # per andare a 10Hz
+        # for _ in range(24):
+        #     p.stepSimulation()
 
         # Ottengo lo stato che sarebbero le ossservazioni (immagine 84x96x3)
         state = self.get_observation()
