@@ -1,15 +1,6 @@
 CONSIDERAZIONI
 
 
-## DAGGER ##
-Creare un env con la macchina (utilizzare la racecar o la simple car) e un circuito se possibile.
-Per la simple car la cartella di origine è pybullet-driving-env.
-In f10_racecar_pybullet c'è il percorso di barcellona con la macchina (le ruote dietro sembrano trascinarsi)
-Per costruire l'env sono necessarie le funzioni di step, reset, render (vedi pagina tra i preferiti di firefox)
-Serve un expert che generi le immagini tramite una camera (zed della racecar per esempio).
-Muovere la macchina tramite freccie tastiera: già implementato in f10_racecar_on_plane.
-Capire se ha senso modificare il modello di rete già presente per car-racingV0.
-
 
 
 WORKFLOW
@@ -45,8 +36,7 @@ possibile scale del batch size e del learning rate tramite il tuner
  Una volta concluse le iterazioni, si chiama optuna e si cercano i parametri ottimi per l'ultimo dataset ottenuto con la simulazione.
  
  Si fa nuovamente il training dell'ultima parte e si salva il modello.
- 
- I parametri per ogni esecuzione sono in: tb_logs/my_model -> hparams.yaml
+
  
  OPTUNA esegue il pruned in maniera automatica quando ritiene che il trial che sta eseguendo non è promettente (è un early stopping automatico)
  
@@ -54,6 +44,9 @@ possibile scale del batch size e del learning rate tramite il tuner
  
  
  
+ ## DAGGER ##
+ Training eseguito con macchina a velocità costante sempre.
+ Training eseguito con macchina a velocità variabile in curva.
  
  
  

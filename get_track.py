@@ -4,7 +4,7 @@ import scipy
 from matplotlib import pyplot as plt
 import scipy.spatial
 
-def loadVertex(circuit='f10_racecar/meshes/barca_track.obj'):
+def loadVertex(circuit='world&car/meshes/barca_track.obj'):
     vertex = None
     mydir = os.path.split(__file__)[0]
     with open(f'{mydir}/{circuit}', 'r') as objf:

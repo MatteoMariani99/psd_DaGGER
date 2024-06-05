@@ -37,7 +37,7 @@ class PyBulletContinuousEnv(gym.Env):
         p.resetDebugVisualizerCamera(cameraDistance=20, cameraYaw=0, cameraPitch=-89, cameraTargetPosition=[4,-2,0])
  
         # carico il tracciato
-        p.loadSDF("f10_racecar/meshes/barca_track_modified.sdf", globalScaling=1)
+        p.loadSDF("world&car/meshes/barca_track_modified.sdf", globalScaling=1)
         
         # punti si spawn della macchina
         env1 = [[-10,1,.3], p.getQuaternionFromEuler([0,0,np.deg2rad(180)])]
@@ -48,7 +48,7 @@ class PyBulletContinuousEnv(gym.Env):
 
         env_list = [env1,env2,env3,env4,env5]
         index_env = random.randint(0,len(env_list)-1)
-        self.car_id = p.loadURDF("f10_racecar/simplecar.urdf", env_list[index_env][0],env_list[index_env][1])
+        self.car_id = p.loadURDF("world&car/simplecar.urdf", env_list[index_env][0],env_list[index_env][1])
 
 
     # Le osservazioni sono le immagini 84x96 rgb prese dalla zed
@@ -230,10 +230,10 @@ class PyBulletContinuousEnv(gym.Env):
     def p_control(self,yaw_error):
         kp = 0.9
         vel_ang = kp*yaw_error
-        #vel_lin = 10 # m/s
+        vel_lin = 10 # m/s
     
-        #if abs(yaw_error)>0.1:
-        vel_lin = (2.3-abs(vel_ang))*4.3
+        if abs(yaw_error)>0.1:
+            vel_lin = (2.3-abs(vel_ang))*(10/2.3)
         return vel_ang, vel_lin
     
 

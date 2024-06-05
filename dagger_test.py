@@ -269,7 +269,6 @@ if __name__ == "__main__":
                 if done: 
                     break
                     
-        #print("--- %s seconds ---" % (time.time() - start_time))
         
         #episode_rewards.append(episode_reward)
 

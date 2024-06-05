@@ -249,9 +249,10 @@ p.setAdditionalSearchPath(pybullet_data.getDataPath())
 p.resetDebugVisualizerCamera(cameraDistance=20, cameraYaw=0, cameraPitch=-89, cameraTargetPosition=[3,3,0])
 #p.resetDebugVisualizerCamera(cameraDistance=22, cameraYaw=0, cameraPitch=-89, cameraTargetPosition=[0,0,0])
 
-p.loadURDF("plane.urdf", useFixedBase = True)
+#p.loadURDF("plane.urdf", useFixedBase = True)
+p.loadURDF("world&car/plane/plane.urdf")
 
-turtle = p.loadURDF("f10_racecar/simplecar.urdf", [0,2,.3], p.getQuaternionFromEuler([0,0,np.deg2rad(180)]))
+turtle = p.loadURDF("world&car/simplecar.urdf", [0,2,.3], p.getQuaternionFromEuler([0,0,np.deg2rad(180)]))
 #turtle = p.loadURDF("f10_racecar/simplecar.urdf", [-12,-11,.3], p.getQuaternionFromEuler([0,0,np.deg2rad(180)]))
 #turtle = p.loadURDF("f10_racecar/simplecar.urdf", [-9,-6.5,.3])
 #turtle = p.loadURDF("f10_racecar/simplecar.urdf", [21,0,.3],  p.getQuaternionFromEuler([0,0,np.deg2rad(-55)]))
@@ -261,8 +262,8 @@ turtle = p.loadURDF("f10_racecar/simplecar.urdf", [0,2,.3], p.getQuaternionFromE
 # carica i coni fino L 190 COMPRESO
 
 
-p.loadSDF("world/cones_blue.sdf",globalScaling = 1)
-p.loadSDF("world/cones_yellow.sdf",globalScaling = 1)
+#p.loadSDF("world/cones_blue.sdf",globalScaling = 1)
+#p.loadSDF("world/cones_yellow.sdf",globalScaling = 1)
 
 #coni = p.loadURDF("world/test.urdf")
 #[p.changeDynamics(idx,-1, mass=0) for idx in track]
@@ -397,10 +398,10 @@ while (1):
 			forward = 10
 			p.setJointMotorControl2(turtle,0,p.POSITION_CONTROL,targetPosition=vel_ang)
 			p.setJointMotorControl2(turtle,2,p.POSITION_CONTROL,targetPosition=vel_ang)
-			p.setJointMotorControl2(turtle,1,p.VELOCITY_CONTROL,targetVelocity=forward)
-			p.setJointMotorControl2(turtle,3,p.VELOCITY_CONTROL,targetVelocity=forward)
-			p.setJointMotorControl2(turtle,4,p.VELOCITY_CONTROL,targetVelocity=forward)
-			p.setJointMotorControl2(turtle,5,p.VELOCITY_CONTROL,targetVelocity=forward)
+			p.setJointMotorControl2(turtle,1,p.VELOCITY_CONTROL,targetVelocity=40)
+			p.setJointMotorControl2(turtle,3,p.VELOCITY_CONTROL,targetVelocity=40)
+			p.setJointMotorControl2(turtle,4,p.VELOCITY_CONTROL,targetVelocity=40)
+			p.setJointMotorControl2(turtle,5,p.VELOCITY_CONTROL,targetVelocity=40)
 
 
 
