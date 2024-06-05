@@ -9,23 +9,21 @@ Il primo passo è stato quello di studiare lo stato dell’arte in modo da reper
 
 ## Struttura
 La repository è così strutturata:
-- **Articoli**: racchiudono gli articoli dello stato dell'arte per lo studio del problema;
-- **Relazione**: racchiude tutti i file .tex per la scrittura della relazione;
-- **Scripts**: racchiude tutti i file .py utilizzati per la simulazione del problema.
+- **Materiale**: racchiude gli articoli dello stato dell'arte per lo studio del problema;
+- **World&car**: racchiude tutti i file urdf e sdf per il caricamento dell'auto e del tracciato;
+- **Scripts**: TO DO.
 
-Inoltre, sono presenti la relazione in formato .pdf e la presentazione in formato .pptx.
 
 
 ## Implementazione
-L’articolo scelto presenta una policy di collision avoidance decentralizzata che permette di mappare direttamente le misure dei sensori in comandi di sterzo e velocità di avanzamento per ciascun robot.
-Per fare ciò viene utilizzato un algoritmo di Reinforcerment Learning (RL) con una politica di tipo Proximal Policy Optimization (PPO) che si basa sul metodo del gradiente. L’algoritmo integra inoltre un controllo ibrido, con 3 diverse modalità di funzionamento, che permette di aumentare la robustezza e l’efficacia del sistema (opzionale).
+L’articolo scelto presenta descrive una policy denominata Dagger (Dataset Aggregation) un algoritmo iterativo che allena una policy deterministica basandosi sulle osservazioni ottenute dalla guida di un esperto (umano, p, mpc...).
+Inizialmente si crea un dataset collezionando immagini dall'ambiente (sotto la policy del solo expert). Dopo aver collezionato N immagini, si procede con un primo training della policy per aggiornare i pesi della rete e minimizzare la loss tramite MSE (azioni expert - azioni predette).
+Una volta allenata la prima policy, le azioni intraprese sull'ambiente non saranno date solo dall'esperto ma in parte anche dalla rete, spiegazione:
+policy = a * beta + predette * (1-beta)
+dove a rappresenta le azioni dell'expert e predette quelle della rete; il coefficiente beta rappresenta una sorta di peso (inizialmente beta = 1 e quindi abbiamo solo azioni dell'expert: finito il primo training beta = 0.9 e così via). 
+Se si vogliono eseguire un numero elevato di iterazioni, alla fine beta sarà pari a 0 e ci saranno solo le azioni della rete a comandare l'auto.
 
-Per la simulazione dell’algoritmo è stato utilizzato PyBullet, un modulo Python per simulazioni in ambito robotico e dell’apprendimento automatico, con particolare attenzione
-al trasferimento da simulazione a realtà: il robot utilizzato in simulazione è il TurtleBot 2.
-
-Viene mostrata la struttura e la suddivisione del codice tra le fasi di testing e training:
-
-![Immagine classi](https://github.com/MatteoMariani99/Progetto-robotica/blob/main/Relazione/Images/final.jpg)
+![Immagine classi](https://github.com/MatteoMariani99/psd_DaGGER/blob/main/Materiale/dagger.png)
 
 ## Installazione
 Dopo aver scaricato l'intera cartella eseguire il comando:
