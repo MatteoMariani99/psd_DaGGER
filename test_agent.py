@@ -4,9 +4,9 @@ import torch
 import cv2
 from model import Model
 import math
+import time
 
-
-from environment import PyBulletContinuousEnv
+from environment_cones import PyBulletContinuousEnv
 
 device = torch.device("cuda:0" if torch.cuda.is_available() else "cpu")
 print("Torch Device:", device)
@@ -20,8 +20,9 @@ def run_episode(env:PyBulletContinuousEnv, agent, max_timesteps=1000000):
     env.reset()
 
     while True:
-
+        start = time.time()
         state= env.get_observation()
+        print("-----seconds-----", time.time()-start)
         colorHSV = env.getCamera_image()
         bird_eye = cv2.resize(colorHSV, (480, 320))
         
@@ -68,6 +69,7 @@ def run_episode(env:PyBulletContinuousEnv, agent, max_timesteps=1000000):
 
         
         # take action, receive new state & reward
+        #a = [0,0]
         next_state, reward, done = env.step(a)
         
         #episode_reward += reward       
@@ -85,30 +87,33 @@ if __name__ == "__main__":
     # numero di episodi 
     n_test_episodes = 15                  
 
-    # istanza del modello
-    agent = Model()
-
-    # carico il modello ottimo ottenuto
-    agent.load("dagger_test_models/modelli ottimi/vel10_variabile.pth")
-    agent.to(device)
-
     # se voglio fargli fare il giro della pista basta che modifico le iterazioni nell env
     env = PyBulletContinuousEnv()
+    #env.reset()
+    # istanza del modello
+    agent = Model()
+    # state= env.get_observation()
+    # print(state.shape)
+    # # Export the model
+    # x = torch.randn(1, 1, 84,96)
+    # torch.onnx.export(agent,               # model being run
+    #                 x,                         # model input (or a tuple for multiple inputs)
+    #                 "model.onnx",   # where to save the model (can be a file or file-like object)
+    #                 export_params=True)
+
+    # carico il modello ottimo ottenuto
+    #agent.load("dagger_test_models/modelli ottimi/vel10_variabile.pth")
+    agent.load("dagger_test_models/model_10.pth")
+    agent.to(device)
+
+   
 
     #episode_rewards = []
     for i in range(n_test_episodes):
         run_episode(env, agent)
         #episode_rewards.append(episode_reward)
 
-    # save results in a dictionary and write them into a .json file
-    # results = dict()
-    # results["episode_rewards"] = episode_rewards
-    # results["mean"] = np.array(episode_rewards).mean()
-    # results["std"] = np.array(episode_rewards).std()
- 
-    # fname = "results/results_bc_agent-%s.json" % datetime.now().strftime("%Y%m%d-%H%M%S")
-    # fh = open(fname, "w")
-    # json.dump(results, fh)
+   
             
     env.close()
     print('... finished')

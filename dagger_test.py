@@ -1,3 +1,4 @@
+import cv2
 import numpy as np
 import pickle
 import os
@@ -7,9 +8,13 @@ import json
 import train_agent
 import torch
 from model import Model
-
-from environment import PyBulletContinuousEnv
+import time
+from environment_cones import PyBulletContinuousEnv
 from get_track import *
+from get_cones import *
+
+from torch.utils.tensorboard import SummaryWriter
+writer = SummaryWriter()
 
 
 device = torch.device("cuda:0" if torch.cuda.is_available() else "cpu")
@@ -23,7 +28,7 @@ if torch.cuda.is_available():
 
 
 
-NUM_ITS = 40 # default è 20. Viene utilizzato 1 lap per iteration. Le iteration rappresentano il
+NUM_ITS = 39 # default è 20. Viene utilizzato 1 lap per iteration. Le iteration rappresentano il
 # numero di volte che noi stoppiamo l'esperto per salvare i dati e fare il training della rete.
 # è un po' come se fosse il numero di episodi.
 beta_i  = 0.9 # parametro usato nella policy PI: tale valore verrà modificato tramite la 
@@ -31,7 +36,7 @@ beta_i  = 0.9 # parametro usato nella policy PI: tale valore verrà modificato t
 # Inizialmente avremo 0.9^0, poi 0.9^1 poi 0.9^2 e così via il beta diminuirà esponenzialmente.
 # Ciò significa che avremo una probabilità di utilizzare la politica dell'expert che decresce 
 # a mano a mano che si procede con il training.
-T = 10000 # ogni iteration contiene N passi
+T = 4000 # ogni iteration contiene N passi
 
 s = """  ____    _                         
  |  _ \  / \   __ _  __ _  ___ _ __ 
@@ -97,7 +102,6 @@ if __name__ == "__main__":
     samples = {
         "state": [],
         "next_state": [],
-        #"reward": [],
         "action": [],
         "terminal" : [],
     }
@@ -116,7 +120,7 @@ if __name__ == "__main__":
     old_model_number = 0 # non serve ai fini pratici
     
 
-
+    
     # qui inizia il vero e proprio algoritmo: num di iterazioni è il numero di episodi che vogliamo
     for iteration in range(NUM_ITS):
         
@@ -134,8 +138,10 @@ if __name__ == "__main__":
 
         episode_reward = 0 # inizializzo le reward
         env.reset() # inizializzo l'ambiente
+        
+        
         state = env.get_observation() # ottengo le osservazioni ovvero le immagini 84x96x1 che andranno poi passate alla rete
-
+        
         # pi: input to the environment: è la policy utilizzata per collezionare le traiettorie
         # a : expert input
 
@@ -150,7 +156,9 @@ if __name__ == "__main__":
         
  
         # ottengo i punti centrali della strada
-        _,_,centerLine = computeTrack(debug=False)
+        #_,_,centerLine = computeTrack(debug=False)
+        _,_,centerLine = getCones()
+        
         # assemblo la lista dei punti a partire dal punto che mi serve
         # es. se parto dalla posizione (10,10) posso trovarmi a metà lista: in questo modo faccio si che 
         # la posizione (10,10) sia quella in testa alla lista in quanto sarà quella da cui parto
@@ -185,7 +193,15 @@ if __name__ == "__main__":
                 # nel nostro caso l'ambiente va creato from scratch e va implementata la logica
                 # per acquisire le immagini e la funzione di ricompense (anche se quest'ultima non
                 # è necessaria)
-                next_state, rewards, done = env.step(pi) # next_state già in formato YUV
+                #start1 = time.time()
+                next_state, rewards, done = env.step(pi) 
+                #cv2.imshow("YOLOv8 Tracking", next_state)
+                # Display the annotated frame
+                #cv2.imshow("YOLOv8 detect", annotated_frame)
+                #cv2.imshow('IMAGE', img)
+                #cv2.waitKey(1)
+                #print("-----secondi-----", time.time()-start1)
+                
 
                 # preprocess image and find prediction ->  policy(state)
                 # passo alla rete lo stato (image) e ottengo le predizioni.
@@ -193,7 +209,6 @@ if __name__ == "__main__":
                 # np.newaxis aumenta la dimensione dell'array di 1 (es. se è un array 1D diventa 2D)
                 # torch.from_numpy crea un tensore a partire da un'array numpy
                 # il modello ritorna le azioni (left/right, up/down)
-                
                 prediction = agent(torch.from_numpy(next_state[np.newaxis,np.newaxis,...]).type(torch.FloatTensor).to(device))
                 
                 # calculate linear combination of expert and network policy
@@ -204,31 +219,30 @@ if __name__ == "__main__":
 
                 print("Policy pred: ",prediction.detach().cpu().numpy().flatten())
                 print("Policy a: ",a)
-                #episode_reward += r
-
-                samples["state"].append(state)            # state has shape (96, 96, 3)
+                
+                samples["state"].append(state)            # state has shape (96, 96, 1)
                 samples["action"].append(np.array(a))     # action has shape (1, 3), STORE THE EXPERT ACTION
                 samples["next_state"].append(next_state)
-                #samples["reward"].append(rewards)
                 samples["terminal"].append(done)
                 
                 state = next_state
                 steps += 1
-
+                
                 # dopo T = N step avviene il train della rete
                 if steps % T == 0:
+                    
                     env.stoppingCar()
+                    
                     print('... saving data')
                     store_data(samples, "./data_test")
-                    #print("fine: ",episode_rewards)
-                    #save_results(episode_rewards, "./results_test")
+
                     # X_train sono le immagini
                     # y_train sono le label
                     # viene richiamata la funzione train_agent.read_data() che permette di leggere
                     # i dati pickle e scomporli in train e validation set
                     X_train, y_train, X_valid, y_valid = train_agent.read_data("./data_test", "data_dagger.pkl.gzip")
 
-                    print(X_train.shape)
+                    print("Immagini per il training: ",X_train.shape)
                     
                     #? USANDO PYTORCH LIGHTNING
                     # definisco il modello pytorch lightning
@@ -245,9 +259,13 @@ if __name__ == "__main__":
                     # agent.save("dagger_test_models/model_{}.pth".format(model_number+1))
                     
                     
-                    train_agent.train_model(X_train, y_train, "dagger_test_models/model_{}.pth".format(model_number+1), num_epochs=10)
+                    train_loss = train_agent.train_model(X_train, y_train, "dagger_test_models/model_{}.pth".format(model_number+1), num_epochs=10)
+                    writer.add_scalar("Loss/train", train_loss, iteration)
+                    
                     model_number += 1
-                    train_agent.validate_model(X_valid,y_valid, agent)
+                    val_loss = train_agent.validate_model(X_valid,y_valid, agent)
+                    writer.add_scalar("Loss/val", val_loss, iteration)
+                    writer.flush()
                     print("Training and validation complete. Press return to continue to the next iteration")
                     wait()
                     break
@@ -259,9 +277,6 @@ if __name__ == "__main__":
 
                 if done: 
                     break
-                    
-        
-        #episode_rewards.append(episode_reward)
 
     env.close()
 

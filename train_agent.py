@@ -56,15 +56,18 @@ def train_model(X_train, y_train, path, num_epochs=20, learning_rate=1e-3, batch
     for t in tqdm(range(num_epochs)):
       for X_batch, y_batch in loader:
         preds  = model(X_batch[:,np.newaxis,...].type(torch.FloatTensor).to(device))
-        
+        #print(y_batch.shape)
         loss   = criterion(preds, y_batch.to(device))
+        
+        
         
         optimizer.zero_grad()
         loss.backward()
         optimizer.step()
         loss_vector.append(loss)
     
-    print("Loss mean: ",(sum(loss_vector)/len(loss_vector)).detach().cpu().numpy().flatten())
+    
+    print("Loss training mean: ",(sum(loss_vector)/len(loss_vector)).detach().cpu().numpy().flatten())
     model.save(path)
     return (sum(loss_vector)/len(loss_vector)).detach().cpu().numpy().flatten()
     
@@ -72,37 +75,50 @@ def train_model(X_train, y_train, path, num_epochs=20, learning_rate=1e-3, batch
 # valutare se calcolare la loss della validation: cerca costruzione early stop manuale 
 def validate_model(X_valid, y_valid, model):
     
-    X_valid = torch.from_numpy(X_valid[:,np.newaxis,...])
-    y_valid = torch.from_numpy(y_valid).to(device)
-    vel_pred = []
-    steer_pred = []
+    
+    loader = DataLoader(dataset=list(zip(X_valid, y_valid)),batch_size=1,shuffle=True)
+
+    criterion = torch.nn.MSELoss()
+    
+    #X_valid = torch.from_numpy(X_valid[:,np.newaxis,...])
+    #y_valid = torch.from_numpy(y_valid).to(device)
+    
+    
+    #vel_pred = []
+    #steer_pred = []
+    loss_vector = []
     print("... validate model")
-    
+    #print(y_valid.shape)
     with torch.no_grad():
-        for i,j in zip(X_valid,y_valid):
-            y_preds  = model(i[:,np.newaxis,...].type(torch.FloatTensor).to(device))
+        for X_batch, y_batch in loader:
+            preds  = model(X_batch[:,np.newaxis,...].type(torch.FloatTensor).to(device))
+            #print(y_batch.shape)
+            loss = criterion(preds, y_batch.to(device))
+            loss_vector.append(loss)
+            #y_pred_detach = y_preds.detach().cpu().numpy()[0]
+            #corr_detach = j.cpu().numpy()
 
-            y_pred_detach = y_preds.detach().cpu().numpy()[0]
-            corr_detach = j.cpu().numpy()
-
-            if round(y_pred_detach[0],2)==round(corr_detach[0],2):
-                steer_pred.append(True)
-            else:
-                steer_pred.append(False)
+            # if round(y_pred_detach[0],2)==round(corr_detach[0],2):
+            #     steer_pred.append(True)
+            # else:
+            #     steer_pred.append(False)
                 
-            if round(y_pred_detach[1],1)==round(corr_detach[1],1):
-                vel_pred.append(True)
-            else:
-                vel_pred.append(False)
+            # if round(y_pred_detach[1],1)==round(corr_detach[1],1):
+            #     vel_pred.append(True)
+            # else:
+            #     vel_pred.append(False)
                 
-        counter_steer = steer_pred.count(True)
-        counter_vel = vel_pred.count(True)
+        #counter_steer = steer_pred.count(True)
+        #counter_vel = vel_pred.count(True)
 
-        accuracy_steer = counter_steer/y_valid.shape[0]
-        accuracy_vel = counter_vel/y_valid.shape[0]
-        
+        #accuracy_steer = counter_steer/y_valid.shape[0]
+        #accuracy_vel = counter_vel/y_valid.shape[0]
     
-    print(f"Accuracy steer: {round(accuracy_steer,3)*100}%, Accuracy vel: {round(accuracy_vel,3)*100}%")
+   
+    print("Loss validation mean: ",(sum(loss_vector)/len(loss_vector)).detach().cpu().numpy().flatten())
+    return (sum(loss_vector)/len(loss_vector)).detach().cpu().numpy().flatten()
+    
+    #print(f"Accuracy steer: {round(accuracy_steer,3)*100}%, Accuracy vel: {round(accuracy_vel,3)*100}%")
 
 
 def objective(trial):
@@ -112,7 +128,8 @@ def objective(trial):
     model = Model()
     model.to(device)
 
-    loss = train_model(X_train, y_train, 'dagger_test_models/model_try_optim.pth', num_epochs=num_epochs, learning_rate=l_r,batch_size=batch_size)
+    loss = train_model(X_train, y_train, 'dagger_test_models/model_try_optim.pth', 
+                       num_epochs=num_epochs, learning_rate=l_r,batch_size=batch_size)
     return loss
 
 
@@ -128,7 +145,8 @@ if __name__ == "__main__":
     
     if not optimize:
         # utilizzo di params ottimi
-        loss = train_model(X_train, y_train, 'dagger_test_models/model_optim_params.pth', num_epochs=19, learning_rate= 0.003877987515407548,batch_size=16)
+        loss = train_model(X_train, y_train, 'dagger_test_models/model_0.pth', num_epochs=19, learning_rate= 0.003877987515407548,batch_size=16)
+        loss_val = validate_model( X_valid, y_valid, model)
     
     else:
         #? for optimization hyperparams
