@@ -37,8 +37,8 @@ if __name__== "__main__":
     print("c ",len(cLine))
     print(cLine[44,0], cLine[44,1])
     
-    plt.scatter(leftSide[:,0],leftSide[:,1], 5, "orange")
-    plt.scatter(rightSide[:,0],rightSide[:,1], 5, 'blue')
+    plt.scatter(leftSide[:,0],leftSide[:,1], 5, "blue")
+    plt.scatter(rightSide[:,0],rightSide[:,1], 5, 'orange')
     plt.scatter(cLine[:,0], cLine[:,1], 5, 'green')
     plt.scatter(cLine[44,0], cLine[44,1], 5, 'black')
     plt.show()

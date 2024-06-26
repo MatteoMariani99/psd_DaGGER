@@ -119,10 +119,10 @@ def main():
     
     
 
-    sdf_content = generate_sdf(scaled_inner, scaled_outer)
+    #sdf_content = generate_sdf(scaled_inner, scaled_outer)
 
-    with open("track.sdf", "w") as f:
-        f.write(sdf_content)
+    # with open("track.sdf", "w") as f:
+    #     f.write(sdf_content)
 
 if __name__ == "__main__":
     main()

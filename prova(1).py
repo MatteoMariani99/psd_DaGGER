@@ -6,9 +6,13 @@ import cv2
 import random
 from get_track import *
 from ultralytics import YOLO
-
+import time
 from get_cones import *
 
+from scipy.interpolate import interp1d
+from scipy.interpolate import CubicSpline
+from scipy.interpolate import splprep, splev
+from collections import Counter
 
 
 turtle= None
@@ -244,7 +248,7 @@ class cameraMgr:
             yellow_center = np.array([[479,639]], dtype=int)
        
         # riordino l'array
-        pts_blue, pts_yellow = cameraMgr.sortedPoints(blue_center, yellow_center)
+        pts_blue, pts_yellow = sortedPoints(blue_center, yellow_center)
        
         if len(pts_blue)>10:
             pts_blue = pts_blue[len(pts_blue)-10:len(pts_blue)]
@@ -529,79 +533,71 @@ class cameraMgr:
             ii=scipy.interpolate.interp1d(np.arange(len), cones.squeeze(), axis=0, kind='linear',bounds_error=False, fill_value='extrapolate')
             pts=ii(np.arange(-len,2*len,.25))
             return pts.reshape(-1,1,2).astype(np.int32)
-        
-        # ottengo la matrice utile ad eseguire l'omografia
         HomoMat = cameraMgr.getHomographyFromPts()
-             
-        # aggiungo un cono blu o uno giallo ai lati dell'immagine quando siamo in curva
+
+        # Elimino coni lontani       
         if blue_center.shape[0] == 0:
-            blue_center = np.array([[0,479]], dtype=int)
+            blue_center = np.array([[479,0]], dtype=int)
 
         if yellow_center.shape[0] == 0:
-            yellow_center = np.array([[639,479]], dtype=int)
+            yellow_center = np.array([[479,639]], dtype=int)
        
-        # 
         pts_blue, pts_yellow = cameraMgr.sortedPoints(blue_center, yellow_center)
 
         # Trasforma la posizione dei coni in vista verticale       
         applyHomo = lambda pts: cv2.convertPointsFromHomogeneous((HomoMat@cv2.convertPointsToHomogeneous(pts)[:,0,:].T).T).astype(int)
         pts_bird_b = applyHomo(pts_blue)
         pts_bird_y = applyHomo(pts_yellow)
-    
        
+
         # Dopo la vista verticale posso eliminare altri coni...
         dist = lambda p : abs(p[0,0]-320)+abs(p[0,1]-480)
         select = lambda v: v[np.array([dist(ve) for ve in v])<980]
         pts_bird_b = select(pts_bird_b)
         pts_bird_y = select(pts_bird_y)
+
+        # Aggiungo coni in caso mancano nel numero sufficiente ???
+
+        # if pts_bird_b.shape[0]>0 and pts_bird_y.shape[0]>0:
+        #     roadCenterX = int((pts_bird_b[-1,0,0]+pts_bird_y[-1,0,0])/2)
+        #     roadCenterL = np.array([[[roadCenterX-180,480]]])
+        #     roadCenterR = np.array([[[roadCenterX+180,480]]])
+        #     pts_bird_b = np.concatenate((pts_bird_b, roadCenterL),axis=0)
+        #     pts_bird_y = np.concatenate((pts_bird_y, roadCenterR),axis=0)
        
-
+        # if pts_bird_b.shape[0]==0:
+        #     pts_bird_b = np.array([[[0, 480]]])
+        # if pts_bird_y.shape[0]==0:
+        #     pts_bird_y = np.array([[[640,480]]])
+       
+       
+       
         bird = np.zeros((480,640), dtype=np.uint8)
-
-        # la dimensione è 0 quando yellow center non è vuoto ma il punto è troppo lontano e quindi con il select viene tolto
-        # if pts_bird_b.shape[0]<=1:
-        #     point = (0, 479)
-            
+       
         if pts_bird_b.shape[0]>1:
             cv2.polylines(bird, [getLine(pts_bird_b)], isClosed=False,color=(255), thickness=1, lineType=cv2.LINE_AA)
-            
             id_b = np.where((getLine(pts_bird_b)[:,0,0]>=0) & (getLine(pts_bird_b)[:,0,0]<=640) & (getLine(pts_bird_b)[:,0,1]>=0) & (getLine(pts_bird_b)[:,0,1]<=480))[0]
-            
-            # può essere che ci siano punti negativi e anche con una y elevata e quindi setto il nuovo punto
             if id_b.shape[0]==0:
                 point = (0, 479)
             else:
-                id_b = id_b
-        else:
-            id_b = np.array([])
-            point = (0, 479)
-                
+                print(getLine(pts_bird_b))
+                point = (int(getLine(pts_bird_b)[id_b[-1]].squeeze()[0]+30),479)
        
-        # if pts_bird_y.shape[0]<=1 and not pts_bird_b.shape[0]<=1:
-            
-        #     point = (639, 479) 
-        #     cv2.polylines(bird, [getLine(pts_bird_b)], isClosed=False,color=(255), thickness=1, lineType=cv2.LINE_AA)
+        
             
         if pts_bird_y.shape[0]>1:
             cv2.polylines(bird, [getLine(pts_bird_y)], isClosed=False,color=(255), thickness=1, lineType=cv2.LINE_AA)
-            
             id_y = np.where((getLine(pts_bird_y)[:,0,0]>=0) & (getLine(pts_bird_y)[:,0,0]<=640) & (getLine(pts_bird_y)[:,0,1]>=0) & (getLine(pts_bird_y)[:,0,1]<=480))[0]
-       
+            
             if id_y.shape[0]==0:
                 point = (639, 479)
-        else:
-            id_y = np.array([])
-            point = (639, 479)
-                
-                  
-        if id_b.shape[0]!=0 and id_y.shape[0]!=0:
-            point = (int((getLine(pts_bird_y)[id_y[-1]].squeeze()[0]+getLine(pts_bird_b)[id_b[-1]].squeeze()[0])/2),479)
+            else:
+                print(getLine(pts_bird_y))
+                print(int(getLine(pts_bird_y)[id_y[-1]].squeeze()[1])-1)
+                point = (int(getLine(pts_bird_y)[id_y[-1]].squeeze()[0]-30),479)
        
-       
-        # funziona -> prova training
-        cv2.floodFill(bird,None,point,255)
-        
         print(point)
+        cv2.floodFill(bird,None,point,255)
         return bird
 
 
@@ -688,13 +684,15 @@ def rect_to_polar_relative(goal):
 
 
 def p_control(yaw_error):
-        kp = 0.9
-        vel_ang = kp*yaw_error
-        vel_lin = 10 # m/s
-    
-        if abs(yaw_error)>0.1:
-            vel_lin = (2.3-abs(vel_ang))*(10/2.3)
-        return vel_ang, vel_lin
+    kp = 0.9
+    kv = 0.5
+    vel_ang = kp*yaw_error
+    vel_lin = 10       
+ 
+    if abs(yaw_error)>0.1:
+        vel_lin = (2.3-abs(vel_ang))*4.3
+ 
+    return vel_ang, vel_lin
 
 
 
@@ -720,6 +718,14 @@ def choosePositionAndIndex(position,index):
     return positionToStart, indexToStart, done
 
 
+
+
+
+def pixel_to_cartesian(pixel_coords, image_height):
+        # Convert pixel coordinates to Cartesian coordinates
+        cartesian_coords = pixel_coords.copy()
+        cartesian_coords = image_height - pixel_coords
+        return cartesian_coords
 
 
 
@@ -855,7 +861,7 @@ class Environment:
                 car_position, car_orientation = p.getBasePositionAndOrientation(turtle)
 
                
-                while r>1:
+                while r>0.5:
                     # keys = p.getKeyboardEvents()
                     # for k,v in keys.items():
 
@@ -876,7 +882,7 @@ class Environment:
                     #             forward=-10
                     #     if (k == p.B3G_DOWN_ARROW and (v&p.KEY_WAS_RELEASED)):
                     #             forward=0
-                    
+                    start1 = time.time()
                     img = cameraMgr.getCamera_image()
                     img = cv2.cvtColor(img,cv2.COLOR_BGR2RGB)
                    
@@ -913,7 +919,7 @@ class Environment:
                     vel_ang,vel_lin = p_control(yaw_error)
                     forward = vel_lin
                     turn = vel_ang
-                    print(f"steer {vel_ang} - vel {vel_lin}")
+                    #print(f"steer {vel_ang} - vel {vel_lin}")
 
                    
                    
