@@ -145,21 +145,20 @@ if __name__ == "__main__":
     
     if not optimize:
         # utilizzo di params ottimi
-        loss = train_model(X_train, y_train, 'dagger_test_models/model_0.pth', num_epochs=19, learning_rate= 0.003877987515407548,batch_size=16)
+        loss = train_model(X_train, y_train, 'dagger_test_models/modelli ottimi/cones/vel10_variabile.pth', num_epochs=19, learning_rate= 0.0014793951570453206,batch_size=16)
         loss_val = validate_model( X_valid, y_valid, model)
     
     else:
         #? for optimization hyperparams
         study = optuna.create_study(storage="sqlite:///db.sqlite3",direction='minimize')
-        study.optimize(objective,n_trials=40)
+        study.optimize(objective,n_trials=50)
         print(f'Best: {study.best_params}')
     
     
     #optuna-dashboard sqlite:///db.sqlite3
     
     # migliore:
-    #Best: {
-        # 'learning_rate': 0.003877987515407548, 
-        # 'batch_size': 16, 
-        # 'num_epochs': 19}
+    #Best: {'learning_rate': 0.0014793951570453206, 
+    # 'batch_size': 16, 
+    # 'num_epochs': 19}
 

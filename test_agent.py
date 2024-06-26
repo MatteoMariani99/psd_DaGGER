@@ -11,27 +11,25 @@ from environment_cones import PyBulletContinuousEnv
 device = torch.device("cuda:0" if torch.cuda.is_available() else "cpu")
 print("Torch Device:", device)
 
+# punti per volante e barra verticale
+pts = np.array([[0, 0], [480, 0],
+        [480, 70], [0, 70]],
+        np.int32)
 
+pts = pts.reshape((-1, 1, 2))
 
-def run_episode(env:PyBulletContinuousEnv, agent, max_timesteps=1000000):
+def run_episode(max_timesteps=1000):
     
     #episode_reward = 0
     step = 0
     env.reset()
-
+    state= env.get_observation()
+    
     while True:
         start = time.time()
-        state= env.get_observation()
-        print("-----seconds-----", time.time()-start)
-        colorHSV = env.getCamera_image()
-        bird_eye = cv2.resize(colorHSV, (480, 320))
         
-        # punti per volante e barra verticale
-        pts = np.array([[0, 0], [480, 0],
-                [480, 70], [0, 70]],
-               np.int32)
- 
-        pts = pts.reshape((-1, 1, 2))
+        color_rgb = env.getCamera_image()
+        bird_eye = cv2.resize(color_rgb, (480, 320))
 
         cv2.fillPoly(bird_eye, pts=[pts], color=(0, 0, 0))
 
@@ -44,9 +42,9 @@ def run_episode(env:PyBulletContinuousEnv, agent, max_timesteps=1000000):
 
         a = prediction.detach().cpu().numpy().flatten()
            
-        # disegno il volante per lo sterzo 
+        # # disegno il volante per lo sterzo 
         steering_wheel.draw_steering_wheel_on_image(a[0]*180/math.pi,(20,10))
-        # aggiungo la barra verticale per la veocità
+        # aggiungo la barra verticale per la velocità
         vel_image = steering_wheel.update_frame_with_bar(a[1])
         
         text = " rad/s"
@@ -55,22 +53,26 @@ def run_episode(env:PyBulletContinuousEnv, agent, max_timesteps=1000000):
         full_text1 = f"{str(round(a[1],2))}{text1}" 
         
         # Display del testo a video
-        final_image = cv2.putText(vel_image, full_text, (90,40), cv2.FONT_HERSHEY_SIMPLEX,  
+        cv2.putText(vel_image, full_text, (90,40), cv2.FONT_HERSHEY_SIMPLEX,  
                         0.6, (255,255,255), 1, cv2.LINE_AA) 
-        final_image = cv2.putText(final_image, full_text1, (360,40), cv2.FONT_HERSHEY_SIMPLEX,  
+        cv2.putText(vel_image, full_text1, (360,40), cv2.FONT_HERSHEY_SIMPLEX,  
                         0.6, (255,255,255), 1, cv2.LINE_AA) 
 
-        image_obs = state
-        image_obs = cv2.resize(image_obs, (480, 320))
-        image_obs = cv2.cvtColor(image_obs, cv2.COLOR_GRAY2BGR)
+        #image_obs = state
+        image_obs = cv2.resize(state, (480, 320))
+        image_obs = cv2.cvtColor(image_obs, cv2.COLOR_GRAY2RGB)
 
-        cv2.imshow("Camera2", cv2.vconcat([final_image, image_obs]))
+        cv2.imshow("Camera2", cv2.vconcat([vel_image, image_obs]))
         cv2.waitKey(1) 
 
         
         # take action, receive new state & reward
         #a = [0,0]
-        next_state, reward, done = env.step(a)
+        
+        next_state, _, done = env.step(a)
+        print("-----seconds-----", time.time()-start)
+        #cv2.imshow("Camera",next_state)
+        
         
         #episode_reward += reward       
         state = next_state
@@ -78,6 +80,7 @@ def run_episode(env:PyBulletContinuousEnv, agent, max_timesteps=1000000):
 
         if done or step > max_timesteps: 
             break
+        print("-----seconds-----", time.time()-start)
 
     #return episode_reward
 
@@ -103,16 +106,13 @@ if __name__ == "__main__":
 
     # carico il modello ottimo ottenuto
     #agent.load("dagger_test_models/modelli ottimi/vel10_variabile.pth")
-    agent.load("dagger_test_models/model_10.pth")
+    agent.load("dagger_test_models/modelli ottimi/cones/vel10_variabile.pth")
     agent.to(device)
 
-   
-
-    #episode_rewards = []
+  
     for i in range(n_test_episodes):
-        run_episode(env, agent)
-        #episode_rewards.append(episode_reward)
-
+        run_episode()
+        
    
             
     env.close()

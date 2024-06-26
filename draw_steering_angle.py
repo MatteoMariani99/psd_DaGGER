@@ -89,22 +89,3 @@ class SteeringWheel():
         frame = self.draw_vertical_bar(frame, velocity)
         return frame
 
-
-# Example usage
-#background_path = 'wheel.jpg'
-
-
-
-# while 1:
-#     for i in range (0,100,1):
-#         steer_angle = i  # Example steering angle
-#         position = (100, 100)  # Position to place the steering wheel on the background
-
-#         # Draw steering wheel on image
-#         result_image = draw_steering_wheel_on_image(background_path, wheel_path, steer_angle, position)
-
-#         # Display the result
-#         cv2.imshow('Steering Wheel Animation', result_image)
-#         cv2.waitKey(0)
-#         cv2.destroyAllWindows()
-

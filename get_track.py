@@ -38,7 +38,7 @@ def splitTrack(vn, skew=6):
 def computeTrack(debug=True):
     vn = loadVertex()
     lSide, rSide, cLine = splitTrack(vn,6)
-    
+    print(rSide[len(rSide)-75:len(rSide)].tolist())
     #getPointToStart(cLine,[0,0])
     if debug:
         plt.scatter(lSide[:,0], lSide[:,1], 1,'red')
@@ -56,18 +56,6 @@ def getPointToStart(cLine,target,threshold):
     return index, position
 
 
-
-    
-
-def agentRef(realX, realY, track):
-    # step 1 locate position in Track
-    # step 2 compute track local shape
-    # step 3 determine agent action (steering angle, speed desired)
-    
-    # Esempio:
-    # Speed constant, angle == skew a distanza di tre metri
-    
-    pass
 
 
 if __name__== "__main__":

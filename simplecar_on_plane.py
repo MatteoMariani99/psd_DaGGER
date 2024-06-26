@@ -738,7 +738,8 @@ class Environment:
         #p.loadURDF("plane.urdf", useFixedBase = True)
         p.loadURDF("world&car/plane/plane.urdf")
 
-        turtle = p.loadURDF("world&car/simplecar.urdf", [-7.6,6,.3], p.getQuaternionFromEuler([0,0,np.deg2rad(90)]))
+        #turtle = p.loadURDF("world&car/simplecar.urdf", [-7.6,6,.3], p.getQuaternionFromEuler([0,0,np.deg2rad(90)]))
+        turtle = p.loadURDF("world&car/simplecar.urdf", [7,13.9,.3], p.getQuaternionFromEuler([0,0,np.deg2rad(145)]))
         #turtle = p.loadURDF("world&car/simplecar.urdf", [0.1,-0.5,.3], p.getQuaternionFromEuler([0,0,np.deg2rad(90)]))
         #turtle = p.loadURDF("f10_racecar/simplecar.urdf", [-12,-11,.3], p.getQuaternionFromEuler([0,0,np.deg2rad(180)]))
         #turtle = p.loadURDF("f10_racecar/simplecar.urdf", [-9,-6.5,.3])
@@ -881,7 +882,7 @@ class Environment:
                     img = cv2.cvtColor(img,cv2.COLOR_BGR2RGB)
                    
            
-                    results = Environment.model.predict(img,conf=0.8)
+                    results = Environment.model.predict(img,conf=0.85)
                     boxes_xywh = results[0].boxes.xywh  # boxes mi da xywh di tutti i coni visti
                     boxes_cls = results[0].boxes.cls  # boxes mi da le classi di tutti i coni visti
                    
@@ -897,7 +898,7 @@ class Environment:
                    
                     cv2.imshow("YOLOv8 Tracking", bird)
                     # Display the annotated frame
-                    #cv2.imshow("YOLOv8 detect", annotated_frame)
+                    cv2.imshow("YOLOv8 detect", annotated_frame)
                     #cv2.imshow('IMAGE', img)
                     k = cv2.waitKey(1)
                     if k==ord('p'):

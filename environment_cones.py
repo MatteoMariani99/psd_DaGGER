@@ -1,3 +1,5 @@
+import random
+import time
 import gym
 import numpy as np
 import pybullet as p
@@ -40,27 +42,24 @@ class PyBulletContinuousEnv(gym.Env):
  
         # carico il tracciato
         p.loadURDF("world&car/plane/plane.urdf")
+   
+        # punti di spawn della macchina per la road
+        env1 = [[7,-4,.3], p.getQuaternionFromEuler([0,0,np.deg2rad(180)])]
+        env2 = [[7,20,.3], p.getQuaternionFromEuler([0,0,np.deg2rad(0)])]
+        env3 = [[-7.6,6,.3], p.getQuaternionFromEuler([0,0,np.deg2rad(90)])]
+        env4 = [[7.3,13.9,.3], p.getQuaternionFromEuler([0,0,np.deg2rad(145)])]
         
-        self.car_id = p.loadURDF("world&car/simplecar.urdf", [7,-4,.3], p.getQuaternionFromEuler([0,0,np.deg2rad(180)]))
+        
+        env_list = [env1,env2,env3,env4]
+        index_env = random.randint(0,len(env_list)-1)
+        self.car_id = p.loadURDF("world&car/simplecar.urdf", env_list[index_env][0],env_list[index_env][1])
         
         p.loadSDF("world/track.sdf",globalScaling = 1)
-        
-        # punti di spawn della macchina per la road
-        # env1 = [[-10,1,.3], p.getQuaternionFromEuler([0,0,np.deg2rad(180)])]
-        # env2 = [[-12,-11,.3], p.getQuaternionFromEuler([0,0,np.deg2rad(180)])]
-        # env3 = [[-9,-6.5,.3], p.getQuaternionFromEuler([0,0,np.deg2rad(0)])]
-        # env4 = [[0,0,.3], p.getQuaternionFromEuler([0,0,np.deg2rad(55)])]
-        # env5 = [[35.5,2,.3], p.getQuaternionFromEuler([0,0,np.deg2rad(-90)])]
-
-        # env_list = [env1,env2,env3,env4,env5]
-        # index_env = random.randint(0,len(env_list)-1)
-        # self.car_id = p.loadURDF("world&car/simplecar.urdf", env_list[index_env][0],env_list[index_env][1])
-        
 
 
     # Le osservazioni sono le immagini 84x96x1 rgb prese dalla zed
     def get_observation(self):
-
+        
         rgb_image = self.getCamera_image()
         
         # eseguo la predizione ed ottengo info sui bounding box e sulle classi trovate
@@ -71,6 +70,7 @@ class PyBulletContinuousEnv(gym.Env):
         
         # funzione che mi definisce la bird eye dopo aver eseguito una serie di controllo per eliminare i coni lontani 
         reshaped_bird_eye = self.birdEyeView_cones(blue_center, yellow_center)
+        
         
         return reshaped_bird_eye
 
@@ -411,38 +411,35 @@ class PyBulletContinuousEnv(gym.Env):
         # che per il giallo): questo mi permette di andare a definire un "point" che sarebbe quello da passare al floodFill in quanto questa 
         # funzione richiede un punto all'interno dell'immagine per poter riempire il poligono
         # la dimensione è 0 quando yellow center non è vuoto ma il punto è troppo lontano e quindi con il select viene tolto
-        if pts_bird_b.shape[0]<=1:
-            point = (0, 479)
-        elif pts_bird_b.shape[0]>1:
+        if pts_bird_b.shape[0]>1:
             cv2.polylines(bird, [getLine(pts_bird_b)], isClosed=False,color=(255), thickness=1, lineType=cv2.LINE_AA)
             
             id_b = np.where((getLine(pts_bird_b)[:,0,0]>=0) & (getLine(pts_bird_b)[:,0,0]<=640) & (getLine(pts_bird_b)[:,0,1]>=0) & (getLine(pts_bird_b)[:,0,1]<=480))[0]
-            
             
             # può essere che ci siano punti negativi e anche con una y elevata e quindi setto il nuovo punto
             if id_b.shape[0]==0:
                 point = (0, 479)
             else:
                 id_b = id_b
-                
-       
-        if pts_bird_y.shape[0]<=1:
-            print("ok5")
-            point = (639, 479) 
-            
-        elif pts_bird_y.shape[0]>1 and not pts_bird_b.shape[0]<=1:
+        else:
+            id_b = np.array([])
+            point = (0, 479)
+   
+        if pts_bird_y.shape[0]>1:
             cv2.polylines(bird, [getLine(pts_bird_y)], isClosed=False,color=(255), thickness=1, lineType=cv2.LINE_AA)
             
             id_y = np.where((getLine(pts_bird_y)[:,0,0]>=0) & (getLine(pts_bird_y)[:,0,0]<=640) & (getLine(pts_bird_y)[:,0,1]>=0) & (getLine(pts_bird_y)[:,0,1]<=480))[0]
        
             if id_y.shape[0]==0:
                 point = (639, 479)
+        else:
+            id_y = np.array([])
+            point = (639, 479)
+                
                   
-            if id_b.shape[0]!=0 and id_y.shape[0]!=0:
-                point = (int((getLine(pts_bird_y)[id_y[-1]].squeeze()[0]+getLine(pts_bird_b)[id_b[-1]].squeeze()[0])/2),479)
-       
-       
-        #print(point)
+        if id_b.shape[0]!=0 and id_y.shape[0]!=0:
+            point = (int((getLine(pts_bird_y)[id_y[-1]].squeeze()[0]+getLine(pts_bird_b)[id_b[-1]].squeeze()[0])/2),479)
+      
         
         # funzione che mi riempie un poligono dato un punto che sta tra due linee
         cv2.floodFill(bird,None,point,255)

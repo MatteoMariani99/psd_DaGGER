@@ -28,7 +28,7 @@ if torch.cuda.is_available():
 
 
 
-NUM_ITS = 39 # default è 20. Viene utilizzato 1 lap per iteration. Le iteration rappresentano il
+NUM_ITS = 41 # default è 20. Viene utilizzato 1 lap per iteration. Le iteration rappresentano il
 # numero di volte che noi stoppiamo l'esperto per salvare i dati e fare il training della rete.
 # è un po' come se fosse il numero di episodi.
 beta_i  = 0.9 # parametro usato nella policy PI: tale valore verrà modificato tramite la 
@@ -195,11 +195,11 @@ if __name__ == "__main__":
                 # è necessaria)
                 #start1 = time.time()
                 next_state, rewards, done = env.step(pi) 
-                #cv2.imshow("YOLOv8 Tracking", next_state)
+                cv2.imshow("YOLOv8 Tracking", next_state)
                 # Display the annotated frame
                 #cv2.imshow("YOLOv8 detect", annotated_frame)
                 #cv2.imshow('IMAGE', img)
-                #cv2.waitKey(1)
+                cv2.waitKey(1)
                 #print("-----secondi-----", time.time()-start1)
                 
 
@@ -220,10 +220,11 @@ if __name__ == "__main__":
                 print("Policy pred: ",prediction.detach().cpu().numpy().flatten())
                 print("Policy a: ",a)
                 
-                samples["state"].append(state)            # state has shape (96, 96, 1)
-                samples["action"].append(np.array(a))     # action has shape (1, 3), STORE THE EXPERT ACTION
-                samples["next_state"].append(next_state)
-                samples["terminal"].append(done)
+                if steps%2==0:
+                    samples["state"].append(state)            # state has shape (96, 96, 1)
+                    samples["action"].append(np.array(a))     # action has shape (1, 3), STORE THE EXPERT ACTION
+                    samples["next_state"].append(next_state)
+                    samples["terminal"].append(done)
                 
                 state = next_state
                 steps += 1
