@@ -6,22 +6,24 @@ import scipy
 
 def getCones():
     #data = pd.read_csv("world/data.csv")
-    right = pd.read_csv("world/innerCones.csv")
-    left = pd.read_csv("world/outerCones.csv")
+    #right = pd.read_csv("world/innerCones.csv")
+    #left = pd.read_csv("world/outerCones.csv")
     
-    rightSide = right.to_numpy()[:,:3]
-    leftSide = left.to_numpy()[:,:3]
+    # new track
+    right = pd.read_csv("world/coneIn.csv")
+    left = pd.read_csv("world/coneOut.csv")
+    
+    rightSide = right.to_numpy()[:,:3][::-1]
+    leftSide = left.to_numpy()[:,:3][::-1]
     
     #print(rightSide.shape)
     #print(leftSide.shape)
 
-    #xy = data.to_numpy()
-    #leftSide = np.array(xy[:151,:])
-    #rightSide = np.array(xy[151:,:])
+
     cLine = np.zeros(leftSide.shape, dtype=np.float32)
 
     for idx, lpt in enumerate(leftSide[:,:]):
-        lpt=lpt.reshape((1,3))
+        lpt=lpt.reshape((1,2))
 
         rdist = scipy.spatial.distance.cdist(lpt, rightSide)
         closerIdx = np.argmin(rdist)
@@ -40,5 +42,4 @@ if __name__== "__main__":
     plt.scatter(leftSide[:,0],leftSide[:,1], 5, "blue")
     plt.scatter(rightSide[:,0],rightSide[:,1], 5, 'orange')
     plt.scatter(cLine[:,0], cLine[:,1], 5, 'green')
-    plt.scatter(cLine[44,0], cLine[44,1], 5, 'black')
     plt.show()

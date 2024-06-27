@@ -732,14 +732,14 @@ class Environment:
         global turtle
         p.connect(p.GUI)
         p.setAdditionalSearchPath(pybullet_data.getDataPath())
-        p.resetDebugVisualizerCamera(cameraDistance=15, cameraYaw=0, cameraPitch=-89, cameraTargetPosition=[3,8,0])
+        p.resetDebugVisualizerCamera(cameraDistance=15, cameraYaw=0, cameraPitch=-89, cameraTargetPosition=[4,8,0])
         #p.resetDebugVisualizerCamera(cameraDistance=22, cameraYaw=0, cameraPitch=-89, cameraTargetPosition=[0,0,0])
 
         #p.loadURDF("plane.urdf", useFixedBase = True)
         p.loadURDF("world&car/plane/plane.urdf")
 
-        #turtle = p.loadURDF("world&car/simplecar.urdf", [-7.6,6,.3], p.getQuaternionFromEuler([0,0,np.deg2rad(90)]))
-        turtle = p.loadURDF("world&car/simplecar.urdf", [7,13.9,.3], p.getQuaternionFromEuler([0,0,np.deg2rad(145)]))
+        turtle = p.loadURDF("world&car/simplecar.urdf", [-7.6,6,.3], p.getQuaternionFromEuler([0,0,np.deg2rad(90)]))
+        #turtle = p.loadURDF("world&car/simplecar.urdf", [38.5,6,.3], p.getQuaternionFromEuler([0,0,np.deg2rad(-90)]))
         #turtle = p.loadURDF("world&car/simplecar.urdf", [0.1,-0.5,.3], p.getQuaternionFromEuler([0,0,np.deg2rad(90)]))
         #turtle = p.loadURDF("f10_racecar/simplecar.urdf", [-12,-11,.3], p.getQuaternionFromEuler([0,0,np.deg2rad(180)]))
         #turtle = p.loadURDF("f10_racecar/simplecar.urdf", [-9,-6.5,.3])
