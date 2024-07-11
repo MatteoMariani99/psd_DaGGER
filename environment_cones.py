@@ -38,23 +38,66 @@ class PyBulletContinuousEnv(gym.Env):
         # Reset della simulazione
         p.resetSimulation()
         p.setGravity(0, 0, -9.81)
-        p.resetDebugVisualizerCamera(cameraDistance=15, cameraYaw=0, cameraPitch=-89, cameraTargetPosition=[3,8,0])
+
+                
+        track_list = [0,1,2,4,5] # lista degli ID dei tracciati
+        self.track_number = random.choice(track_list)
+        
+        
+        #p.resetDebugVisualizerCamera(cameraDistance=20, cameraYaw=0, cameraPitch=-89, cameraTargetPosition=[5,10,0])
+        
+        p.resetDebugVisualizerCamera(cameraDistance=20, cameraYaw=0, cameraPitch=-89, cameraTargetPosition=[0,0,0])
  
         # carico il tracciato
         p.loadURDF("world&car/plane/plane.urdf")
    
         # punti di spawn della macchina per la road
-        env1 = [[7,-4,.3], p.getQuaternionFromEuler([0,0,np.deg2rad(180)])]
-        env2 = [[7,20,.3], p.getQuaternionFromEuler([0,0,np.deg2rad(0)])]
-        env3 = [[-7.6,6,.3], p.getQuaternionFromEuler([0,0,np.deg2rad(90)])]
-        env4 = [[7.3,13.9,.3], p.getQuaternionFromEuler([0,0,np.deg2rad(145)])]
+        # env1 = [[7,-4,.3], p.getQuaternionFromEuler([0,0,np.deg2rad(180)])]
+        # env2 = [[7,20,.3], p.getQuaternionFromEuler([0,0,np.deg2rad(0)])]
+        # env3 = [[-7.6,6,.3], p.getQuaternionFromEuler([0,0,np.deg2rad(90)])]
+        # env4 = [[7.3,13.9,.3], p.getQuaternionFromEuler([0,0,np.deg2rad(145)])]
         
         
-        env_list = [env1,env2,env3,env4]
-        index_env = random.randint(0,len(env_list)-1)
-        self.car_id = p.loadURDF("world&car/simplecar.urdf", env_list[index_env][0],env_list[index_env][1])
+        # env_list = [env1,env2,env3,env4]
+        # index_env = random.randint(0,len(env_list)-1)
+        #self.car_id = p.loadURDF("world&car/simplecar.urdf", env_list[index_env][0],env_list[index_env][1])
+
         
-        p.loadSDF("world/track.sdf",globalScaling = 1)
+        
+        
+        # TRACK 0
+        if self.track_number==0:
+            self.car_id = p.loadURDF("world&car/simplecar.urdf", [-7.6,6,.3], p.getQuaternionFromEuler([0,0,np.deg2rad(90)]))
+        
+        elif self.track_number==1:
+        # TRACK 1
+            self.car_id = p.loadURDF("world&car/simplecar.urdf",[12.22, -6.26,.3], p.getQuaternionFromEuler([0,0,np.deg2rad(-135)]))
+        
+        elif self.track_number==2:
+        # TRACK 2
+            self.car_id = p.loadURDF("world&car/simplecar.urdf",[7.32, -16.6,.3], p.getQuaternionFromEuler([0,0,np.deg2rad(180)]))
+        
+        elif self.track_number==4:
+        # TRACK 4
+            self.car_id = p.loadURDF("world&car/simplecar.urdf",[-11.9, 10.23,.3], p.getQuaternionFromEuler([0,0,np.deg2rad(45)]))
+        
+        elif self.track_number==5:
+        # TRACK 5
+            self.car_id = p.loadURDF("world&car/simplecar.urdf",[1.27, -6.78,.3], p.getQuaternionFromEuler([0,0,np.deg2rad(115)]))
+        
+        
+        # TESTING 
+        # TRACK 6
+        #self.car_id = p.loadURDF("world&car/simplecar.urdf",[6.7, -7.05,.3], p.getQuaternionFromEuler([0,0,np.deg2rad(180)]))
+        
+        # TRACK 7
+        #self.car_id = p.loadURDF("world&car/simplecar.urdf",[-13.5, 9.43,.3], p.getQuaternionFromEuler([0,0,np.deg2rad(30)]))
+        
+        # TRACK 9
+        #self.car_id = p.loadURDF("world&car/simplecar.urdf",[6.7, 18.8,.3], p.getQuaternionFromEuler([0,0,np.deg2rad(0)]))
+        
+        
+        p.loadSDF(f"world/track/track{self.track_number}.sdf",globalScaling = 1)
 
 
     # Le osservazioni sono le immagini 84x96x1 rgb prese dalla zed
@@ -100,6 +143,7 @@ class PyBulletContinuousEnv(gym.Env):
         p.setJointMotorControl2(self.car_id,0,p.POSITION_CONTROL,targetPosition=steer)
         p.setJointMotorControl2(self.car_id,2,p.POSITION_CONTROL,targetPosition=steer)
 
+        #p.setTimeStep(0.02)
         # per andare a 10Hz
         for _ in range(24):
             p.stepSimulation()
@@ -121,7 +165,7 @@ class PyBulletContinuousEnv(gym.Env):
         p.disconnect()
 
 
-    # ottengo l'immagine dalla zed montata sul robot e ritorno l'immagine HSV 640X480x3
+    # ottengo l'immagine dalla zed montata sul robot e ritorno l'immagine RGB 640X480x3
     def getCamera_image(self):
         camInfo = p.getDebugVisualizerCamera()
         ls = p.getLinkState(self.car_id,zed_camera_joint, computeForwardKinematics=True)
@@ -139,7 +183,6 @@ class PyBulletContinuousEnv(gym.Env):
         
         width, height, rgbImg, depthImg, segImg= p.getCameraImage(640,480,viewMatrix=viewMat,projectionMatrix=projMat, renderer=p.ER_BULLET_HARDWARE_OPENGL)
 
-        #imgHSV = cv2.cvtColor(rgbImg[:,:,:3], cv2.COLOR_RGB2HSV)
         return rgbImg[:,:,:3]
 
 
@@ -291,15 +334,18 @@ class PyBulletContinuousEnv(gym.Env):
         # basso sinistra, alto sinistra, alto destra, basso destra
         
         #conePts4Homography = np.array([[186,324], [458,324], [601,412], [43,412]]).astype(np.float32)
+        
+        #conePts4Homography = np.array([[155,317], [489,317], [579,371], [86,371]]).astype(np.float32)
         #                                  UL        UR          LR        LL
         #coneDesiredPts     = np.array([[ 140,307], [500,307], [500,400], [140,400]  ]).astype(np.float32)
+        # 155,317     489,317         579,371       86,371 
        
-        #HomoMat = cv2.getPerspectiveTransform(conePts4Homography,roadDesiredPts)
-        
+        #HomoMat = cv2.getPerspectiveTransform(conePts4Homography,coneDesiredPts)
+        #print(HomoMat)
        
         self.HomoMat = np.array([[   -0.46095,     -1.3316,      468.43],
-                            [ 9.4581e-16,     -2.0326,      551.64],
-                            [ 2.3918e-18,      -0.0041613,       1]])
+                             [ 9.4581e-16,     -2.0326,      551.64],
+                             [ 2.3918e-18,      -0.0041613,       1]])
         return self.HomoMat
 
 

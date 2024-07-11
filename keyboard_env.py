@@ -27,7 +27,8 @@ env.reset()
 # dopo 1000 step done diventa True
 while not done:
 	start = time.time()
-       
+	#state= env.get_observation()
+	color_rgb = env.getCamera_image()
         
 	p.setGravity(0,0,-9.81)
 	keys = p.getKeyboardEvents()
@@ -48,12 +49,15 @@ while not done:
 		if (k == p.B3G_UP_ARROW and (v&p.KEY_WAS_RELEASED)):
 			forward=0
 		if (k == p.B3G_DOWN_ARROW and (v&p.KEY_WAS_TRIGGERED)):
-			backward=10
+			forward=-10
 		if (k == p.B3G_DOWN_ARROW and (v&p.KEY_WAS_RELEASED)):
-			backward=0
+			forward=0
+   
+   
 
+	#forward = 0
 	image,_,_ = env.step([turn,forward])
-	cv2.imshow("YOLOv8 Tracking", image)
+	cv2.imshow("YOLOv8 Tracking", color_rgb)
 	# Display the annotated frame
 	#cv2.imshow("YOLOv8 detect", annotated_frame)
 	#cv2.imshow('IMAGE', img)

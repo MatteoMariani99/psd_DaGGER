@@ -3,22 +3,24 @@ import numpy as np
 from matplotlib import pyplot as plt
 import scipy
 
+#track_number = 4
 
-def getCones():
-    #data = pd.read_csv("world/data.csv")
-    #right = pd.read_csv("world/innerCones.csv")
-    #left = pd.read_csv("world/outerCones.csv")
+
+
+def getCones(track_number):
     
     # new track
-    right = pd.read_csv("world/coneIn.csv")
-    left = pd.read_csv("world/coneOut.csv")
+    right = pd.read_csv(f"world/cones_position/coneIN_track{track_number}.csv")
+    left = pd.read_csv(f"world/cones_position/coneOUT_track{track_number}.csv")
     
-    rightSide = right.to_numpy()[:,:3][::-1]
-    leftSide = left.to_numpy()[:,:3][::-1]
     
-    #print(rightSide.shape)
-    #print(leftSide.shape)
-
+    if track_number==1 or track_number==4:
+        rightSide = right.to_numpy()[:,:2][::-1]
+        leftSide = left.to_numpy()[:,:2][::-1]
+    else:
+        rightSide = right.to_numpy()[:,:2]
+        leftSide = left.to_numpy()[:,:2]
+   
 
     cLine = np.zeros(leftSide.shape, dtype=np.float32)
 
@@ -33,11 +35,11 @@ def getCones():
     
 
 if __name__== "__main__":
-    leftSide, rightSide, cLine = getCones() 
+    leftSide, rightSide, cLine = getCones(2) 
     print("l ",len(leftSide))
     print("r ",len(rightSide))
     print("c ",len(cLine))
-    print(cLine[44,0], cLine[44,1])
+   
     
     plt.scatter(leftSide[:,0],leftSide[:,1], 5, "blue")
     plt.scatter(rightSide[:,0],rightSide[:,1], 5, 'orange')

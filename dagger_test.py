@@ -157,7 +157,11 @@ if __name__ == "__main__":
  
         # ottengo i punti centrali della strada
         #_,_,centerLine = computeTrack(debug=False)
-        _,_,centerLine = getCones()
+        _,_,centerLine = getCones(env.track_number)
+        
+        
+        # invertita pr 1,4 le left e right in get_cones
+        
         
         # assemblo la lista dei punti a partire dal punto che mi serve
         # es. se parto dalla posizione (10,10) posso trovarmi a metà lista: in questo modo faccio si che 
@@ -169,6 +173,7 @@ if __name__ == "__main__":
         # per ogni indice nella lista seguo il punto tramite il controllore P
         for i in total_index:
             goal = centerLine[i][:2] # non prendo la z
+            
             r, yaw_error = env.rect_to_polar_relative(goal)
 
             # viene messo sia qui che sotto in modo da uscire prima dal ciclo for e poi dal while
@@ -178,7 +183,6 @@ if __name__ == "__main__":
             
             # quando la distanza verso il punto diventa minore di 0.5 passo al punto successivo
             while r>0.5:
-
                 # calcolo le coordinate polari dalla macchina al punto che devo raggiungere ottenendo in uscita distanza (m) e angolo (rad)
                 r, yaw_error = env.rect_to_polar_relative(goal)
                 

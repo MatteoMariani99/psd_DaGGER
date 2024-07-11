@@ -49,16 +49,15 @@ def train_model(X_train, y_train, path, num_epochs=20, learning_rate=1e-3, batch
     loader = DataLoader(dataset=list(zip(X_train, y_train)),batch_size=batch_size,shuffle=True)
 
     criterion = torch.nn.MSELoss()
-    #optimizer = torch.optim.SGD(model.parameters(), lr=learning_rate, momentum=0.9) # built-in L2 
+
     optimizer = torch.optim.AdamW(model.parameters(), lr=learning_rate, weight_decay=1e-5) # built-in L2 
 
     loss_vector = []
     for t in tqdm(range(num_epochs)):
       for X_batch, y_batch in loader:
         preds  = model(X_batch[:,np.newaxis,...].type(torch.FloatTensor).to(device))
-        #print(y_batch.shape)
+
         loss   = criterion(preds, y_batch.to(device))
-        
         
         
         optimizer.zero_grad()
@@ -79,48 +78,22 @@ def validate_model(X_valid, y_valid, model):
     loader = DataLoader(dataset=list(zip(X_valid, y_valid)),batch_size=1,shuffle=True)
 
     criterion = torch.nn.MSELoss()
-    
-    #X_valid = torch.from_numpy(X_valid[:,np.newaxis,...])
-    #y_valid = torch.from_numpy(y_valid).to(device)
-    
-    
-    #vel_pred = []
-    #steer_pred = []
+
     loss_vector = []
     print("... validate model")
-    #print(y_valid.shape)
+
     with torch.no_grad():
         for X_batch, y_batch in loader:
             preds  = model(X_batch[:,np.newaxis,...].type(torch.FloatTensor).to(device))
-            #print(y_batch.shape)
+
             loss = criterion(preds, y_batch.to(device))
             loss_vector.append(loss)
-            #y_pred_detach = y_preds.detach().cpu().numpy()[0]
-            #corr_detach = j.cpu().numpy()
-
-            # if round(y_pred_detach[0],2)==round(corr_detach[0],2):
-            #     steer_pred.append(True)
-            # else:
-            #     steer_pred.append(False)
-                
-            # if round(y_pred_detach[1],1)==round(corr_detach[1],1):
-            #     vel_pred.append(True)
-            # else:
-            #     vel_pred.append(False)
-                
-        #counter_steer = steer_pred.count(True)
-        #counter_vel = vel_pred.count(True)
-
-        #accuracy_steer = counter_steer/y_valid.shape[0]
-        #accuracy_vel = counter_vel/y_valid.shape[0]
-    
+            
    
     print("Loss validation mean: ",(sum(loss_vector)/len(loss_vector)).detach().cpu().numpy().flatten())
     return (sum(loss_vector)/len(loss_vector)).detach().cpu().numpy().flatten()
     
-    #print(f"Accuracy steer: {round(accuracy_steer,3)*100}%, Accuracy vel: {round(accuracy_vel,3)*100}%")
-
-
+    
 def objective(trial):
     l_r = trial.suggest_float('learning_rate',1e-4,1e-1, log=True) # log= True in modo che varia il valore logaritmicamente
     batch_size = trial.suggest_categorical('batch_size',[16,32,64])
@@ -145,7 +118,7 @@ if __name__ == "__main__":
     
     if not optimize:
         # utilizzo di params ottimi
-        loss = train_model(X_train, y_train, 'dagger_test_models/modelli ottimi/cones/vel10_variabile.pth', num_epochs=19, learning_rate= 0.0014793951570453206,batch_size=16)
+        loss = train_model(X_train, y_train, 'dagger_test_models/modelli ottimi/cones/multi_track.pth', num_epochs=20, learning_rate= 0.002217342432015554, batch_size=16)
         loss_val = validate_model( X_valid, y_valid, model)
     
     else:
@@ -158,7 +131,7 @@ if __name__ == "__main__":
     #optuna-dashboard sqlite:///db.sqlite3
     
     # migliore:
-    #Best: {'learning_rate': 0.0014793951570453206, 
+    #Best: {'learning_rate': 0.002217342432015554, 
     # 'batch_size': 16, 
-    # 'num_epochs': 19}
+    # 'num_epochs': 20}
 

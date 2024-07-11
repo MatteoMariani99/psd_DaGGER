@@ -1,0 +1,6521 @@
+<?xml version="1.0"?>
+  <sdf version='1.9'>
+     <model name='cone_0'>
+      <link name='cone_0_link'>
+        <inertial>
+			<mass>0</mass>
+			<inertia>
+			<ixx>0.166667</ixx>
+			<ixy>0</ixy>
+			<ixz>0</ixz>
+			<iyy>0.166667</iyy>
+			<iyz>0</iyz>
+			<izz>0.166667</izz>
+			</inertia>
+		</inertial>
+        <collision name='cone_0_collision'>
+          <geometry>
+            <mesh>
+              <uri>/models/cone/meshes/cone.stl</uri>
+              <scale>0.001 0.001 0.001</scale>
+            </mesh>
+          </geometry>
+        </collision>
+        <visual name='cone_0_visual'>
+          <geometry>
+            <mesh>
+              <uri>/models/cone/meshes/cone.stl</uri>
+              <scale>0.001 0.001 0.001</scale>
+            </mesh>
+          </geometry>
+          <material>
+            <ambient>1 1 0 1</ambient>
+            <diffuse>1 1 0 1</diffuse>
+            <specular>1 1 0 1</specular>
+          </material>
+        </visual>
+        
+        <enable_wind>false</enable_wind>
+      </link>
+      <pose>-11.968186448017756 16.118956736265083 0.0 1.57 0 0</pose>
+      <static>true</static>
+      </model>
+      
+     <model name='cone_1'>
+      <link name='cone_1_link'>
+        <inertial>
+			<mass>0</mass>
+			<inertia>
+			<ixx>0.166667</ixx>
+			<ixy>0</ixy>
+			<ixz>0</ixz>
+			<iyy>0.166667</iyy>
+			<iyz>0</iyz>
+			<izz>0.166667</izz>
+			</inertia>
+		</inertial>
+        <collision name='cone_1_collision'>
+          <geometry>
+            <mesh>
+              <uri>/models/cone/meshes/cone.stl</uri>
+              <scale>0.001 0.001 0.001</scale>
+            </mesh>
+          </geometry>
+        </collision>
+        <visual name='cone_1_visual'>
+          <geometry>
+            <mesh>
+              <uri>/models/cone/meshes/cone.stl</uri>
+              <scale>0.001 0.001 0.001</scale>
+            </mesh>
+          </geometry>
+          <material>
+            <ambient>1 1 0 1</ambient>
+            <diffuse>1 1 0 1</diffuse>
+            <specular>1 1 0 1</specular>
+          </material>
+        </visual>
+        
+        <enable_wind>false</enable_wind>
+      </link>
+      <pose>-10.669546673695246 15.693745902715584 0.0 1.57 0 0</pose>
+      <static>true</static>
+      </model>
+      
+     <model name='cone_2'>
+      <link name='cone_2_link'>
+        <inertial>
+			<mass>0</mass>
+			<inertia>
+			<ixx>0.166667</ixx>
+			<ixy>0</ixy>
+			<ixz>0</ixz>
+			<iyy>0.166667</iyy>
+			<iyz>0</iyz>
+			<izz>0.166667</izz>
+			</inertia>
+		</inertial>
+        <collision name='cone_2_collision'>
+          <geometry>
+            <mesh>
+              <uri>/models/cone/meshes/cone.stl</uri>
+              <scale>0.001 0.001 0.001</scale>
+            </mesh>
+          </geometry>
+        </collision>
+        <visual name='cone_2_visual'>
+          <geometry>
+            <mesh>
+              <uri>/models/cone/meshes/cone.stl</uri>
+              <scale>0.001 0.001 0.001</scale>
+            </mesh>
+          </geometry>
+          <material>
+            <ambient>1 1 0 1</ambient>
+            <diffuse>1 1 0 1</diffuse>
+            <specular>1 1 0 1</specular>
+          </material>
+        </visual>
+        
+        <enable_wind>false</enable_wind>
+      </link>
+      <pose>-8.99744231502215 14.815476468740364 0.0 1.57 0 0</pose>
+      <static>true</static>
+      </model>
+      
+     <model name='cone_3'>
+      <link name='cone_3_link'>
+        <inertial>
+			<mass>0</mass>
+			<inertia>
+			<ixx>0.166667</ixx>
+			<ixy>0</ixy>
+			<ixz>0</ixz>
+			<iyy>0.166667</iyy>
+			<iyz>0</iyz>
+			<izz>0.166667</izz>
+			</inertia>
+		</inertial>
+        <collision name='cone_3_collision'>
+          <geometry>
+            <mesh>
+              <uri>/models/cone/meshes/cone.stl</uri>
+              <scale>0.001 0.001 0.001</scale>
+            </mesh>
+          </geometry>
+        </collision>
+        <visual name='cone_3_visual'>
+          <geometry>
+            <mesh>
+              <uri>/models/cone/meshes/cone.stl</uri>
+              <scale>0.001 0.001 0.001</scale>
+            </mesh>
+          </geometry>
+          <material>
+            <ambient>1 1 0 1</ambient>
+            <diffuse>1 1 0 1</diffuse>
+            <specular>1 1 0 1</specular>
+          </material>
+        </visual>
+        
+        <enable_wind>false</enable_wind>
+      </link>
+      <pose>-7.967058728138605 13.95920734757032 0.0 1.57 0 0</pose>
+      <static>true</static>
+      </model>
+      
+     <model name='cone_4'>
+      <link name='cone_4_link'>
+        <inertial>
+			<mass>0</mass>
+			<inertia>
+			<ixx>0.166667</ixx>
+			<ixy>0</ixy>
+			<ixz>0</ixz>
+			<iyy>0.166667</iyy>
+			<iyz>0</iyz>
+			<izz>0.166667</izz>
+			</inertia>
+		</inertial>
+        <collision name='cone_4_collision'>
+          <geometry>
+            <mesh>
+              <uri>/models/cone/meshes/cone.stl</uri>
+              <scale>0.001 0.001 0.001</scale>
+            </mesh>
+          </geometry>
+        </collision>
+        <visual name='cone_4_visual'>
+          <geometry>
+            <mesh>
+              <uri>/models/cone/meshes/cone.stl</uri>
+              <scale>0.001 0.001 0.001</scale>
+            </mesh>
+          </geometry>
+          <material>
+            <ambient>1 1 0 1</ambient>
+            <diffuse>1 1 0 1</diffuse>
+            <specular>1 1 0 1</specular>
+          </material>
+        </visual>
+        
+        <enable_wind>false</enable_wind>
+      </link>
+      <pose>-7.153440545002619 13.045023254094978 0.0 1.57 0 0</pose>
+      <static>true</static>
+      </model>
+      
+     <model name='cone_5'>
+      <link name='cone_5_link'>
+        <inertial>
+			<mass>0</mass>
+			<inertia>
+			<ixx>0.166667</ixx>
+			<ixy>0</ixy>
+			<ixz>0</ixz>
+			<iyy>0.166667</iyy>
+			<iyz>0</iyz>
+			<izz>0.166667</izz>
+			</inertia>
+		</inertial>
+        <collision name='cone_5_collision'>
+          <geometry>
+            <mesh>
+              <uri>/models/cone/meshes/cone.stl</uri>
+              <scale>0.001 0.001 0.001</scale>
+            </mesh>
+          </geometry>
+        </collision>
+        <visual name='cone_5_visual'>
+          <geometry>
+            <mesh>
+              <uri>/models/cone/meshes/cone.stl</uri>
+              <scale>0.001 0.001 0.001</scale>
+            </mesh>
+          </geometry>
+          <material>
+            <ambient>1 1 0 1</ambient>
+            <diffuse>1 1 0 1</diffuse>
+            <specular>1 1 0 1</specular>
+          </material>
+        </visual>
+        
+        <enable_wind>false</enable_wind>
+      </link>
+      <pose>-6.1443267563978825 11.720125964818855 0.0 1.57 0 0</pose>
+      <static>true</static>
+      </model>
+      
+     <model name='cone_6'>
+      <link name='cone_6_link'>
+        <inertial>
+			<mass>0</mass>
+			<inertia>
+			<ixx>0.166667</ixx>
+			<ixy>0</ixy>
+			<ixz>0</ixz>
+			<iyy>0.166667</iyy>
+			<iyz>0</iyz>
+			<izz>0.166667</izz>
+			</inertia>
+		</inertial>
+        <collision name='cone_6_collision'>
+          <geometry>
+            <mesh>
+              <uri>/models/cone/meshes/cone.stl</uri>
+              <scale>0.001 0.001 0.001</scale>
+            </mesh>
+          </geometry>
+        </collision>
+        <visual name='cone_6_visual'>
+          <geometry>
+            <mesh>
+              <uri>/models/cone/meshes/cone.stl</uri>
+              <scale>0.001 0.001 0.001</scale>
+            </mesh>
+          </geometry>
+          <material>
+            <ambient>1 1 0 1</ambient>
+            <diffuse>1 1 0 1</diffuse>
+            <specular>1 1 0 1</specular>
+          </material>
+        </visual>
+        
+        <enable_wind>false</enable_wind>
+      </link>
+      <pose>-5.157501767079035 10.43574076050367 0.0 1.57 0 0</pose>
+      <static>true</static>
+      </model>
+      
+     <model name='cone_7'>
+      <link name='cone_7_link'>
+        <inertial>
+			<mass>0</mass>
+			<inertia>
+			<ixx>0.166667</ixx>
+			<ixy>0</ixy>
+			<ixz>0</ixz>
+			<iyy>0.166667</iyy>
+			<iyz>0</iyz>
+			<izz>0.166667</izz>
+			</inertia>
+		</inertial>
+        <collision name='cone_7_collision'>
+          <geometry>
+            <mesh>
+              <uri>/models/cone/meshes/cone.stl</uri>
+              <scale>0.001 0.001 0.001</scale>
+            </mesh>
+          </geometry>
+        </collision>
+        <visual name='cone_7_visual'>
+          <geometry>
+            <mesh>
+              <uri>/models/cone/meshes/cone.stl</uri>
+              <scale>0.001 0.001 0.001</scale>
+            </mesh>
+          </geometry>
+          <material>
+            <ambient>1 1 0 1</ambient>
+            <diffuse>1 1 0 1</diffuse>
+            <specular>1 1 0 1</specular>
+          </material>
+        </visual>
+        
+        <enable_wind>false</enable_wind>
+      </link>
+      <pose>-3.9162870148817692 9.537957004247566 0.0 1.57 0 0</pose>
+      <static>true</static>
+      </model>
+      
+     <model name='cone_8'>
+      <link name='cone_8_link'>
+        <inertial>
+			<mass>0</mass>
+			<inertia>
+			<ixx>0.166667</ixx>
+			<ixy>0</ixy>
+			<ixz>0</ixz>
+			<iyy>0.166667</iyy>
+			<iyz>0</iyz>
+			<izz>0.166667</izz>
+			</inertia>
+		</inertial>
+        <collision name='cone_8_collision'>
+          <geometry>
+            <mesh>
+              <uri>/models/cone/meshes/cone.stl</uri>
+              <scale>0.001 0.001 0.001</scale>
+            </mesh>
+          </geometry>
+        </collision>
+        <visual name='cone_8_visual'>
+          <geometry>
+            <mesh>
+              <uri>/models/cone/meshes/cone.stl</uri>
+              <scale>0.001 0.001 0.001</scale>
+            </mesh>
+          </geometry>
+          <material>
+            <ambient>1 1 0 1</ambient>
+            <diffuse>1 1 0 1</diffuse>
+            <specular>1 1 0 1</specular>
+          </material>
+        </visual>
+        
+        <enable_wind>false</enable_wind>
+      </link>
+      <pose>-1.9933438996473942 8.90024214142408 0.0 1.57 0 0</pose>
+      <static>true</static>
+      </model>
+      
+     <model name='cone_9'>
+      <link name='cone_9_link'>
+        <inertial>
+			<mass>0</mass>
+			<inertia>
+			<ixx>0.166667</ixx>
+			<ixy>0</ixy>
+			<ixz>0</ixz>
+			<iyy>0.166667</iyy>
+			<iyz>0</iyz>
+			<izz>0.166667</izz>
+			</inertia>
+		</inertial>
+        <collision name='cone_9_collision'>
+          <geometry>
+            <mesh>
+              <uri>/models/cone/meshes/cone.stl</uri>
+              <scale>0.001 0.001 0.001</scale>
+            </mesh>
+          </geometry>
+        </collision>
+        <visual name='cone_9_visual'>
+          <geometry>
+            <mesh>
+              <uri>/models/cone/meshes/cone.stl</uri>
+              <scale>0.001 0.001 0.001</scale>
+            </mesh>
+          </geometry>
+          <material>
+            <ambient>1 1 0 1</ambient>
+            <diffuse>1 1 0 1</diffuse>
+            <specular>1 1 0 1</specular>
+          </material>
+        </visual>
+        
+        <enable_wind>false</enable_wind>
+      </link>
+      <pose>-0.6009307603041325 8.190974525152107 0.0 1.57 0 0</pose>
+      <static>true</static>
+      </model>
+      
+     <model name='cone_10'>
+      <link name='cone_10_link'>
+        <inertial>
+			<mass>0</mass>
+			<inertia>
+			<ixx>0.166667</ixx>
+			<ixy>0</ixy>
+			<ixz>0</ixz>
+			<iyy>0.166667</iyy>
+			<iyz>0</iyz>
+			<izz>0.166667</izz>
+			</inertia>
+		</inertial>
+        <collision name='cone_10_collision'>
+          <geometry>
+            <mesh>
+              <uri>/models/cone/meshes/cone.stl</uri>
+              <scale>0.001 0.001 0.001</scale>
+            </mesh>
+          </geometry>
+        </collision>
+        <visual name='cone_10_visual'>
+          <geometry>
+            <mesh>
+              <uri>/models/cone/meshes/cone.stl</uri>
+              <scale>0.001 0.001 0.001</scale>
+            </mesh>
+          </geometry>
+          <material>
+            <ambient>1 1 0 1</ambient>
+            <diffuse>1 1 0 1</diffuse>
+            <specular>1 1 0 1</specular>
+          </material>
+        </visual>
+        
+        <enable_wind>false</enable_wind>
+      </link>
+      <pose>0.9377083082993831 7.521741203008553 0.0 1.57 0 0</pose>
+      <static>true</static>
+      </model>
+      
+     <model name='cone_11'>
+      <link name='cone_11_link'>
+        <inertial>
+			<mass>0</mass>
+			<inertia>
+			<ixx>0.166667</ixx>
+			<ixy>0</ixy>
+			<ixz>0</ixz>
+			<iyy>0.166667</iyy>
+			<iyz>0</iyz>
+			<izz>0.166667</izz>
+			</inertia>
+		</inertial>
+        <collision name='cone_11_collision'>
+          <geometry>
+            <mesh>
+              <uri>/models/cone/meshes/cone.stl</uri>
+              <scale>0.001 0.001 0.001</scale>
+            </mesh>
+          </geometry>
+        </collision>
+        <visual name='cone_11_visual'>
+          <geometry>
+            <mesh>
+              <uri>/models/cone/meshes/cone.stl</uri>
+              <scale>0.001 0.001 0.001</scale>
+            </mesh>
+          </geometry>
+          <material>
+            <ambient>1 1 0 1</ambient>
+            <diffuse>1 1 0 1</diffuse>
+            <specular>1 1 0 1</specular>
+          </material>
+        </visual>
+        
+        <enable_wind>false</enable_wind>
+      </link>
+      <pose>2.7017826338609066 6.739544204412361 0.0 1.57 0 0</pose>
+      <static>true</static>
+      </model>
+      
+     <model name='cone_12'>
+      <link name='cone_12_link'>
+        <inertial>
+			<mass>0</mass>
+			<inertia>
+			<ixx>0.166667</ixx>
+			<ixy>0</ixy>
+			<ixz>0</ixz>
+			<iyy>0.166667</iyy>
+			<iyz>0</iyz>
+			<izz>0.166667</izz>
+			</inertia>
+		</inertial>
+        <collision name='cone_12_collision'>
+          <geometry>
+            <mesh>
+              <uri>/models/cone/meshes/cone.stl</uri>
+              <scale>0.001 0.001 0.001</scale>
+            </mesh>
+          </geometry>
+        </collision>
+        <visual name='cone_12_visual'>
+          <geometry>
+            <mesh>
+              <uri>/models/cone/meshes/cone.stl</uri>
+              <scale>0.001 0.001 0.001</scale>
+            </mesh>
+          </geometry>
+          <material>
+            <ambient>1 1 0 1</ambient>
+            <diffuse>1 1 0 1</diffuse>
+            <specular>1 1 0 1</specular>
+          </material>
+        </visual>
+        
+        <enable_wind>false</enable_wind>
+      </link>
+      <pose>4.395138194163641 5.801395705877205 0.0 1.57 0 0</pose>
+      <static>true</static>
+      </model>
+      
+     <model name='cone_13'>
+      <link name='cone_13_link'>
+        <inertial>
+			<mass>0</mass>
+			<inertia>
+			<ixx>0.166667</ixx>
+			<ixy>0</ixy>
+			<ixz>0</ixz>
+			<iyy>0.166667</iyy>
+			<iyz>0</iyz>
+			<izz>0.166667</izz>
+			</inertia>
+		</inertial>
+        <collision name='cone_13_collision'>
+          <geometry>
+            <mesh>
+              <uri>/models/cone/meshes/cone.stl</uri>
+              <scale>0.001 0.001 0.001</scale>
+            </mesh>
+          </geometry>
+        </collision>
+        <visual name='cone_13_visual'>
+          <geometry>
+            <mesh>
+              <uri>/models/cone/meshes/cone.stl</uri>
+              <scale>0.001 0.001 0.001</scale>
+            </mesh>
+          </geometry>
+          <material>
+            <ambient>1 1 0 1</ambient>
+            <diffuse>1 1 0 1</diffuse>
+            <specular>1 1 0 1</specular>
+          </material>
+        </visual>
+        
+        <enable_wind>false</enable_wind>
+      </link>
+      <pose>6.203648020823797 5.138144782720467 0.0 1.57 0 0</pose>
+      <static>true</static>
+      </model>
+      
+     <model name='cone_14'>
+      <link name='cone_14_link'>
+        <inertial>
+			<mass>0</mass>
+			<inertia>
+			<ixx>0.166667</ixx>
+			<ixy>0</ixy>
+			<ixz>0</ixz>
+			<iyy>0.166667</iyy>
+			<iyz>0</iyz>
+			<izz>0.166667</izz>
+			</inertia>
+		</inertial>
+        <collision name='cone_14_collision'>
+          <geometry>
+            <mesh>
+              <uri>/models/cone/meshes/cone.stl</uri>
+              <scale>0.001 0.001 0.001</scale>
+            </mesh>
+          </geometry>
+        </collision>
+        <visual name='cone_14_visual'>
+          <geometry>
+            <mesh>
+              <uri>/models/cone/meshes/cone.stl</uri>
+              <scale>0.001 0.001 0.001</scale>
+            </mesh>
+          </geometry>
+          <material>
+            <ambient>1 1 0 1</ambient>
+            <diffuse>1 1 0 1</diffuse>
+            <specular>1 1 0 1</specular>
+          </material>
+        </visual>
+        
+        <enable_wind>false</enable_wind>
+      </link>
+      <pose>7.681177546580633 4.265408805547615 0.0 1.57 0 0</pose>
+      <static>true</static>
+      </model>
+      
+     <model name='cone_15'>
+      <link name='cone_15_link'>
+        <inertial>
+			<mass>0</mass>
+			<inertia>
+			<ixx>0.166667</ixx>
+			<ixy>0</ixy>
+			<ixz>0</ixz>
+			<iyy>0.166667</iyy>
+			<iyz>0</iyz>
+			<izz>0.166667</izz>
+			</inertia>
+		</inertial>
+        <collision name='cone_15_collision'>
+          <geometry>
+            <mesh>
+              <uri>/models/cone/meshes/cone.stl</uri>
+              <scale>0.001 0.001 0.001</scale>
+            </mesh>
+          </geometry>
+        </collision>
+        <visual name='cone_15_visual'>
+          <geometry>
+            <mesh>
+              <uri>/models/cone/meshes/cone.stl</uri>
+              <scale>0.001 0.001 0.001</scale>
+            </mesh>
+          </geometry>
+          <material>
+            <ambient>1 1 0 1</ambient>
+            <diffuse>1 1 0 1</diffuse>
+            <specular>1 1 0 1</specular>
+          </material>
+        </visual>
+        
+        <enable_wind>false</enable_wind>
+      </link>
+      <pose>9.664833476146063 3.637980750738045 0.0 1.57 0 0</pose>
+      <static>true</static>
+      </model>
+      
+     <model name='cone_16'>
+      <link name='cone_16_link'>
+        <inertial>
+			<mass>0</mass>
+			<inertia>
+			<ixx>0.166667</ixx>
+			<ixy>0</ixy>
+			<ixz>0</ixz>
+			<iyy>0.166667</iyy>
+			<iyz>0</iyz>
+			<izz>0.166667</izz>
+			</inertia>
+		</inertial>
+        <collision name='cone_16_collision'>
+          <geometry>
+            <mesh>
+              <uri>/models/cone/meshes/cone.stl</uri>
+              <scale>0.001 0.001 0.001</scale>
+            </mesh>
+          </geometry>
+        </collision>
+        <visual name='cone_16_visual'>
+          <geometry>
+            <mesh>
+              <uri>/models/cone/meshes/cone.stl</uri>
+              <scale>0.001 0.001 0.001</scale>
+            </mesh>
+          </geometry>
+          <material>
+            <ambient>1 1 0 1</ambient>
+            <diffuse>1 1 0 1</diffuse>
+            <specular>1 1 0 1</specular>
+          </material>
+        </visual>
+        
+        <enable_wind>false</enable_wind>
+      </link>
+      <pose>11.317978312571844 2.839434913335701 0.0 1.57 0 0</pose>
+      <static>true</static>
+      </model>
+      
+     <model name='cone_17'>
+      <link name='cone_17_link'>
+        <inertial>
+			<mass>0</mass>
+			<inertia>
+			<ixx>0.166667</ixx>
+			<ixy>0</ixy>
+			<ixz>0</ixz>
+			<iyy>0.166667</iyy>
+			<iyz>0</iyz>
+			<izz>0.166667</izz>
+			</inertia>
+		</inertial>
+        <collision name='cone_17_collision'>
+          <geometry>
+            <mesh>
+              <uri>/models/cone/meshes/cone.stl</uri>
+              <scale>0.001 0.001 0.001</scale>
+            </mesh>
+          </geometry>
+        </collision>
+        <visual name='cone_17_visual'>
+          <geometry>
+            <mesh>
+              <uri>/models/cone/meshes/cone.stl</uri>
+              <scale>0.001 0.001 0.001</scale>
+            </mesh>
+          </geometry>
+          <material>
+            <ambient>1 1 0 1</ambient>
+            <diffuse>1 1 0 1</diffuse>
+            <specular>1 1 0 1</specular>
+          </material>
+        </visual>
+        
+        <enable_wind>false</enable_wind>
+      </link>
+      <pose>13.022356440623602 1.9630053555354081 0.0 1.57 0 0</pose>
+      <static>true</static>
+      </model>
+      
+     <model name='cone_18'>
+      <link name='cone_18_link'>
+        <inertial>
+			<mass>0</mass>
+			<inertia>
+			<ixx>0.166667</ixx>
+			<ixy>0</ixy>
+			<ixz>0</ixz>
+			<iyy>0.166667</iyy>
+			<iyz>0</iyz>
+			<izz>0.166667</izz>
+			</inertia>
+		</inertial>
+        <collision name='cone_18_collision'>
+          <geometry>
+            <mesh>
+              <uri>/models/cone/meshes/cone.stl</uri>
+              <scale>0.001 0.001 0.001</scale>
+            </mesh>
+          </geometry>
+        </collision>
+        <visual name='cone_18_visual'>
+          <geometry>
+            <mesh>
+              <uri>/models/cone/meshes/cone.stl</uri>
+              <scale>0.001 0.001 0.001</scale>
+            </mesh>
+          </geometry>
+          <material>
+            <ambient>1 1 0 1</ambient>
+            <diffuse>1 1 0 1</diffuse>
+            <specular>1 1 0 1</specular>
+          </material>
+        </visual>
+        
+        <enable_wind>false</enable_wind>
+      </link>
+      <pose>14.136616160472235 0.9554675137385331 0.0 1.57 0 0</pose>
+      <static>true</static>
+      </model>
+      
+     <model name='cone_19'>
+      <link name='cone_19_link'>
+        <inertial>
+			<mass>0</mass>
+			<inertia>
+			<ixx>0.166667</ixx>
+			<ixy>0</ixy>
+			<ixz>0</ixz>
+			<iyy>0.166667</iyy>
+			<iyz>0</iyz>
+			<izz>0.166667</izz>
+			</inertia>
+		</inertial>
+        <collision name='cone_19_collision'>
+          <geometry>
+            <mesh>
+              <uri>/models/cone/meshes/cone.stl</uri>
+              <scale>0.001 0.001 0.001</scale>
+            </mesh>
+          </geometry>
+        </collision>
+        <visual name='cone_19_visual'>
+          <geometry>
+            <mesh>
+              <uri>/models/cone/meshes/cone.stl</uri>
+              <scale>0.001 0.001 0.001</scale>
+            </mesh>
+          </geometry>
+          <material>
+            <ambient>1 1 0 1</ambient>
+            <diffuse>1 1 0 1</diffuse>
+            <specular>1 1 0 1</specular>
+          </material>
+        </visual>
+        
+        <enable_wind>false</enable_wind>
+      </link>
+      <pose>14.665762354930242 -0.5264050448552169 0.0 1.57 0 0</pose>
+      <static>true</static>
+      </model>
+      
+     <model name='cone_20'>
+      <link name='cone_20_link'>
+        <inertial>
+			<mass>0</mass>
+			<inertia>
+			<ixx>0.166667</ixx>
+			<ixy>0</ixy>
+			<ixz>0</ixz>
+			<iyy>0.166667</iyy>
+			<iyz>0</iyz>
+			<izz>0.166667</izz>
+			</inertia>
+		</inertial>
+        <collision name='cone_20_collision'>
+          <geometry>
+            <mesh>
+              <uri>/models/cone/meshes/cone.stl</uri>
+              <scale>0.001 0.001 0.001</scale>
+            </mesh>
+          </geometry>
+        </collision>
+        <visual name='cone_20_visual'>
+          <geometry>
+            <mesh>
+              <uri>/models/cone/meshes/cone.stl</uri>
+              <scale>0.001 0.001 0.001</scale>
+            </mesh>
+          </geometry>
+          <material>
+            <ambient>1 1 0 1</ambient>
+            <diffuse>1 1 0 1</diffuse>
+            <specular>1 1 0 1</specular>
+          </material>
+        </visual>
+        
+        <enable_wind>false</enable_wind>
+      </link>
+      <pose>14.741663386424383 -1.9784218752995528 0.0 1.57 0 0</pose>
+      <static>true</static>
+      </model>
+      
+     <model name='cone_21'>
+      <link name='cone_21_link'>
+        <inertial>
+			<mass>0</mass>
+			<inertia>
+			<ixx>0.166667</ixx>
+			<ixy>0</ixy>
+			<ixz>0</ixz>
+			<iyy>0.166667</iyy>
+			<iyz>0</iyz>
+			<izz>0.166667</izz>
+			</inertia>
+		</inertial>
+        <collision name='cone_21_collision'>
+          <geometry>
+            <mesh>
+              <uri>/models/cone/meshes/cone.stl</uri>
+              <scale>0.001 0.001 0.001</scale>
+            </mesh>
+          </geometry>
+        </collision>
+        <visual name='cone_21_visual'>
+          <geometry>
+            <mesh>
+              <uri>/models/cone/meshes/cone.stl</uri>
+              <scale>0.001 0.001 0.001</scale>
+            </mesh>
+          </geometry>
+          <material>
+            <ambient>1 1 0 1</ambient>
+            <diffuse>1 1 0 1</diffuse>
+            <specular>1 1 0 1</specular>
+          </material>
+        </visual>
+        
+        <enable_wind>false</enable_wind>
+      </link>
+      <pose>14.039839198191961 -3.2217499697819747 0.0 1.57 0 0</pose>
+      <static>true</static>
+      </model>
+      
+     <model name='cone_22'>
+      <link name='cone_22_link'>
+        <inertial>
+			<mass>0</mass>
+			<inertia>
+			<ixx>0.166667</ixx>
+			<ixy>0</ixy>
+			<ixz>0</ixz>
+			<iyy>0.166667</iyy>
+			<iyz>0</iyz>
+			<izz>0.166667</izz>
+			</inertia>
+		</inertial>
+        <collision name='cone_22_collision'>
+          <geometry>
+            <mesh>
+              <uri>/models/cone/meshes/cone.stl</uri>
+              <scale>0.001 0.001 0.001</scale>
+            </mesh>
+          </geometry>
+        </collision>
+        <visual name='cone_22_visual'>
+          <geometry>
+            <mesh>
+              <uri>/models/cone/meshes/cone.stl</uri>
+              <scale>0.001 0.001 0.001</scale>
+            </mesh>
+          </geometry>
+          <material>
+            <ambient>1 1 0 1</ambient>
+            <diffuse>1 1 0 1</diffuse>
+            <specular>1 1 0 1</specular>
+          </material>
+        </visual>
+        
+        <enable_wind>false</enable_wind>
+      </link>
+      <pose>12.901606013377508 -4.109075256647209 0.0 1.57 0 0</pose>
+      <static>true</static>
+      </model>
+      
+     <model name='cone_23'>
+      <link name='cone_23_link'>
+        <inertial>
+			<mass>0</mass>
+			<inertia>
+			<ixx>0.166667</ixx>
+			<ixy>0</ixy>
+			<ixz>0</ixz>
+			<iyy>0.166667</iyy>
+			<iyz>0</iyz>
+			<izz>0.166667</izz>
+			</inertia>
+		</inertial>
+        <collision name='cone_23_collision'>
+          <geometry>
+            <mesh>
+              <uri>/models/cone/meshes/cone.stl</uri>
+              <scale>0.001 0.001 0.001</scale>
+            </mesh>
+          </geometry>
+        </collision>
+        <visual name='cone_23_visual'>
+          <geometry>
+            <mesh>
+              <uri>/models/cone/meshes/cone.stl</uri>
+              <scale>0.001 0.001 0.001</scale>
+            </mesh>
+          </geometry>
+          <material>
+            <ambient>1 1 0 1</ambient>
+            <diffuse>1 1 0 1</diffuse>
+            <specular>1 1 0 1</specular>
+          </material>
+        </visual>
+        
+        <enable_wind>false</enable_wind>
+      </link>
+      <pose>11.666641642649969 -4.8042313540593184 0.0 1.57 0 0</pose>
+      <static>true</static>
+      </model>
+      
+     <model name='cone_24'>
+      <link name='cone_24_link'>
+        <inertial>
+			<mass>0</mass>
+			<inertia>
+			<ixx>0.166667</ixx>
+			<ixy>0</ixy>
+			<ixz>0</ixz>
+			<iyy>0.166667</iyy>
+			<iyz>0</iyz>
+			<izz>0.166667</izz>
+			</inertia>
+		</inertial>
+        <collision name='cone_24_collision'>
+          <geometry>
+            <mesh>
+              <uri>/models/cone/meshes/cone.stl</uri>
+              <scale>0.001 0.001 0.001</scale>
+            </mesh>
+          </geometry>
+        </collision>
+        <visual name='cone_24_visual'>
+          <geometry>
+            <mesh>
+              <uri>/models/cone/meshes/cone.stl</uri>
+              <scale>0.001 0.001 0.001</scale>
+            </mesh>
+          </geometry>
+          <material>
+            <ambient>1 1 0 1</ambient>
+            <diffuse>1 1 0 1</diffuse>
+            <specular>1 1 0 1</specular>
+          </material>
+        </visual>
+        
+        <enable_wind>false</enable_wind>
+      </link>
+      <pose>10.237661768992742 -5.497134872736076 0.0 1.57 0 0</pose>
+      <static>true</static>
+      </model>
+      
+     <model name='cone_25'>
+      <link name='cone_25_link'>
+        <inertial>
+			<mass>0</mass>
+			<inertia>
+			<ixx>0.166667</ixx>
+			<ixy>0</ixy>
+			<ixz>0</ixz>
+			<iyy>0.166667</iyy>
+			<iyz>0</iyz>
+			<izz>0.166667</izz>
+			</inertia>
+		</inertial>
+        <collision name='cone_25_collision'>
+          <geometry>
+            <mesh>
+              <uri>/models/cone/meshes/cone.stl</uri>
+              <scale>0.001 0.001 0.001</scale>
+            </mesh>
+          </geometry>
+        </collision>
+        <visual name='cone_25_visual'>
+          <geometry>
+            <mesh>
+              <uri>/models/cone/meshes/cone.stl</uri>
+              <scale>0.001 0.001 0.001</scale>
+            </mesh>
+          </geometry>
+          <material>
+            <ambient>1 1 0 1</ambient>
+            <diffuse>1 1 0 1</diffuse>
+            <specular>1 1 0 1</specular>
+          </material>
+        </visual>
+        
+        <enable_wind>false</enable_wind>
+      </link>
+      <pose>8.755720545848211 -6.834264465631584 0.0 1.57 0 0</pose>
+      <static>true</static>
+      </model>
+      
+     <model name='cone_26'>
+      <link name='cone_26_link'>
+        <inertial>
+			<mass>0</mass>
+			<inertia>
+			<ixx>0.166667</ixx>
+			<ixy>0</ixy>
+			<ixz>0</ixz>
+			<iyy>0.166667</iyy>
+			<iyz>0</iyz>
+			<izz>0.166667</izz>
+			</inertia>
+		</inertial>
+        <collision name='cone_26_collision'>
+          <geometry>
+            <mesh>
+              <uri>/models/cone/meshes/cone.stl</uri>
+              <scale>0.001 0.001 0.001</scale>
+            </mesh>
+          </geometry>
+        </collision>
+        <visual name='cone_26_visual'>
+          <geometry>
+            <mesh>
+              <uri>/models/cone/meshes/cone.stl</uri>
+              <scale>0.001 0.001 0.001</scale>
+            </mesh>
+          </geometry>
+          <material>
+            <ambient>1 1 0 1</ambient>
+            <diffuse>1 1 0 1</diffuse>
+            <specular>1 1 0 1</specular>
+          </material>
+        </visual>
+        
+        <enable_wind>false</enable_wind>
+      </link>
+      <pose>8.323421885569891 -8.40813417083178 0.0 1.57 0 0</pose>
+      <static>true</static>
+      </model>
+      
+     <model name='cone_27'>
+      <link name='cone_27_link'>
+        <inertial>
+			<mass>0</mass>
+			<inertia>
+			<ixx>0.166667</ixx>
+			<ixy>0</ixy>
+			<ixz>0</ixz>
+			<iyy>0.166667</iyy>
+			<iyz>0</iyz>
+			<izz>0.166667</izz>
+			</inertia>
+		</inertial>
+        <collision name='cone_27_collision'>
+          <geometry>
+            <mesh>
+              <uri>/models/cone/meshes/cone.stl</uri>
+              <scale>0.001 0.001 0.001</scale>
+            </mesh>
+          </geometry>
+        </collision>
+        <visual name='cone_27_visual'>
+          <geometry>
+            <mesh>
+              <uri>/models/cone/meshes/cone.stl</uri>
+              <scale>0.001 0.001 0.001</scale>
+            </mesh>
+          </geometry>
+          <material>
+            <ambient>1 1 0 1</ambient>
+            <diffuse>1 1 0 1</diffuse>
+            <specular>1 1 0 1</specular>
+          </material>
+        </visual>
+        
+        <enable_wind>false</enable_wind>
+      </link>
+      <pose>8.43458025654157 -9.679237076105217 0.0 1.57 0 0</pose>
+      <static>true</static>
+      </model>
+      
+     <model name='cone_28'>
+      <link name='cone_28_link'>
+        <inertial>
+			<mass>0</mass>
+			<inertia>
+			<ixx>0.166667</ixx>
+			<ixy>0</ixy>
+			<ixz>0</ixz>
+			<iyy>0.166667</iyy>
+			<iyz>0</iyz>
+			<izz>0.166667</izz>
+			</inertia>
+		</inertial>
+        <collision name='cone_28_collision'>
+          <geometry>
+            <mesh>
+              <uri>/models/cone/meshes/cone.stl</uri>
+              <scale>0.001 0.001 0.001</scale>
+            </mesh>
+          </geometry>
+        </collision>
+        <visual name='cone_28_visual'>
+          <geometry>
+            <mesh>
+              <uri>/models/cone/meshes/cone.stl</uri>
+              <scale>0.001 0.001 0.001</scale>
+            </mesh>
+          </geometry>
+          <material>
+            <ambient>1 1 0 1</ambient>
+            <diffuse>1 1 0 1</diffuse>
+            <specular>1 1 0 1</specular>
+          </material>
+        </visual>
+        
+        <enable_wind>false</enable_wind>
+      </link>
+      <pose>9.053011347850164 -10.848193832697014 0.0 1.57 0 0</pose>
+      <static>true</static>
+      </model>
+      
+     <model name='cone_29'>
+      <link name='cone_29_link'>
+        <inertial>
+			<mass>0</mass>
+			<inertia>
+			<ixx>0.166667</ixx>
+			<ixy>0</ixy>
+			<ixz>0</ixz>
+			<iyy>0.166667</iyy>
+			<iyz>0</iyz>
+			<izz>0.166667</izz>
+			</inertia>
+		</inertial>
+        <collision name='cone_29_collision'>
+          <geometry>
+            <mesh>
+              <uri>/models/cone/meshes/cone.stl</uri>
+              <scale>0.001 0.001 0.001</scale>
+            </mesh>
+          </geometry>
+        </collision>
+        <visual name='cone_29_visual'>
+          <geometry>
+            <mesh>
+              <uri>/models/cone/meshes/cone.stl</uri>
+              <scale>0.001 0.001 0.001</scale>
+            </mesh>
+          </geometry>
+          <material>
+            <ambient>1 1 0 1</ambient>
+            <diffuse>1 1 0 1</diffuse>
+            <specular>1 1 0 1</specular>
+          </material>
+        </visual>
+        
+        <enable_wind>false</enable_wind>
+      </link>
+      <pose>9.999855448802313 -12.125081726373772 0.0 1.57 0 0</pose>
+      <static>true</static>
+      </model>
+      
+     <model name='cone_30'>
+      <link name='cone_30_link'>
+        <inertial>
+			<mass>0</mass>
+			<inertia>
+			<ixx>0.166667</ixx>
+			<ixy>0</ixy>
+			<ixz>0</ixz>
+			<iyy>0.166667</iyy>
+			<iyz>0</iyz>
+			<izz>0.166667</izz>
+			</inertia>
+		</inertial>
+        <collision name='cone_30_collision'>
+          <geometry>
+            <mesh>
+              <uri>/models/cone/meshes/cone.stl</uri>
+              <scale>0.001 0.001 0.001</scale>
+            </mesh>
+          </geometry>
+        </collision>
+        <visual name='cone_30_visual'>
+          <geometry>
+            <mesh>
+              <uri>/models/cone/meshes/cone.stl</uri>
+              <scale>0.001 0.001 0.001</scale>
+            </mesh>
+          </geometry>
+          <material>
+            <ambient>1 1 0 1</ambient>
+            <diffuse>1 1 0 1</diffuse>
+            <specular>1 1 0 1</specular>
+          </material>
+        </visual>
+        
+        <enable_wind>false</enable_wind>
+      </link>
+      <pose>11.021646906932196 -13.27082605010424 0.0 1.57 0 0</pose>
+      <static>true</static>
+      </model>
+      
+     <model name='cone_31'>
+      <link name='cone_31_link'>
+        <inertial>
+			<mass>0</mass>
+			<inertia>
+			<ixx>0.166667</ixx>
+			<ixy>0</ixy>
+			<ixz>0</ixz>
+			<iyy>0.166667</iyy>
+			<iyz>0</iyz>
+			<izz>0.166667</izz>
+			</inertia>
+		</inertial>
+        <collision name='cone_31_collision'>
+          <geometry>
+            <mesh>
+              <uri>/models/cone/meshes/cone.stl</uri>
+              <scale>0.001 0.001 0.001</scale>
+            </mesh>
+          </geometry>
+        </collision>
+        <visual name='cone_31_visual'>
+          <geometry>
+            <mesh>
+              <uri>/models/cone/meshes/cone.stl</uri>
+              <scale>0.001 0.001 0.001</scale>
+            </mesh>
+          </geometry>
+          <material>
+            <ambient>1 1 0 1</ambient>
+            <diffuse>1 1 0 1</diffuse>
+            <specular>1 1 0 1</specular>
+          </material>
+        </visual>
+        
+        <enable_wind>false</enable_wind>
+      </link>
+      <pose>11.793604304393133 -14.153104492487053 0.0 1.57 0 0</pose>
+      <static>true</static>
+      </model>
+      
+     <model name='cone_32'>
+      <link name='cone_32_link'>
+        <inertial>
+			<mass>0</mass>
+			<inertia>
+			<ixx>0.166667</ixx>
+			<ixy>0</ixy>
+			<ixz>0</ixz>
+			<iyy>0.166667</iyy>
+			<iyz>0</iyz>
+			<izz>0.166667</izz>
+			</inertia>
+		</inertial>
+        <collision name='cone_32_collision'>
+          <geometry>
+            <mesh>
+              <uri>/models/cone/meshes/cone.stl</uri>
+              <scale>0.001 0.001 0.001</scale>
+            </mesh>
+          </geometry>
+        </collision>
+        <visual name='cone_32_visual'>
+          <geometry>
+            <mesh>
+              <uri>/models/cone/meshes/cone.stl</uri>
+              <scale>0.001 0.001 0.001</scale>
+            </mesh>
+          </geometry>
+          <material>
+            <ambient>1 1 0 1</ambient>
+            <diffuse>1 1 0 1</diffuse>
+            <specular>1 1 0 1</specular>
+          </material>
+        </visual>
+        
+        <enable_wind>false</enable_wind>
+      </link>
+      <pose>11.987701823314032 -14.91368837005053 0.0 1.57 0 0</pose>
+      <static>true</static>
+      </model>
+      
+     <model name='cone_33'>
+      <link name='cone_33_link'>
+        <inertial>
+			<mass>0</mass>
+			<inertia>
+			<ixx>0.166667</ixx>
+			<ixy>0</ixy>
+			<ixz>0</ixz>
+			<iyy>0.166667</iyy>
+			<iyz>0</iyz>
+			<izz>0.166667</izz>
+			</inertia>
+		</inertial>
+        <collision name='cone_33_collision'>
+          <geometry>
+            <mesh>
+              <uri>/models/cone/meshes/cone.stl</uri>
+              <scale>0.001 0.001 0.001</scale>
+            </mesh>
+          </geometry>
+        </collision>
+        <visual name='cone_33_visual'>
+          <geometry>
+            <mesh>
+              <uri>/models/cone/meshes/cone.stl</uri>
+              <scale>0.001 0.001 0.001</scale>
+            </mesh>
+          </geometry>
+          <material>
+            <ambient>1 1 0 1</ambient>
+            <diffuse>1 1 0 1</diffuse>
+            <specular>1 1 0 1</specular>
+          </material>
+        </visual>
+        
+        <enable_wind>false</enable_wind>
+      </link>
+      <pose>11.488663127024969 -15.48107118255053 0.0 1.57 0 0</pose>
+      <static>true</static>
+      </model>
+      
+     <model name='cone_34'>
+      <link name='cone_34_link'>
+        <inertial>
+			<mass>0</mass>
+			<inertia>
+			<ixx>0.166667</ixx>
+			<ixy>0</ixy>
+			<ixz>0</ixz>
+			<iyy>0.166667</iyy>
+			<iyz>0</iyz>
+			<izz>0.166667</izz>
+			</inertia>
+		</inertial>
+        <collision name='cone_34_collision'>
+          <geometry>
+            <mesh>
+              <uri>/models/cone/meshes/cone.stl</uri>
+              <scale>0.001 0.001 0.001</scale>
+            </mesh>
+          </geometry>
+        </collision>
+        <visual name='cone_34_visual'>
+          <geometry>
+            <mesh>
+              <uri>/models/cone/meshes/cone.stl</uri>
+              <scale>0.001 0.001 0.001</scale>
+            </mesh>
+          </geometry>
+          <material>
+            <ambient>1 1 0 1</ambient>
+            <diffuse>1 1 0 1</diffuse>
+            <specular>1 1 0 1</specular>
+          </material>
+        </visual>
+        
+        <enable_wind>false</enable_wind>
+      </link>
+      <pose>10.417070796092352 -15.681548782648186 0.0 1.57 0 0</pose>
+      <static>true</static>
+      </model>
+      
+     <model name='cone_35'>
+      <link name='cone_35_link'>
+        <inertial>
+			<mass>0</mass>
+			<inertia>
+			<ixx>0.166667</ixx>
+			<ixy>0</ixy>
+			<ixz>0</ixz>
+			<iyy>0.166667</iyy>
+			<iyz>0</iyz>
+			<izz>0.166667</izz>
+			</inertia>
+		</inertial>
+        <collision name='cone_35_collision'>
+          <geometry>
+            <mesh>
+              <uri>/models/cone/meshes/cone.stl</uri>
+              <scale>0.001 0.001 0.001</scale>
+            </mesh>
+          </geometry>
+        </collision>
+        <visual name='cone_35_visual'>
+          <geometry>
+            <mesh>
+              <uri>/models/cone/meshes/cone.stl</uri>
+              <scale>0.001 0.001 0.001</scale>
+            </mesh>
+          </geometry>
+          <material>
+            <ambient>1 1 0 1</ambient>
+            <diffuse>1 1 0 1</diffuse>
+            <specular>1 1 0 1</specular>
+          </material>
+        </visual>
+        
+        <enable_wind>false</enable_wind>
+      </link>
+      <pose>9.011757304271063 -15.696181961359123 0.0 1.57 0 0</pose>
+      <static>true</static>
+      </model>
+      
+     <model name='cone_36'>
+      <link name='cone_36_link'>
+        <inertial>
+			<mass>0</mass>
+			<inertia>
+			<ixx>0.166667</ixx>
+			<ixy>0</ixy>
+			<ixz>0</ixz>
+			<iyy>0.166667</iyy>
+			<iyz>0</iyz>
+			<izz>0.166667</izz>
+			</inertia>
+		</inertial>
+        <collision name='cone_36_collision'>
+          <geometry>
+            <mesh>
+              <uri>/models/cone/meshes/cone.stl</uri>
+              <scale>0.001 0.001 0.001</scale>
+            </mesh>
+          </geometry>
+        </collision>
+        <visual name='cone_36_visual'>
+          <geometry>
+            <mesh>
+              <uri>/models/cone/meshes/cone.stl</uri>
+              <scale>0.001 0.001 0.001</scale>
+            </mesh>
+          </geometry>
+          <material>
+            <ambient>1 1 0 1</ambient>
+            <diffuse>1 1 0 1</diffuse>
+            <specular>1 1 0 1</specular>
+          </material>
+        </visual>
+        
+        <enable_wind>false</enable_wind>
+      </link>
+      <pose>7.133097102244696 -15.702857681573967 0.0 1.57 0 0</pose>
+      <static>true</static>
+      </model>
+      
+     <model name='cone_37'>
+      <link name='cone_37_link'>
+        <inertial>
+			<mass>0</mass>
+			<inertia>
+			<ixx>0.166667</ixx>
+			<ixy>0</ixy>
+			<ixz>0</ixz>
+			<iyy>0.166667</iyy>
+			<iyz>0</iyz>
+			<izz>0.166667</izz>
+			</inertia>
+		</inertial>
+        <collision name='cone_37_collision'>
+          <geometry>
+            <mesh>
+              <uri>/models/cone/meshes/cone.stl</uri>
+              <scale>0.001 0.001 0.001</scale>
+            </mesh>
+          </geometry>
+        </collision>
+        <visual name='cone_37_visual'>
+          <geometry>
+            <mesh>
+              <uri>/models/cone/meshes/cone.stl</uri>
+              <scale>0.001 0.001 0.001</scale>
+            </mesh>
+          </geometry>
+          <material>
+            <ambient>1 1 0 1</ambient>
+            <diffuse>1 1 0 1</diffuse>
+            <specular>1 1 0 1</specular>
+          </material>
+        </visual>
+        
+        <enable_wind>false</enable_wind>
+      </link>
+      <pose>5.483965327342352 -15.63589067107592 0.0 1.57 0 0</pose>
+      <static>true</static>
+      </model>
+      
+     <model name='cone_38'>
+      <link name='cone_38_link'>
+        <inertial>
+			<mass>0</mass>
+			<inertia>
+			<ixx>0.166667</ixx>
+			<ixy>0</ixy>
+			<ixz>0</ixz>
+			<iyy>0.166667</iyy>
+			<iyz>0</iyz>
+			<izz>0.166667</izz>
+			</inertia>
+		</inertial>
+        <collision name='cone_38_collision'>
+          <geometry>
+            <mesh>
+              <uri>/models/cone/meshes/cone.stl</uri>
+              <scale>0.001 0.001 0.001</scale>
+            </mesh>
+          </geometry>
+        </collision>
+        <visual name='cone_38_visual'>
+          <geometry>
+            <mesh>
+              <uri>/models/cone/meshes/cone.stl</uri>
+              <scale>0.001 0.001 0.001</scale>
+            </mesh>
+          </geometry>
+          <material>
+            <ambient>1 1 0 1</ambient>
+            <diffuse>1 1 0 1</diffuse>
+            <specular>1 1 0 1</specular>
+          </material>
+        </visual>
+        
+        <enable_wind>false</enable_wind>
+      </link>
+      <pose>3.921953608592352 -15.64477510100756 0.0 1.57 0 0</pose>
+      <static>true</static>
+      </model>
+      
+     <model name='cone_39'>
+      <link name='cone_39_link'>
+        <inertial>
+			<mass>0</mass>
+			<inertia>
+			<ixx>0.166667</ixx>
+			<ixy>0</ixy>
+			<ixz>0</ixz>
+			<iyy>0.166667</iyy>
+			<iyz>0</iyz>
+			<izz>0.166667</izz>
+			</inertia>
+		</inertial>
+        <collision name='cone_39_collision'>
+          <geometry>
+            <mesh>
+              <uri>/models/cone/meshes/cone.stl</uri>
+              <scale>0.001 0.001 0.001</scale>
+            </mesh>
+          </geometry>
+        </collision>
+        <visual name='cone_39_visual'>
+          <geometry>
+            <mesh>
+              <uri>/models/cone/meshes/cone.stl</uri>
+              <scale>0.001 0.001 0.001</scale>
+            </mesh>
+          </geometry>
+          <material>
+            <ambient>1 1 0 1</ambient>
+            <diffuse>1 1 0 1</diffuse>
+            <specular>1 1 0 1</specular>
+          </material>
+        </visual>
+        
+        <enable_wind>false</enable_wind>
+      </link>
+      <pose>2.5232071181138362 -15.615035721124748 0.0 1.57 0 0</pose>
+      <static>true</static>
+      </model>
+      
+     <model name='cone_40'>
+      <link name='cone_40_link'>
+        <inertial>
+			<mass>0</mass>
+			<inertia>
+			<ixx>0.166667</ixx>
+			<ixy>0</ixy>
+			<ixz>0</ixz>
+			<iyy>0.166667</iyy>
+			<iyz>0</iyz>
+			<izz>0.166667</izz>
+			</inertia>
+		</inertial>
+        <collision name='cone_40_collision'>
+          <geometry>
+            <mesh>
+              <uri>/models/cone/meshes/cone.stl</uri>
+              <scale>0.001 0.001 0.001</scale>
+            </mesh>
+          </geometry>
+        </collision>
+        <visual name='cone_40_visual'>
+          <geometry>
+            <mesh>
+              <uri>/models/cone/meshes/cone.stl</uri>
+              <scale>0.001 0.001 0.001</scale>
+            </mesh>
+          </geometry>
+          <material>
+            <ambient>1 1 0 1</ambient>
+            <diffuse>1 1 0 1</diffuse>
+            <specular>1 1 0 1</specular>
+          </material>
+        </visual>
+        
+        <enable_wind>false</enable_wind>
+      </link>
+      <pose>0.9086584349473323 -15.622363754572014 0.0 1.57 0 0</pose>
+      <static>true</static>
+      </model>
+      
+     <model name='cone_41'>
+      <link name='cone_41_link'>
+        <inertial>
+			<mass>0</mass>
+			<inertia>
+			<ixx>0.166667</ixx>
+			<ixy>0</ixy>
+			<ixz>0</ixz>
+			<iyy>0.166667</iyy>
+			<iyz>0</iyz>
+			<izz>0.166667</izz>
+			</inertia>
+		</inertial>
+        <collision name='cone_41_collision'>
+          <geometry>
+            <mesh>
+              <uri>/models/cone/meshes/cone.stl</uri>
+              <scale>0.001 0.001 0.001</scale>
+            </mesh>
+          </geometry>
+        </collision>
+        <visual name='cone_41_visual'>
+          <geometry>
+            <mesh>
+              <uri>/models/cone/meshes/cone.stl</uri>
+              <scale>0.001 0.001 0.001</scale>
+            </mesh>
+          </geometry>
+          <material>
+            <ambient>1 1 0 1</ambient>
+            <diffuse>1 1 0 1</diffuse>
+            <specular>1 1 0 1</specular>
+          </material>
+        </visual>
+        
+        <enable_wind>false</enable_wind>
+      </link>
+      <pose>-1.074959347645441 -15.764079757989983 0.0 1.57 0 0</pose>
+      <static>true</static>
+      </model>
+      
+     <model name='cone_42'>
+      <link name='cone_42_link'>
+        <inertial>
+			<mass>0</mass>
+			<inertia>
+			<ixx>0.166667</ixx>
+			<ixy>0</ixy>
+			<ixz>0</ixz>
+			<iyy>0.166667</iyy>
+			<iyz>0</iyz>
+			<izz>0.166667</izz>
+			</inertia>
+		</inertial>
+        <collision name='cone_42_collision'>
+          <geometry>
+            <mesh>
+              <uri>/models/cone/meshes/cone.stl</uri>
+              <scale>0.001 0.001 0.001</scale>
+            </mesh>
+          </geometry>
+        </collision>
+        <visual name='cone_42_visual'>
+          <geometry>
+            <mesh>
+              <uri>/models/cone/meshes/cone.stl</uri>
+              <scale>0.001 0.001 0.001</scale>
+            </mesh>
+          </geometry>
+          <material>
+            <ambient>1 1 0 1</ambient>
+            <diffuse>1 1 0 1</diffuse>
+            <specular>1 1 0 1</specular>
+          </material>
+        </visual>
+        
+        <enable_wind>false</enable_wind>
+      </link>
+      <pose>-2.8904557923475895 -16.37157411223803 0.0 1.57 0 0</pose>
+      <static>true</static>
+      </model>
+      
+     <model name='cone_43'>
+      <link name='cone_43_link'>
+        <inertial>
+			<mass>0</mass>
+			<inertia>
+			<ixx>0.166667</ixx>
+			<ixy>0</ixy>
+			<ixz>0</ixz>
+			<iyy>0.166667</iyy>
+			<iyz>0</iyz>
+			<izz>0.166667</izz>
+			</inertia>
+		</inertial>
+        <collision name='cone_43_collision'>
+          <geometry>
+            <mesh>
+              <uri>/models/cone/meshes/cone.stl</uri>
+              <scale>0.001 0.001 0.001</scale>
+            </mesh>
+          </geometry>
+        </collision>
+        <visual name='cone_43_visual'>
+          <geometry>
+            <mesh>
+              <uri>/models/cone/meshes/cone.stl</uri>
+              <scale>0.001 0.001 0.001</scale>
+            </mesh>
+          </geometry>
+          <material>
+            <ambient>1 1 0 1</ambient>
+            <diffuse>1 1 0 1</diffuse>
+            <specular>1 1 0 1</specular>
+          </material>
+        </visual>
+        
+        <enable_wind>false</enable_wind>
+      </link>
+      <pose>-3.8562389115492497 -16.4599339450017 0.0 1.57 0 0</pose>
+      <static>true</static>
+      </model>
+      
+     <model name='cone_44'>
+      <link name='cone_44_link'>
+        <inertial>
+			<mass>0</mass>
+			<inertia>
+			<ixx>0.166667</ixx>
+			<ixy>0</ixy>
+			<ixz>0</ixz>
+			<iyy>0.166667</iyy>
+			<iyz>0</iyz>
+			<izz>0.166667</izz>
+			</inertia>
+		</inertial>
+        <collision name='cone_44_collision'>
+          <geometry>
+            <mesh>
+              <uri>/models/cone/meshes/cone.stl</uri>
+              <scale>0.001 0.001 0.001</scale>
+            </mesh>
+          </geometry>
+        </collision>
+        <visual name='cone_44_visual'>
+          <geometry>
+            <mesh>
+              <uri>/models/cone/meshes/cone.stl</uri>
+              <scale>0.001 0.001 0.001</scale>
+            </mesh>
+          </geometry>
+          <material>
+            <ambient>1 1 0 1</ambient>
+            <diffuse>1 1 0 1</diffuse>
+            <specular>1 1 0 1</specular>
+          </material>
+        </visual>
+        
+        <enable_wind>false</enable_wind>
+      </link>
+      <pose>-4.717035839955011 -15.775134750665764 0.0 1.57 0 0</pose>
+      <static>true</static>
+      </model>
+      
+     <model name='cone_45'>
+      <link name='cone_45_link'>
+        <inertial>
+			<mass>0</mass>
+			<inertia>
+			<ixx>0.166667</ixx>
+			<ixy>0</ixy>
+			<ixz>0</ixz>
+			<iyy>0.166667</iyy>
+			<iyz>0</iyz>
+			<izz>0.166667</izz>
+			</inertia>
+		</inertial>
+        <collision name='cone_45_collision'>
+          <geometry>
+            <mesh>
+              <uri>/models/cone/meshes/cone.stl</uri>
+              <scale>0.001 0.001 0.001</scale>
+            </mesh>
+          </geometry>
+        </collision>
+        <visual name='cone_45_visual'>
+          <geometry>
+            <mesh>
+              <uri>/models/cone/meshes/cone.stl</uri>
+              <scale>0.001 0.001 0.001</scale>
+            </mesh>
+          </geometry>
+          <material>
+            <ambient>1 1 0 1</ambient>
+            <diffuse>1 1 0 1</diffuse>
+            <specular>1 1 0 1</specular>
+          </material>
+        </visual>
+        
+        <enable_wind>false</enable_wind>
+      </link>
+      <pose>-5.075207302967707 -14.750343033136467 0.0 1.57 0 0</pose>
+      <static>true</static>
+      </model>
+      
+     <model name='cone_46'>
+      <link name='cone_46_link'>
+        <inertial>
+			<mass>0</mass>
+			<inertia>
+			<ixx>0.166667</ixx>
+			<ixy>0</ixy>
+			<ixz>0</ixz>
+			<iyy>0.166667</iyy>
+			<iyz>0</iyz>
+			<izz>0.166667</izz>
+			</inertia>
+		</inertial>
+        <collision name='cone_46_collision'>
+          <geometry>
+            <mesh>
+              <uri>/models/cone/meshes/cone.stl</uri>
+              <scale>0.001 0.001 0.001</scale>
+            </mesh>
+          </geometry>
+        </collision>
+        <visual name='cone_46_visual'>
+          <geometry>
+            <mesh>
+              <uri>/models/cone/meshes/cone.stl</uri>
+              <scale>0.001 0.001 0.001</scale>
+            </mesh>
+          </geometry>
+          <material>
+            <ambient>1 1 0 1</ambient>
+            <diffuse>1 1 0 1</diffuse>
+            <specular>1 1 0 1</specular>
+          </material>
+        </visual>
+        
+        <enable_wind>false</enable_wind>
+      </link>
+      <pose>-4.308617184559504 -13.172988601984123 0.0 1.57 0 0</pose>
+      <static>true</static>
+      </model>
+      
+     <model name='cone_47'>
+      <link name='cone_47_link'>
+        <inertial>
+			<mass>0</mass>
+			<inertia>
+			<ixx>0.166667</ixx>
+			<ixy>0</ixy>
+			<ixz>0</ixz>
+			<iyy>0.166667</iyy>
+			<iyz>0</iyz>
+			<izz>0.166667</izz>
+			</inertia>
+		</inertial>
+        <collision name='cone_47_collision'>
+          <geometry>
+            <mesh>
+              <uri>/models/cone/meshes/cone.stl</uri>
+              <scale>0.001 0.001 0.001</scale>
+            </mesh>
+          </geometry>
+        </collision>
+        <visual name='cone_47_visual'>
+          <geometry>
+            <mesh>
+              <uri>/models/cone/meshes/cone.stl</uri>
+              <scale>0.001 0.001 0.001</scale>
+            </mesh>
+          </geometry>
+          <material>
+            <ambient>1 1 0 1</ambient>
+            <diffuse>1 1 0 1</diffuse>
+            <specular>1 1 0 1</specular>
+          </material>
+        </visual>
+        
+        <enable_wind>false</enable_wind>
+      </link>
+      <pose>-3.1068673829237614 -12.191730209650139 0.0 1.57 0 0</pose>
+      <static>true</static>
+      </model>
+      
+     <model name='cone_48'>
+      <link name='cone_48_link'>
+        <inertial>
+			<mass>0</mass>
+			<inertia>
+			<ixx>0.166667</ixx>
+			<ixy>0</ixy>
+			<ixz>0</ixz>
+			<iyy>0.166667</iyy>
+			<iyz>0</iyz>
+			<izz>0.166667</izz>
+			</inertia>
+		</inertial>
+        <collision name='cone_48_collision'>
+          <geometry>
+            <mesh>
+              <uri>/models/cone/meshes/cone.stl</uri>
+              <scale>0.001 0.001 0.001</scale>
+            </mesh>
+          </geometry>
+        </collision>
+        <visual name='cone_48_visual'>
+          <geometry>
+            <mesh>
+              <uri>/models/cone/meshes/cone.stl</uri>
+              <scale>0.001 0.001 0.001</scale>
+            </mesh>
+          </geometry>
+          <material>
+            <ambient>1 1 0 1</ambient>
+            <diffuse>1 1 0 1</diffuse>
+            <specular>1 1 0 1</specular>
+          </material>
+        </visual>
+        
+        <enable_wind>false</enable_wind>
+      </link>
+      <pose>-1.3852229813734684 -10.86966867095385 0.0 1.57 0 0</pose>
+      <static>true</static>
+      </model>
+      
+     <model name='cone_49'>
+      <link name='cone_49_link'>
+        <inertial>
+			<mass>0</mass>
+			<inertia>
+			<ixx>0.166667</ixx>
+			<ixy>0</ixy>
+			<ixz>0</ixz>
+			<iyy>0.166667</iyy>
+			<iyz>0</iyz>
+			<izz>0.166667</izz>
+			</inertia>
+		</inertial>
+        <collision name='cone_49_collision'>
+          <geometry>
+            <mesh>
+              <uri>/models/cone/meshes/cone.stl</uri>
+              <scale>0.001 0.001 0.001</scale>
+            </mesh>
+          </geometry>
+        </collision>
+        <visual name='cone_49_visual'>
+          <geometry>
+            <mesh>
+              <uri>/models/cone/meshes/cone.stl</uri>
+              <scale>0.001 0.001 0.001</scale>
+            </mesh>
+          </geometry>
+          <material>
+            <ambient>1 1 0 1</ambient>
+            <diffuse>1 1 0 1</diffuse>
+            <specular>1 1 0 1</specular>
+          </material>
+        </visual>
+        
+        <enable_wind>false</enable_wind>
+      </link>
+      <pose>0.5043548842271175 -9.46356172210131 0.0 1.57 0 0</pose>
+      <static>true</static>
+      </model>
+      
+     <model name='cone_50'>
+      <link name='cone_50_link'>
+        <inertial>
+			<mass>0</mass>
+			<inertia>
+			<ixx>0.166667</ixx>
+			<ixy>0</ixy>
+			<ixz>0</ixz>
+			<iyy>0.166667</iyy>
+			<iyz>0</iyz>
+			<izz>0.166667</izz>
+			</inertia>
+		</inertial>
+        <collision name='cone_50_collision'>
+          <geometry>
+            <mesh>
+              <uri>/models/cone/meshes/cone.stl</uri>
+              <scale>0.001 0.001 0.001</scale>
+            </mesh>
+          </geometry>
+        </collision>
+        <visual name='cone_50_visual'>
+          <geometry>
+            <mesh>
+              <uri>/models/cone/meshes/cone.stl</uri>
+              <scale>0.001 0.001 0.001</scale>
+            </mesh>
+          </geometry>
+          <material>
+            <ambient>1 1 0 1</ambient>
+            <diffuse>1 1 0 1</diffuse>
+            <specular>1 1 0 1</specular>
+          </material>
+        </visual>
+        
+        <enable_wind>false</enable_wind>
+      </link>
+      <pose>2.329049517711004 -7.6776444399968184 0.0 1.57 0 0</pose>
+      <static>true</static>
+      </model>
+      
+     <model name='cone_51'>
+      <link name='cone_51_link'>
+        <inertial>
+			<mass>0</mass>
+			<inertia>
+			<ixx>0.166667</ixx>
+			<ixy>0</ixy>
+			<ixz>0</ixz>
+			<iyy>0.166667</iyy>
+			<iyz>0</iyz>
+			<izz>0.166667</izz>
+			</inertia>
+		</inertial>
+        <collision name='cone_51_collision'>
+          <geometry>
+            <mesh>
+              <uri>/models/cone/meshes/cone.stl</uri>
+              <scale>0.001 0.001 0.001</scale>
+            </mesh>
+          </geometry>
+        </collision>
+        <visual name='cone_51_visual'>
+          <geometry>
+            <mesh>
+              <uri>/models/cone/meshes/cone.stl</uri>
+              <scale>0.001 0.001 0.001</scale>
+            </mesh>
+          </geometry>
+          <material>
+            <ambient>1 1 0 1</ambient>
+            <diffuse>1 1 0 1</diffuse>
+            <specular>1 1 0 1</specular>
+          </material>
+        </visual>
+        
+        <enable_wind>false</enable_wind>
+      </link>
+      <pose>3.7578148146470394 -5.8843190158024825 0.0 1.57 0 0</pose>
+      <static>true</static>
+      </model>
+      
+     <model name='cone_52'>
+      <link name='cone_52_link'>
+        <inertial>
+			<mass>0</mass>
+			<inertia>
+			<ixx>0.166667</ixx>
+			<ixy>0</ixy>
+			<ixz>0</ixz>
+			<iyy>0.166667</iyy>
+			<iyz>0</iyz>
+			<izz>0.166667</izz>
+			</inertia>
+		</inertial>
+        <collision name='cone_52_collision'>
+          <geometry>
+            <mesh>
+              <uri>/models/cone/meshes/cone.stl</uri>
+              <scale>0.001 0.001 0.001</scale>
+            </mesh>
+          </geometry>
+        </collision>
+        <visual name='cone_52_visual'>
+          <geometry>
+            <mesh>
+              <uri>/models/cone/meshes/cone.stl</uri>
+              <scale>0.001 0.001 0.001</scale>
+            </mesh>
+          </geometry>
+          <material>
+            <ambient>1 1 0 1</ambient>
+            <diffuse>1 1 0 1</diffuse>
+            <specular>1 1 0 1</specular>
+          </material>
+        </visual>
+        
+        <enable_wind>false</enable_wind>
+      </link>
+      <pose>4.623348643382391 -4.014095016779045 0.0 1.57 0 0</pose>
+      <static>true</static>
+      </model>
+      
+     <model name='cone_53'>
+      <link name='cone_53_link'>
+        <inertial>
+			<mass>0</mass>
+			<inertia>
+			<ixx>0.166667</ixx>
+			<ixy>0</ixy>
+			<ixz>0</ixz>
+			<iyy>0.166667</iyy>
+			<iyz>0</iyz>
+			<izz>0.166667</izz>
+			</inertia>
+		</inertial>
+        <collision name='cone_53_collision'>
+          <geometry>
+            <mesh>
+              <uri>/models/cone/meshes/cone.stl</uri>
+              <scale>0.001 0.001 0.001</scale>
+            </mesh>
+          </geometry>
+        </collision>
+        <visual name='cone_53_visual'>
+          <geometry>
+            <mesh>
+              <uri>/models/cone/meshes/cone.stl</uri>
+              <scale>0.001 0.001 0.001</scale>
+            </mesh>
+          </geometry>
+          <material>
+            <ambient>1 1 0 1</ambient>
+            <diffuse>1 1 0 1</diffuse>
+            <specular>1 1 0 1</specular>
+          </material>
+        </visual>
+        
+        <enable_wind>false</enable_wind>
+      </link>
+      <pose>5.301691462596258 -2.1573082888737716 0.0 1.57 0 0</pose>
+      <static>true</static>
+      </model>
+      
+     <model name='cone_54'>
+      <link name='cone_54_link'>
+        <inertial>
+			<mass>0</mass>
+			<inertia>
+			<ixx>0.166667</ixx>
+			<ixy>0</ixy>
+			<ixz>0</ixz>
+			<iyy>0.166667</iyy>
+			<iyz>0</iyz>
+			<izz>0.166667</izz>
+			</inertia>
+		</inertial>
+        <collision name='cone_54_collision'>
+          <geometry>
+            <mesh>
+              <uri>/models/cone/meshes/cone.stl</uri>
+              <scale>0.001 0.001 0.001</scale>
+            </mesh>
+          </geometry>
+        </collision>
+        <visual name='cone_54_visual'>
+          <geometry>
+            <mesh>
+              <uri>/models/cone/meshes/cone.stl</uri>
+              <scale>0.001 0.001 0.001</scale>
+            </mesh>
+          </geometry>
+          <material>
+            <ambient>1 1 0 1</ambient>
+            <diffuse>1 1 0 1</diffuse>
+            <specular>1 1 0 1</specular>
+          </material>
+        </visual>
+        
+        <enable_wind>false</enable_wind>
+      </link>
+      <pose>5.330988337596258 -0.58156938201342 0.0 1.57 0 0</pose>
+      <static>true</static>
+      </model>
+      
+     <model name='cone_55'>
+      <link name='cone_55_link'>
+        <inertial>
+			<mass>0</mass>
+			<inertia>
+			<ixx>0.166667</ixx>
+			<ixy>0</ixy>
+			<ixz>0</ixz>
+			<iyy>0.166667</iyy>
+			<iyz>0</iyz>
+			<izz>0.166667</izz>
+			</inertia>
+		</inertial>
+        <collision name='cone_55_collision'>
+          <geometry>
+            <mesh>
+              <uri>/models/cone/meshes/cone.stl</uri>
+              <scale>0.001 0.001 0.001</scale>
+            </mesh>
+          </geometry>
+        </collision>
+        <visual name='cone_55_visual'>
+          <geometry>
+            <mesh>
+              <uri>/models/cone/meshes/cone.stl</uri>
+              <scale>0.001 0.001 0.001</scale>
+            </mesh>
+          </geometry>
+          <material>
+            <ambient>1 1 0 1</ambient>
+            <diffuse>1 1 0 1</diffuse>
+            <specular>1 1 0 1</specular>
+          </material>
+        </visual>
+        
+        <enable_wind>false</enable_wind>
+      </link>
+      <pose>4.235338618357977 0.9479315792902909 0.0 1.57 0 0</pose>
+      <static>true</static>
+      </model>
+      
+     <model name='cone_56'>
+      <link name='cone_56_link'>
+        <inertial>
+			<mass>0</mass>
+			<inertia>
+			<ixx>0.166667</ixx>
+			<ixy>0</ixy>
+			<ixz>0</ixz>
+			<iyy>0.166667</iyy>
+			<iyz>0</iyz>
+			<izz>0.166667</izz>
+			</inertia>
+		</inertial>
+        <collision name='cone_56_collision'>
+          <geometry>
+            <mesh>
+              <uri>/models/cone/meshes/cone.stl</uri>
+              <scale>0.001 0.001 0.001</scale>
+            </mesh>
+          </geometry>
+        </collision>
+        <visual name='cone_56_visual'>
+          <geometry>
+            <mesh>
+              <uri>/models/cone/meshes/cone.stl</uri>
+              <scale>0.001 0.001 0.001</scale>
+            </mesh>
+          </geometry>
+          <material>
+            <ambient>1 1 0 1</ambient>
+            <diffuse>1 1 0 1</diffuse>
+            <specular>1 1 0 1</specular>
+          </material>
+        </visual>
+        
+        <enable_wind>false</enable_wind>
+      </link>
+      <pose>2.896736552317938 2.043400100408455 0.0 1.57 0 0</pose>
+      <static>true</static>
+      </model>
+      
+     <model name='cone_57'>
+      <link name='cone_57_link'>
+        <inertial>
+			<mass>0</mass>
+			<inertia>
+			<ixx>0.166667</ixx>
+			<ixy>0</ixy>
+			<ixz>0</ixz>
+			<iyy>0.166667</iyy>
+			<iyz>0</iyz>
+			<izz>0.166667</izz>
+			</inertia>
+		</inertial>
+        <collision name='cone_57_collision'>
+          <geometry>
+            <mesh>
+              <uri>/models/cone/meshes/cone.stl</uri>
+              <scale>0.001 0.001 0.001</scale>
+            </mesh>
+          </geometry>
+        </collision>
+        <visual name='cone_57_visual'>
+          <geometry>
+            <mesh>
+              <uri>/models/cone/meshes/cone.stl</uri>
+              <scale>0.001 0.001 0.001</scale>
+            </mesh>
+          </geometry>
+          <material>
+            <ambient>1 1 0 1</ambient>
+            <diffuse>1 1 0 1</diffuse>
+            <specular>1 1 0 1</specular>
+          </material>
+        </visual>
+        
+        <enable_wind>false</enable_wind>
+      </link>
+      <pose>0.8847774763902034 2.9997418438776933 0.0 1.57 0 0</pose>
+      <static>true</static>
+      </model>
+      
+     <model name='cone_58'>
+      <link name='cone_58_link'>
+        <inertial>
+			<mass>0</mass>
+			<inertia>
+			<ixx>0.166667</ixx>
+			<ixy>0</ixy>
+			<ixz>0</ixz>
+			<iyy>0.166667</iyy>
+			<iyz>0</iyz>
+			<izz>0.166667</izz>
+			</inertia>
+		</inertial>
+        <collision name='cone_58_collision'>
+          <geometry>
+            <mesh>
+              <uri>/models/cone/meshes/cone.stl</uri>
+              <scale>0.001 0.001 0.001</scale>
+            </mesh>
+          </geometry>
+        </collision>
+        <visual name='cone_58_visual'>
+          <geometry>
+            <mesh>
+              <uri>/models/cone/meshes/cone.stl</uri>
+              <scale>0.001 0.001 0.001</scale>
+            </mesh>
+          </geometry>
+          <material>
+            <ambient>1 1 0 1</ambient>
+            <diffuse>1 1 0 1</diffuse>
+            <specular>1 1 0 1</specular>
+          </material>
+        </visual>
+        
+        <enable_wind>false</enable_wind>
+      </link>
+      <pose>-0.49722344676653485 3.6118681942805253 0.0 1.57 0 0</pose>
+      <static>true</static>
+      </model>
+      
+     <model name='cone_59'>
+      <link name='cone_59_link'>
+        <inertial>
+			<mass>0</mass>
+			<inertia>
+			<ixx>0.166667</ixx>
+			<ixy>0</ixy>
+			<ixz>0</ixz>
+			<iyy>0.166667</iyy>
+			<iyz>0</iyz>
+			<izz>0.166667</izz>
+			</inertia>
+		</inertial>
+        <collision name='cone_59_collision'>
+          <geometry>
+            <mesh>
+              <uri>/models/cone/meshes/cone.stl</uri>
+              <scale>0.001 0.001 0.001</scale>
+            </mesh>
+          </geometry>
+        </collision>
+        <visual name='cone_59_visual'>
+          <geometry>
+            <mesh>
+              <uri>/models/cone/meshes/cone.stl</uri>
+              <scale>0.001 0.001 0.001</scale>
+            </mesh>
+          </geometry>
+          <material>
+            <ambient>1 1 0 1</ambient>
+            <diffuse>1 1 0 1</diffuse>
+            <specular>1 1 0 1</specular>
+          </material>
+        </visual>
+        
+        <enable_wind>false</enable_wind>
+      </link>
+      <pose>-2.254290173451105 4.352450660406014 0.0 1.57 0 0</pose>
+      <static>true</static>
+      </model>
+      
+     <model name='cone_60'>
+      <link name='cone_60_link'>
+        <inertial>
+			<mass>0</mass>
+			<inertia>
+			<ixx>0.166667</ixx>
+			<ixy>0</ixy>
+			<ixz>0</ixz>
+			<iyy>0.166667</iyy>
+			<iyz>0</iyz>
+			<izz>0.166667</izz>
+			</inertia>
+		</inertial>
+        <collision name='cone_60_collision'>
+          <geometry>
+            <mesh>
+              <uri>/models/cone/meshes/cone.stl</uri>
+              <scale>0.001 0.001 0.001</scale>
+            </mesh>
+          </geometry>
+        </collision>
+        <visual name='cone_60_visual'>
+          <geometry>
+            <mesh>
+              <uri>/models/cone/meshes/cone.stl</uri>
+              <scale>0.001 0.001 0.001</scale>
+            </mesh>
+          </geometry>
+          <material>
+            <ambient>1 1 0 1</ambient>
+            <diffuse>1 1 0 1</diffuse>
+            <specular>1 1 0 1</specular>
+          </material>
+        </visual>
+        
+        <enable_wind>false</enable_wind>
+      </link>
+      <pose>-3.6873374680678044 5.030030540166756 0.0 1.57 0 0</pose>
+      <static>true</static>
+      </model>
+      
+     <model name='cone_61'>
+      <link name='cone_61_link'>
+        <inertial>
+			<mass>0</mass>
+			<inertia>
+			<ixx>0.166667</ixx>
+			<ixy>0</ixy>
+			<ixz>0</ixz>
+			<iyy>0.166667</iyy>
+			<iyz>0</iyz>
+			<izz>0.166667</izz>
+			</inertia>
+		</inertial>
+        <collision name='cone_61_collision'>
+          <geometry>
+            <mesh>
+              <uri>/models/cone/meshes/cone.stl</uri>
+              <scale>0.001 0.001 0.001</scale>
+            </mesh>
+          </geometry>
+        </collision>
+        <visual name='cone_61_visual'>
+          <geometry>
+            <mesh>
+              <uri>/models/cone/meshes/cone.stl</uri>
+              <scale>0.001 0.001 0.001</scale>
+            </mesh>
+          </geometry>
+          <material>
+            <ambient>1 1 0 1</ambient>
+            <diffuse>1 1 0 1</diffuse>
+            <specular>1 1 0 1</specular>
+          </material>
+        </visual>
+        
+        <enable_wind>false</enable_wind>
+      </link>
+      <pose>-5.062751362721125 5.874812415777107 0.0 1.57 0 0</pose>
+      <static>true</static>
+      </model>
+      
+     <model name='cone_62'>
+      <link name='cone_62_link'>
+        <inertial>
+			<mass>0</mass>
+			<inertia>
+			<ixx>0.166667</ixx>
+			<ixy>0</ixy>
+			<ixz>0</ixz>
+			<iyy>0.166667</iyy>
+			<iyz>0</iyz>
+			<izz>0.166667</izz>
+			</inertia>
+		</inertial>
+        <collision name='cone_62_collision'>
+          <geometry>
+            <mesh>
+              <uri>/models/cone/meshes/cone.stl</uri>
+              <scale>0.001 0.001 0.001</scale>
+            </mesh>
+          </geometry>
+        </collision>
+        <visual name='cone_62_visual'>
+          <geometry>
+            <mesh>
+              <uri>/models/cone/meshes/cone.stl</uri>
+              <scale>0.001 0.001 0.001</scale>
+            </mesh>
+          </geometry>
+          <material>
+            <ambient>1 1 0 1</ambient>
+            <diffuse>1 1 0 1</diffuse>
+            <specular>1 1 0 1</specular>
+          </material>
+        </visual>
+        
+        <enable_wind>false</enable_wind>
+      </link>
+      <pose>-5.507081578175226 6.8754113232478105 0.0 1.57 0 0</pose>
+      <static>true</static>
+      </model>
+      
+     <model name='cone_63'>
+      <link name='cone_63_link'>
+        <inertial>
+			<mass>0</mass>
+			<inertia>
+			<ixx>0.166667</ixx>
+			<ixy>0</ixy>
+			<ixz>0</ixz>
+			<iyy>0.166667</iyy>
+			<iyz>0</iyz>
+			<izz>0.166667</izz>
+			</inertia>
+		</inertial>
+        <collision name='cone_63_collision'>
+          <geometry>
+            <mesh>
+              <uri>/models/cone/meshes/cone.stl</uri>
+              <scale>0.001 0.001 0.001</scale>
+            </mesh>
+          </geometry>
+        </collision>
+        <visual name='cone_63_visual'>
+          <geometry>
+            <mesh>
+              <uri>/models/cone/meshes/cone.stl</uri>
+              <scale>0.001 0.001 0.001</scale>
+            </mesh>
+          </geometry>
+          <material>
+            <ambient>1 1 0 1</ambient>
+            <diffuse>1 1 0 1</diffuse>
+            <specular>1 1 0 1</specular>
+          </material>
+        </visual>
+        
+        <enable_wind>false</enable_wind>
+      </link>
+      <pose>-6.464478562275568 8.185349754033943 0.0 1.57 0 0</pose>
+      <static>true</static>
+      </model>
+      
+     <model name='cone_64'>
+      <link name='cone_64_link'>
+        <inertial>
+			<mass>0</mass>
+			<inertia>
+			<ixx>0.166667</ixx>
+			<ixy>0</ixy>
+			<ixz>0</ixz>
+			<iyy>0.166667</iyy>
+			<iyz>0</iyz>
+			<izz>0.166667</izz>
+			</inertia>
+		</inertial>
+        <collision name='cone_64_collision'>
+          <geometry>
+            <mesh>
+              <uri>/models/cone/meshes/cone.stl</uri>
+              <scale>0.001 0.001 0.001</scale>
+            </mesh>
+          </geometry>
+        </collision>
+        <visual name='cone_64_visual'>
+          <geometry>
+            <mesh>
+              <uri>/models/cone/meshes/cone.stl</uri>
+              <scale>0.001 0.001 0.001</scale>
+            </mesh>
+          </geometry>
+          <material>
+            <ambient>1 1 0 1</ambient>
+            <diffuse>1 1 0 1</diffuse>
+            <specular>1 1 0 1</specular>
+          </material>
+        </visual>
+        
+        <enable_wind>false</enable_wind>
+      </link>
+      <pose>-7.617978642384211 9.320493510900398 0.0 1.57 0 0</pose>
+      <static>true</static>
+      </model>
+      
+     <model name='cone_65'>
+      <link name='cone_65_link'>
+        <inertial>
+			<mass>0</mass>
+			<inertia>
+			<ixx>0.166667</ixx>
+			<ixy>0</ixy>
+			<ixz>0</ixz>
+			<iyy>0.166667</iyy>
+			<iyz>0</iyz>
+			<izz>0.166667</izz>
+			</inertia>
+		</inertial>
+        <collision name='cone_65_collision'>
+          <geometry>
+            <mesh>
+              <uri>/models/cone/meshes/cone.stl</uri>
+              <scale>0.001 0.001 0.001</scale>
+            </mesh>
+          </geometry>
+        </collision>
+        <visual name='cone_65_visual'>
+          <geometry>
+            <mesh>
+              <uri>/models/cone/meshes/cone.stl</uri>
+              <scale>0.001 0.001 0.001</scale>
+            </mesh>
+          </geometry>
+          <material>
+            <ambient>1 1 0 1</ambient>
+            <diffuse>1 1 0 1</diffuse>
+            <specular>1 1 0 1</specular>
+          </material>
+        </visual>
+        
+        <enable_wind>false</enable_wind>
+      </link>
+      <pose>-9.295849869648615 10.04336433762159 0.0 1.57 0 0</pose>
+      <static>true</static>
+      </model>
+      
+     <model name='cone_66'>
+      <link name='cone_66_link'>
+        <inertial>
+			<mass>0</mass>
+			<inertia>
+			<ixx>0.166667</ixx>
+			<ixy>0</ixy>
+			<ixz>0</ixz>
+			<iyy>0.166667</iyy>
+			<iyz>0</iyz>
+			<izz>0.166667</izz>
+			</inertia>
+		</inertial>
+        <collision name='cone_66_collision'>
+          <geometry>
+            <mesh>
+              <uri>/models/cone/meshes/cone.stl</uri>
+              <scale>0.001 0.001 0.001</scale>
+            </mesh>
+          </geometry>
+        </collision>
+        <visual name='cone_66_visual'>
+          <geometry>
+            <mesh>
+              <uri>/models/cone/meshes/cone.stl</uri>
+              <scale>0.001 0.001 0.001</scale>
+            </mesh>
+          </geometry>
+          <material>
+            <ambient>1 1 0 1</ambient>
+            <diffuse>1 1 0 1</diffuse>
+            <specular>1 1 0 1</specular>
+          </material>
+        </visual>
+        
+        <enable_wind>false</enable_wind>
+      </link>
+      <pose>-10.739963839451471 10.583399108587166 0.0 1.57 0 0</pose>
+      <static>true</static>
+      </model>
+      
+     <model name='cone_67'>
+      <link name='cone_67_link'>
+        <inertial>
+			<mass>0</mass>
+			<inertia>
+			<ixx>0.166667</ixx>
+			<ixy>0</ixy>
+			<ixz>0</ixz>
+			<iyy>0.166667</iyy>
+			<iyz>0</iyz>
+			<izz>0.166667</izz>
+			</inertia>
+		</inertial>
+        <collision name='cone_67_collision'>
+          <geometry>
+            <mesh>
+              <uri>/models/cone/meshes/cone.stl</uri>
+              <scale>0.001 0.001 0.001</scale>
+            </mesh>
+          </geometry>
+        </collision>
+        <visual name='cone_67_visual'>
+          <geometry>
+            <mesh>
+              <uri>/models/cone/meshes/cone.stl</uri>
+              <scale>0.001 0.001 0.001</scale>
+            </mesh>
+          </geometry>
+          <material>
+            <ambient>1 1 0 1</ambient>
+            <diffuse>1 1 0 1</diffuse>
+            <specular>1 1 0 1</specular>
+          </material>
+        </visual>
+        
+        <enable_wind>false</enable_wind>
+      </link>
+      <pose>-12.374027798573175 10.703994086919685 0.0 1.57 0 0</pose>
+      <static>true</static>
+      </model>
+      
+     <model name='cone_68'>
+      <link name='cone_68_link'>
+        <inertial>
+			<mass>0</mass>
+			<inertia>
+			<ixx>0.166667</ixx>
+			<ixy>0</ixy>
+			<ixz>0</ixz>
+			<iyy>0.166667</iyy>
+			<iyz>0</iyz>
+			<izz>0.166667</izz>
+			</inertia>
+		</inertial>
+        <collision name='cone_68_collision'>
+          <geometry>
+            <mesh>
+              <uri>/models/cone/meshes/cone.stl</uri>
+              <scale>0.001 0.001 0.001</scale>
+            </mesh>
+          </geometry>
+        </collision>
+        <visual name='cone_68_visual'>
+          <geometry>
+            <mesh>
+              <uri>/models/cone/meshes/cone.stl</uri>
+              <scale>0.001 0.001 0.001</scale>
+            </mesh>
+          </geometry>
+          <material>
+            <ambient>1 1 0 1</ambient>
+            <diffuse>1 1 0 1</diffuse>
+            <specular>1 1 0 1</specular>
+          </material>
+        </visual>
+        
+        <enable_wind>false</enable_wind>
+      </link>
+      <pose>-14.002649317185083 11.057182601629158 0.0 1.57 0 0</pose>
+      <static>true</static>
+      </model>
+      
+     <model name='cone_69'>
+      <link name='cone_69_link'>
+        <inertial>
+			<mass>0</mass>
+			<inertia>
+			<ixx>0.166667</ixx>
+			<ixy>0</ixy>
+			<ixz>0</ixz>
+			<iyy>0.166667</iyy>
+			<iyz>0</iyz>
+			<izz>0.166667</izz>
+			</inertia>
+		</inertial>
+        <collision name='cone_69_collision'>
+          <geometry>
+            <mesh>
+              <uri>/models/cone/meshes/cone.stl</uri>
+              <scale>0.001 0.001 0.001</scale>
+            </mesh>
+          </geometry>
+        </collision>
+        <visual name='cone_69_visual'>
+          <geometry>
+            <mesh>
+              <uri>/models/cone/meshes/cone.stl</uri>
+              <scale>0.001 0.001 0.001</scale>
+            </mesh>
+          </geometry>
+          <material>
+            <ambient>1 1 0 1</ambient>
+            <diffuse>1 1 0 1</diffuse>
+            <specular>1 1 0 1</specular>
+          </material>
+        </visual>
+        
+        <enable_wind>false</enable_wind>
+      </link>
+      <pose>-15.212938259045282 11.116232684789559 0.0 1.57 0 0</pose>
+      <static>true</static>
+      </model>
+      
+     <model name='cone_70'>
+      <link name='cone_70_link'>
+        <inertial>
+			<mass>0</mass>
+			<inertia>
+			<ixx>0.166667</ixx>
+			<ixy>0</ixy>
+			<ixz>0</ixz>
+			<iyy>0.166667</iyy>
+			<iyz>0</iyz>
+			<izz>0.166667</izz>
+			</inertia>
+		</inertial>
+        <collision name='cone_70_collision'>
+          <geometry>
+            <mesh>
+              <uri>/models/cone/meshes/cone.stl</uri>
+              <scale>0.001 0.001 0.001</scale>
+            </mesh>
+          </geometry>
+        </collision>
+        <visual name='cone_70_visual'>
+          <geometry>
+            <mesh>
+              <uri>/models/cone/meshes/cone.stl</uri>
+              <scale>0.001 0.001 0.001</scale>
+            </mesh>
+          </geometry>
+          <material>
+            <ambient>1 1 0 1</ambient>
+            <diffuse>1 1 0 1</diffuse>
+            <specular>1 1 0 1</specular>
+          </material>
+        </visual>
+        
+        <enable_wind>false</enable_wind>
+      </link>
+      <pose>-16.442452977101006 11.663200668035408 0.0 1.57 0 0</pose>
+      <static>true</static>
+      </model>
+      
+     <model name='cone_71'>
+      <link name='cone_71_link'>
+        <inertial>
+			<mass>0</mass>
+			<inertia>
+			<ixx>0.166667</ixx>
+			<ixy>0</ixy>
+			<ixz>0</ixz>
+			<iyy>0.166667</iyy>
+			<iyz>0</iyz>
+			<izz>0.166667</izz>
+			</inertia>
+		</inertial>
+        <collision name='cone_71_collision'>
+          <geometry>
+            <mesh>
+              <uri>/models/cone/meshes/cone.stl</uri>
+              <scale>0.001 0.001 0.001</scale>
+            </mesh>
+          </geometry>
+        </collision>
+        <visual name='cone_71_visual'>
+          <geometry>
+            <mesh>
+              <uri>/models/cone/meshes/cone.stl</uri>
+              <scale>0.001 0.001 0.001</scale>
+            </mesh>
+          </geometry>
+          <material>
+            <ambient>1 1 0 1</ambient>
+            <diffuse>1 1 0 1</diffuse>
+            <specular>1 1 0 1</specular>
+          </material>
+        </visual>
+        
+        <enable_wind>false</enable_wind>
+      </link>
+      <pose>-17.111143896977104 12.451381019292732 0.0 1.57 0 0</pose>
+      <static>true</static>
+      </model>
+      
+     <model name='cone_72'>
+      <link name='cone_72_link'>
+        <inertial>
+			<mass>0</mass>
+			<inertia>
+			<ixx>0.166667</ixx>
+			<ixy>0</ixy>
+			<ixz>0</ixz>
+			<iyy>0.166667</iyy>
+			<iyz>0</iyz>
+			<izz>0.166667</izz>
+			</inertia>
+		</inertial>
+        <collision name='cone_72_collision'>
+          <geometry>
+            <mesh>
+              <uri>/models/cone/meshes/cone.stl</uri>
+              <scale>0.001 0.001 0.001</scale>
+            </mesh>
+          </geometry>
+        </collision>
+        <visual name='cone_72_visual'>
+          <geometry>
+            <mesh>
+              <uri>/models/cone/meshes/cone.stl</uri>
+              <scale>0.001 0.001 0.001</scale>
+            </mesh>
+          </geometry>
+          <material>
+            <ambient>1 1 0 1</ambient>
+            <diffuse>1 1 0 1</diffuse>
+            <specular>1 1 0 1</specular>
+          </material>
+        </visual>
+        
+        <enable_wind>false</enable_wind>
+      </link>
+      <pose>-17.1746478776137 13.253454497991463 0.0 1.57 0 0</pose>
+      <static>true</static>
+      </model>
+      
+     <model name='cone_73'>
+      <link name='cone_73_link'>
+        <inertial>
+			<mass>0</mass>
+			<inertia>
+			<ixx>0.166667</ixx>
+			<ixy>0</ixy>
+			<ixz>0</ixz>
+			<iyy>0.166667</iyy>
+			<iyz>0</iyz>
+			<izz>0.166667</izz>
+			</inertia>
+		</inertial>
+        <collision name='cone_73_collision'>
+          <geometry>
+            <mesh>
+              <uri>/models/cone/meshes/cone.stl</uri>
+              <scale>0.001 0.001 0.001</scale>
+            </mesh>
+          </geometry>
+        </collision>
+        <visual name='cone_73_visual'>
+          <geometry>
+            <mesh>
+              <uri>/models/cone/meshes/cone.stl</uri>
+              <scale>0.001 0.001 0.001</scale>
+            </mesh>
+          </geometry>
+          <material>
+            <ambient>1 1 0 1</ambient>
+            <diffuse>1 1 0 1</diffuse>
+            <specular>1 1 0 1</specular>
+          </material>
+        </visual>
+        
+        <enable_wind>false</enable_wind>
+      </link>
+      <pose>-16.72467286388079 14.600258639989754 0.0 1.57 0 0</pose>
+      <static>true</static>
+      </model>
+      
+     <model name='cone_74'>
+      <link name='cone_74_link'>
+        <inertial>
+			<mass>0</mass>
+			<inertia>
+			<ixx>0.166667</ixx>
+			<ixy>0</ixy>
+			<ixz>0</ixz>
+			<iyy>0.166667</iyy>
+			<iyz>0</iyz>
+			<izz>0.166667</izz>
+			</inertia>
+		</inertial>
+        <collision name='cone_74_collision'>
+          <geometry>
+            <mesh>
+              <uri>/models/cone/meshes/cone.stl</uri>
+              <scale>0.001 0.001 0.001</scale>
+            </mesh>
+          </geometry>
+        </collision>
+        <visual name='cone_74_visual'>
+          <geometry>
+            <mesh>
+              <uri>/models/cone/meshes/cone.stl</uri>
+              <scale>0.001 0.001 0.001</scale>
+            </mesh>
+          </geometry>
+          <material>
+            <ambient>1 1 0 1</ambient>
+            <diffuse>1 1 0 1</diffuse>
+            <specular>1 1 0 1</specular>
+          </material>
+        </visual>
+        
+        <enable_wind>false</enable_wind>
+      </link>
+      <pose>-15.909356902043024 15.742202929197212 0.0 1.57 0 0</pose>
+      <static>true</static>
+      </model>
+      
+     <model name='cone_75'>
+      <link name='cone_75_link'>
+        <inertial>
+			<mass>0</mass>
+			<inertia>
+			<ixx>0.166667</ixx>
+			<ixy>0</ixy>
+			<ixz>0</ixz>
+			<iyy>0.166667</iyy>
+			<iyz>0</iyz>
+			<izz>0.166667</izz>
+			</inertia>
+		</inertial>
+        <collision name='cone_75_collision'>
+          <geometry>
+            <mesh>
+              <uri>/models/cone/meshes/cone.stl</uri>
+              <scale>0.001 0.001 0.001</scale>
+            </mesh>
+          </geometry>
+        </collision>
+        <visual name='cone_75_visual'>
+          <geometry>
+            <mesh>
+              <uri>/models/cone/meshes/cone.stl</uri>
+              <scale>0.001 0.001 0.001</scale>
+            </mesh>
+          </geometry>
+          <material>
+            <ambient>1 1 0 1</ambient>
+            <diffuse>1 1 0 1</diffuse>
+            <specular>1 1 0 1</specular>
+          </material>
+        </visual>
+        
+        <enable_wind>false</enable_wind>
+      </link>
+      <pose>-14.64853615562121 16.28610812777128 0.0 1.57 0 0</pose>
+      <static>true</static>
+      </model>
+      
+     <model name='cone_76'>
+      <link name='cone_76_link'>
+        <inertial>
+			<mass>0</mass>
+			<inertia>
+			<ixx>0.166667</ixx>
+			<ixy>0</ixy>
+			<ixz>0</ixz>
+			<iyy>0.166667</iyy>
+			<iyz>0</iyz>
+			<izz>0.166667</izz>
+			</inertia>
+		</inertial>
+        <collision name='cone_76_collision'>
+          <geometry>
+            <mesh>
+              <uri>/models/cone/meshes/cone.stl</uri>
+              <scale>0.001 0.001 0.001</scale>
+            </mesh>
+          </geometry>
+        </collision>
+        <visual name='cone_76_visual'>
+          <geometry>
+            <mesh>
+              <uri>/models/cone/meshes/cone.stl</uri>
+              <scale>0.001 0.001 0.001</scale>
+            </mesh>
+          </geometry>
+          <material>
+            <ambient>1 1 0 1</ambient>
+            <diffuse>1 1 0 1</diffuse>
+            <specular>1 1 0 1</specular>
+          </material>
+        </visual>
+        
+        <enable_wind>false</enable_wind>
+      </link>
+      <pose>-13.850569556156794 16.29785524958219 0.0 1.57 0 0</pose>
+      <static>true</static>
+      </model>
+      
+     <model name='cone_77'>
+      <link name='cone_77_link'>
+        <inertial>
+			<mass>0</mass>
+			<inertia>
+			<ixx>0.166667</ixx>
+			<ixy>0</ixy>
+			<ixz>0</ixz>
+			<iyy>0.166667</iyy>
+			<iyz>0</iyz>
+			<izz>0.166667</izz>
+			</inertia>
+		</inertial>
+        <collision name='cone_77_collision'>
+          <geometry>
+            <mesh>
+              <uri>/models/cone/meshes/cone.stl</uri>
+              <scale>0.001 0.001 0.001</scale>
+            </mesh>
+          </geometry>
+        </collision>
+        <visual name='cone_77_visual'>
+          <geometry>
+            <mesh>
+              <uri>/models/cone/meshes/cone.stl</uri>
+              <scale>0.001 0.001 0.001</scale>
+            </mesh>
+          </geometry>
+          <material>
+            <ambient>1 1 0 1</ambient>
+            <diffuse>1 1 0 1</diffuse>
+            <specular>1 1 0 1</specular>
+          </material>
+        </visual>
+        
+        <enable_wind>false</enable_wind>
+      </link>
+      <pose>-12.875808904568354 16.2635271465167 0.0 1.57 0 0</pose>
+      <static>true</static>
+      </model>
+      
+     <model name='cone_79'>
+      <link name='cone_79_link'>
+        <inertial>
+			<mass>0</mass>
+			<inertia>
+			<ixx>0.166667</ixx>
+			<ixy>0</ixy>
+			<ixz>0</ixz>
+			<iyy>0.166667</iyy>
+			<iyz>0</iyz>
+			<izz>0.166667</izz>
+			</inertia>
+		</inertial>
+        <collision name='cone_79_collision'>
+          <geometry>
+            <mesh>
+              <uri>/models/cone/meshes/cone.stl</uri>
+              <scale>0.001 0.001 0.001</scale>
+            </mesh>
+          </geometry>
+        </collision>
+        <visual name='cone_79_visual'>
+          <geometry>
+            <mesh>
+              <uri>/models/cone/meshes/cone.stl</uri>
+              <scale>0.001 0.001 0.001</scale>
+            </mesh>
+          </geometry>
+          <material>
+            <ambient>0 0 1 1</ambient>
+            <diffuse>0 0 1 1</diffuse>
+            <specular>0 0 1 1</specular>
+          </material>
+        </visual>
+        
+        <enable_wind>false</enable_wind>
+      </link>
+      <pose>-12.143626384896997 18.169462942414814 0.0 1.57 0 0</pose>
+      <static>true</static>
+      </model>
+      
+     <model name='cone_80'>
+      <link name='cone_80_link'>
+        <inertial>
+			<mass>0</mass>
+			<inertia>
+			<ixx>0.166667</ixx>
+			<ixy>0</ixy>
+			<ixz>0</ixz>
+			<iyy>0.166667</iyy>
+			<iyz>0</iyz>
+			<izz>0.166667</izz>
+			</inertia>
+		</inertial>
+        <collision name='cone_80_collision'>
+          <geometry>
+            <mesh>
+              <uri>/models/cone/meshes/cone.stl</uri>
+              <scale>0.001 0.001 0.001</scale>
+            </mesh>
+          </geometry>
+        </collision>
+        <visual name='cone_80_visual'>
+          <geometry>
+            <mesh>
+              <uri>/models/cone/meshes/cone.stl</uri>
+              <scale>0.001 0.001 0.001</scale>
+            </mesh>
+          </geometry>
+          <material>
+            <ambient>0 0 1 1</ambient>
+            <diffuse>0 0 1 1</diffuse>
+            <specular>0 0 1 1</specular>
+          </material>
+        </visual>
+        
+        <enable_wind>false</enable_wind>
+      </link>
+      <pose>-10.620214157266382 18.02029111319118 0.0 1.57 0 0</pose>
+      <static>true</static>
+      </model>
+      
+     <model name='cone_81'>
+      <link name='cone_81_link'>
+        <inertial>
+			<mass>0</mass>
+			<inertia>
+			<ixx>0.166667</ixx>
+			<ixy>0</ixy>
+			<ixz>0</ixz>
+			<iyy>0.166667</iyy>
+			<iyz>0</iyz>
+			<izz>0.166667</izz>
+			</inertia>
+		</inertial>
+        <collision name='cone_81_collision'>
+          <geometry>
+            <mesh>
+              <uri>/models/cone/meshes/cone.stl</uri>
+              <scale>0.001 0.001 0.001</scale>
+            </mesh>
+          </geometry>
+        </collision>
+        <visual name='cone_81_visual'>
+          <geometry>
+            <mesh>
+              <uri>/models/cone/meshes/cone.stl</uri>
+              <scale>0.001 0.001 0.001</scale>
+            </mesh>
+          </geometry>
+          <material>
+            <ambient>0 0 1 1</ambient>
+            <diffuse>0 0 1 1</diffuse>
+            <specular>0 0 1 1</specular>
+          </material>
+        </visual>
+        
+        <enable_wind>false</enable_wind>
+      </link>
+      <pose>-9.466473274392847 17.66192113690906 0.0 1.57 0 0</pose>
+      <static>true</static>
+      </model>
+      
+     <model name='cone_82'>
+      <link name='cone_82_link'>
+        <inertial>
+			<mass>0</mass>
+			<inertia>
+			<ixx>0.166667</ixx>
+			<ixy>0</ixy>
+			<ixz>0</ixz>
+			<iyy>0.166667</iyy>
+			<iyz>0</iyz>
+			<izz>0.166667</izz>
+			</inertia>
+		</inertial>
+        <collision name='cone_82_collision'>
+          <geometry>
+            <mesh>
+              <uri>/models/cone/meshes/cone.stl</uri>
+              <scale>0.001 0.001 0.001</scale>
+            </mesh>
+          </geometry>
+        </collision>
+        <visual name='cone_82_visual'>
+          <geometry>
+            <mesh>
+              <uri>/models/cone/meshes/cone.stl</uri>
+              <scale>0.001 0.001 0.001</scale>
+            </mesh>
+          </geometry>
+          <material>
+            <ambient>0 0 1 1</ambient>
+            <diffuse>0 0 1 1</diffuse>
+            <specular>0 0 1 1</specular>
+          </material>
+        </visual>
+        
+        <enable_wind>false</enable_wind>
+      </link>
+      <pose>-7.7447835733125245 16.71302350693279 0.0 1.57 0 0</pose>
+      <static>true</static>
+      </model>
+      
+     <model name='cone_83'>
+      <link name='cone_83_link'>
+        <inertial>
+			<mass>0</mass>
+			<inertia>
+			<ixx>0.166667</ixx>
+			<ixy>0</ixy>
+			<ixz>0</ixz>
+			<iyy>0.166667</iyy>
+			<iyz>0</iyz>
+			<izz>0.166667</izz>
+			</inertia>
+		</inertial>
+        <collision name='cone_83_collision'>
+          <geometry>
+            <mesh>
+              <uri>/models/cone/meshes/cone.stl</uri>
+              <scale>0.001 0.001 0.001</scale>
+            </mesh>
+          </geometry>
+        </collision>
+        <visual name='cone_83_visual'>
+          <geometry>
+            <mesh>
+              <uri>/models/cone/meshes/cone.stl</uri>
+              <scale>0.001 0.001 0.001</scale>
+            </mesh>
+          </geometry>
+          <material>
+            <ambient>0 0 1 1</ambient>
+            <diffuse>0 0 1 1</diffuse>
+            <specular>0 0 1 1</specular>
+          </material>
+        </visual>
+        
+        <enable_wind>false</enable_wind>
+      </link>
+      <pose>-6.531743698282007 15.742043339543873 0.0 1.57 0 0</pose>
+      <static>true</static>
+      </model>
+      
+     <model name='cone_84'>
+      <link name='cone_84_link'>
+        <inertial>
+			<mass>0</mass>
+			<inertia>
+			<ixx>0.166667</ixx>
+			<ixy>0</ixy>
+			<ixz>0</ixz>
+			<iyy>0.166667</iyy>
+			<iyz>0</iyz>
+			<izz>0.166667</izz>
+			</inertia>
+		</inertial>
+        <collision name='cone_84_collision'>
+          <geometry>
+            <mesh>
+              <uri>/models/cone/meshes/cone.stl</uri>
+              <scale>0.001 0.001 0.001</scale>
+            </mesh>
+          </geometry>
+        </collision>
+        <visual name='cone_84_visual'>
+          <geometry>
+            <mesh>
+              <uri>/models/cone/meshes/cone.stl</uri>
+              <scale>0.001 0.001 0.001</scale>
+            </mesh>
+          </geometry>
+          <material>
+            <ambient>0 0 1 1</ambient>
+            <diffuse>0 0 1 1</diffuse>
+            <specular>0 0 1 1</specular>
+          </material>
+        </visual>
+        
+        <enable_wind>false</enable_wind>
+      </link>
+      <pose>-5.463331394357446 14.621094309621387 0.0 1.57 0 0</pose>
+      <static>true</static>
+      </model>
+      
+     <model name='cone_85'>
+      <link name='cone_85_link'>
+        <inertial>
+			<mass>0</mass>
+			<inertia>
+			<ixx>0.166667</ixx>
+			<ixy>0</ixy>
+			<ixz>0</ixz>
+			<iyy>0.166667</iyy>
+			<iyz>0</iyz>
+			<izz>0.166667</izz>
+			</inertia>
+		</inertial>
+        <collision name='cone_85_collision'>
+          <geometry>
+            <mesh>
+              <uri>/models/cone/meshes/cone.stl</uri>
+              <scale>0.001 0.001 0.001</scale>
+            </mesh>
+          </geometry>
+        </collision>
+        <visual name='cone_85_visual'>
+          <geometry>
+            <mesh>
+              <uri>/models/cone/meshes/cone.stl</uri>
+              <scale>0.001 0.001 0.001</scale>
+            </mesh>
+          </geometry>
+          <material>
+            <ambient>0 0 1 1</ambient>
+            <diffuse>0 0 1 1</diffuse>
+            <specular>0 0 1 1</specular>
+          </material>
+        </visual>
+        
+        <enable_wind>false</enable_wind>
+      </link>
+      <pose>-4.368184261483911 13.288699709706837 0.0 1.57 0 0</pose>
+      <static>true</static>
+      </model>
+      
+     <model name='cone_86'>
+      <link name='cone_86_link'>
+        <inertial>
+			<mass>0</mass>
+			<inertia>
+			<ixx>0.166667</ixx>
+			<ixy>0</ixy>
+			<ixz>0</ixz>
+			<iyy>0.166667</iyy>
+			<iyz>0</iyz>
+			<izz>0.166667</izz>
+			</inertia>
+		</inertial>
+        <collision name='cone_86_collision'>
+          <geometry>
+            <mesh>
+              <uri>/models/cone/meshes/cone.stl</uri>
+              <scale>0.001 0.001 0.001</scale>
+            </mesh>
+          </geometry>
+        </collision>
+        <visual name='cone_86_visual'>
+          <geometry>
+            <mesh>
+              <uri>/models/cone/meshes/cone.stl</uri>
+              <scale>0.001 0.001 0.001</scale>
+            </mesh>
+          </geometry>
+          <material>
+            <ambient>0 0 1 1</ambient>
+            <diffuse>0 0 1 1</diffuse>
+            <specular>0 0 1 1</specular>
+          </material>
+        </visual>
+        
+        <enable_wind>false</enable_wind>
+      </link>
+      <pose>-3.437526874704126 12.171207033925587 0.0 1.57 0 0</pose>
+      <static>true</static>
+      </model>
+      
+     <model name='cone_87'>
+      <link name='cone_87_link'>
+        <inertial>
+			<mass>0</mass>
+			<inertia>
+			<ixx>0.166667</ixx>
+			<ixy>0</ixy>
+			<ixz>0</ixz>
+			<iyy>0.166667</iyy>
+			<iyz>0</iyz>
+			<izz>0.166667</izz>
+			</inertia>
+		</inertial>
+        <collision name='cone_87_collision'>
+          <geometry>
+            <mesh>
+              <uri>/models/cone/meshes/cone.stl</uri>
+              <scale>0.001 0.001 0.001</scale>
+            </mesh>
+          </geometry>
+        </collision>
+        <visual name='cone_87_visual'>
+          <geometry>
+            <mesh>
+              <uri>/models/cone/meshes/cone.stl</uri>
+              <scale>0.001 0.001 0.001</scale>
+            </mesh>
+          </geometry>
+          <material>
+            <ambient>0 0 1 1</ambient>
+            <diffuse>0 0 1 1</diffuse>
+            <specular>0 0 1 1</specular>
+          </material>
+        </visual>
+        
+        <enable_wind>false</enable_wind>
+      </link>
+      <pose>-2.385660343332056 11.252447687917286 0.0 1.57 0 0</pose>
+      <static>true</static>
+      </model>
+      
+     <model name='cone_88'>
+      <link name='cone_88_link'>
+        <inertial>
+			<mass>0</mass>
+			<inertia>
+			<ixx>0.166667</ixx>
+			<ixy>0</ixy>
+			<ixz>0</ixz>
+			<iyy>0.166667</iyy>
+			<iyz>0</iyz>
+			<izz>0.166667</izz>
+			</inertia>
+		</inertial>
+        <collision name='cone_88_collision'>
+          <geometry>
+            <mesh>
+              <uri>/models/cone/meshes/cone.stl</uri>
+              <scale>0.001 0.001 0.001</scale>
+            </mesh>
+          </geometry>
+        </collision>
+        <visual name='cone_88_visual'>
+          <geometry>
+            <mesh>
+              <uri>/models/cone/meshes/cone.stl</uri>
+              <scale>0.001 0.001 0.001</scale>
+            </mesh>
+          </geometry>
+          <material>
+            <ambient>0 0 1 1</ambient>
+            <diffuse>0 0 1 1</diffuse>
+            <specular>0 0 1 1</specular>
+          </material>
+        </visual>
+        
+        <enable_wind>false</enable_wind>
+      </link>
+      <pose>-1.039690189523462 10.69521673851543 0.0 1.57 0 0</pose>
+      <static>true</static>
+      </model>
+      
+     <model name='cone_89'>
+      <link name='cone_89_link'>
+        <inertial>
+			<mass>0</mass>
+			<inertia>
+			<ixx>0.166667</ixx>
+			<ixy>0</ixy>
+			<ixz>0</ixz>
+			<iyy>0.166667</iyy>
+			<iyz>0</iyz>
+			<izz>0.166667</izz>
+			</inertia>
+		</inertial>
+        <collision name='cone_89_collision'>
+          <geometry>
+            <mesh>
+              <uri>/models/cone/meshes/cone.stl</uri>
+              <scale>0.001 0.001 0.001</scale>
+            </mesh>
+          </geometry>
+        </collision>
+        <visual name='cone_89_visual'>
+          <geometry>
+            <mesh>
+              <uri>/models/cone/meshes/cone.stl</uri>
+              <scale>0.001 0.001 0.001</scale>
+            </mesh>
+          </geometry>
+          <material>
+            <ambient>0 0 1 1</ambient>
+            <diffuse>0 0 1 1</diffuse>
+            <specular>0 0 1 1</specular>
+          </material>
+        </visual>
+        
+        <enable_wind>false</enable_wind>
+      </link>
+      <pose>0.48232919676804187 10.037437044911915 0.0 1.57 0 0</pose>
+      <static>true</static>
+      </model>
+      
+     <model name='cone_90'>
+      <link name='cone_90_link'>
+        <inertial>
+			<mass>0</mass>
+			<inertia>
+			<ixx>0.166667</ixx>
+			<ixy>0</ixy>
+			<ixz>0</ixz>
+			<iyy>0.166667</iyy>
+			<iyz>0</iyz>
+			<izz>0.166667</izz>
+			</inertia>
+		</inertial>
+        <collision name='cone_90_collision'>
+          <geometry>
+            <mesh>
+              <uri>/models/cone/meshes/cone.stl</uri>
+              <scale>0.001 0.001 0.001</scale>
+            </mesh>
+          </geometry>
+        </collision>
+        <visual name='cone_90_visual'>
+          <geometry>
+            <mesh>
+              <uri>/models/cone/meshes/cone.stl</uri>
+              <scale>0.001 0.001 0.001</scale>
+            </mesh>
+          </geometry>
+          <material>
+            <ambient>0 0 1 1</ambient>
+            <diffuse>0 0 1 1</diffuse>
+            <specular>0 0 1 1</specular>
+          </material>
+        </visual>
+        
+        <enable_wind>false</enable_wind>
+      </link>
+      <pose>2.0889995764067137 9.37065848045879 0.0 1.57 0 0</pose>
+      <static>true</static>
+      </model>
+      
+     <model name='cone_91'>
+      <link name='cone_91_link'>
+        <inertial>
+			<mass>0</mass>
+			<inertia>
+			<ixx>0.166667</ixx>
+			<ixy>0</ixy>
+			<ixz>0</ixz>
+			<iyy>0.166667</iyy>
+			<iyz>0</iyz>
+			<izz>0.166667</izz>
+			</inertia>
+		</inertial>
+        <collision name='cone_91_collision'>
+          <geometry>
+            <mesh>
+              <uri>/models/cone/meshes/cone.stl</uri>
+              <scale>0.001 0.001 0.001</scale>
+            </mesh>
+          </geometry>
+        </collision>
+        <visual name='cone_91_visual'>
+          <geometry>
+            <mesh>
+              <uri>/models/cone/meshes/cone.stl</uri>
+              <scale>0.001 0.001 0.001</scale>
+            </mesh>
+          </geometry>
+          <material>
+            <ambient>0 0 1 1</ambient>
+            <diffuse>0 0 1 1</diffuse>
+            <specular>0 0 1 1</specular>
+          </material>
+        </visual>
+        
+        <enable_wind>false</enable_wind>
+      </link>
+      <pose>3.856695957021948 8.559778773122364 0.0 1.57 0 0</pose>
+      <static>true</static>
+      </model>
+      
+     <model name='cone_92'>
+      <link name='cone_92_link'>
+        <inertial>
+			<mass>0</mass>
+			<inertia>
+			<ixx>0.166667</ixx>
+			<ixy>0</ixy>
+			<ixz>0</ixz>
+			<iyy>0.166667</iyy>
+			<iyz>0</iyz>
+			<izz>0.166667</izz>
+			</inertia>
+		</inertial>
+        <collision name='cone_92_collision'>
+          <geometry>
+            <mesh>
+              <uri>/models/cone/meshes/cone.stl</uri>
+              <scale>0.001 0.001 0.001</scale>
+            </mesh>
+          </geometry>
+        </collision>
+        <visual name='cone_92_visual'>
+          <geometry>
+            <mesh>
+              <uri>/models/cone/meshes/cone.stl</uri>
+              <scale>0.001 0.001 0.001</scale>
+            </mesh>
+          </geometry>
+          <material>
+            <ambient>0 0 1 1</ambient>
+            <diffuse>0 0 1 1</diffuse>
+            <specular>0 0 1 1</specular>
+          </material>
+        </visual>
+        
+        <enable_wind>false</enable_wind>
+      </link>
+      <pose>5.236489124136206 7.502845370107227 0.0 1.57 0 0</pose>
+      <static>true</static>
+      </model>
+      
+     <model name='cone_93'>
+      <link name='cone_93_link'>
+        <inertial>
+			<mass>0</mass>
+			<inertia>
+			<ixx>0.166667</ixx>
+			<ixy>0</ixy>
+			<ixz>0</ixz>
+			<iyy>0.166667</iyy>
+			<iyz>0</iyz>
+			<izz>0.166667</izz>
+			</inertia>
+		</inertial>
+        <collision name='cone_93_collision'>
+          <geometry>
+            <mesh>
+              <uri>/models/cone/meshes/cone.stl</uri>
+              <scale>0.001 0.001 0.001</scale>
+            </mesh>
+          </geometry>
+        </collision>
+        <visual name='cone_93_visual'>
+          <geometry>
+            <mesh>
+              <uri>/models/cone/meshes/cone.stl</uri>
+              <scale>0.001 0.001 0.001</scale>
+            </mesh>
+          </geometry>
+          <material>
+            <ambient>0 0 1 1</ambient>
+            <diffuse>0 0 1 1</diffuse>
+            <specular>0 0 1 1</specular>
+          </material>
+        </visual>
+        
+        <enable_wind>false</enable_wind>
+      </link>
+      <pose>7.310631580190893 7.050475680165821 0.0 1.57 0 0</pose>
+      <static>true</static>
+      </model>
+      
+     <model name='cone_94'>
+      <link name='cone_94_link'>
+        <inertial>
+			<mass>0</mass>
+			<inertia>
+			<ixx>0.166667</ixx>
+			<ixy>0</ixy>
+			<ixz>0</ixz>
+			<iyy>0.166667</iyy>
+			<iyz>0</iyz>
+			<izz>0.166667</izz>
+			</inertia>
+		</inertial>
+        <collision name='cone_94_collision'>
+          <geometry>
+            <mesh>
+              <uri>/models/cone/meshes/cone.stl</uri>
+              <scale>0.001 0.001 0.001</scale>
+            </mesh>
+          </geometry>
+        </collision>
+        <visual name='cone_94_visual'>
+          <geometry>
+            <mesh>
+              <uri>/models/cone/meshes/cone.stl</uri>
+              <scale>0.001 0.001 0.001</scale>
+            </mesh>
+          </geometry>
+          <material>
+            <ambient>0 0 1 1</ambient>
+            <diffuse>0 0 1 1</diffuse>
+            <specular>0 0 1 1</specular>
+          </material>
+        </visual>
+        
+        <enable_wind>false</enable_wind>
+      </link>
+      <pose>9.163769550161597 6.35232409172588 0.0 1.57 0 0</pose>
+      <static>true</static>
+      </model>
+      
+     <model name='cone_95'>
+      <link name='cone_95_link'>
+        <inertial>
+			<mass>0</mass>
+			<inertia>
+			<ixx>0.166667</ixx>
+			<ixy>0</ixy>
+			<ixz>0</ixz>
+			<iyy>0.166667</iyy>
+			<iyz>0</iyz>
+			<izz>0.166667</izz>
+			</inertia>
+		</inertial>
+        <collision name='cone_95_collision'>
+          <geometry>
+            <mesh>
+              <uri>/models/cone/meshes/cone.stl</uri>
+              <scale>0.001 0.001 0.001</scale>
+            </mesh>
+          </geometry>
+        </collision>
+        <visual name='cone_95_visual'>
+          <geometry>
+            <mesh>
+              <uri>/models/cone/meshes/cone.stl</uri>
+              <scale>0.001 0.001 0.001</scale>
+            </mesh>
+          </geometry>
+          <material>
+            <ambient>0 0 1 1</ambient>
+            <diffuse>0 0 1 1</diffuse>
+            <specular>0 0 1 1</specular>
+          </material>
+        </visual>
+        
+        <enable_wind>false</enable_wind>
+      </link>
+      <pose>10.704998798208472 5.810450159841114 0.0 1.57 0 0</pose>
+      <static>true</static>
+      </model>
+      
+     <model name='cone_96'>
+      <link name='cone_96_link'>
+        <inertial>
+			<mass>0</mass>
+			<inertia>
+			<ixx>0.166667</ixx>
+			<ixy>0</ixy>
+			<ixz>0</ixz>
+			<iyy>0.166667</iyy>
+			<iyz>0</iyz>
+			<izz>0.166667</izz>
+			</inertia>
+		</inertial>
+        <collision name='cone_96_collision'>
+          <geometry>
+            <mesh>
+              <uri>/models/cone/meshes/cone.stl</uri>
+              <scale>0.001 0.001 0.001</scale>
+            </mesh>
+          </geometry>
+        </collision>
+        <visual name='cone_96_visual'>
+          <geometry>
+            <mesh>
+              <uri>/models/cone/meshes/cone.stl</uri>
+              <scale>0.001 0.001 0.001</scale>
+            </mesh>
+          </geometry>
+          <material>
+            <ambient>0 0 1 1</ambient>
+            <diffuse>0 0 1 1</diffuse>
+            <specular>0 0 1 1</specular>
+          </material>
+        </visual>
+        
+        <enable_wind>false</enable_wind>
+      </link>
+      <pose>12.352129764394995 5.072425448232227 0.0 1.57 0 0</pose>
+      <static>true</static>
+      </model>
+      
+     <model name='cone_97'>
+      <link name='cone_97_link'>
+        <inertial>
+			<mass>0</mass>
+			<inertia>
+			<ixx>0.166667</ixx>
+			<ixy>0</ixy>
+			<ixz>0</ixz>
+			<iyy>0.166667</iyy>
+			<iyz>0</iyz>
+			<izz>0.166667</izz>
+			</inertia>
+		</inertial>
+        <collision name='cone_97_collision'>
+          <geometry>
+            <mesh>
+              <uri>/models/cone/meshes/cone.stl</uri>
+              <scale>0.001 0.001 0.001</scale>
+            </mesh>
+          </geometry>
+        </collision>
+        <visual name='cone_97_visual'>
+          <geometry>
+            <mesh>
+              <uri>/models/cone/meshes/cone.stl</uri>
+              <scale>0.001 0.001 0.001</scale>
+            </mesh>
+          </geometry>
+          <material>
+            <ambient>0 0 1 1</ambient>
+            <diffuse>0 0 1 1</diffuse>
+            <specular>0 0 1 1</specular>
+          </material>
+        </visual>
+        
+        <enable_wind>false</enable_wind>
+      </link>
+      <pose>14.254858798818823 4.009689890676075 0.0 1.57 0 0</pose>
+      <static>true</static>
+      </model>
+      
+     <model name='cone_98'>
+      <link name='cone_98_link'>
+        <inertial>
+			<mass>0</mass>
+			<inertia>
+			<ixx>0.166667</ixx>
+			<ixy>0</ixy>
+			<ixz>0</ixz>
+			<iyy>0.166667</iyy>
+			<iyz>0</iyz>
+			<izz>0.166667</izz>
+			</inertia>
+		</inertial>
+        <collision name='cone_98_collision'>
+          <geometry>
+            <mesh>
+              <uri>/models/cone/meshes/cone.stl</uri>
+              <scale>0.001 0.001 0.001</scale>
+            </mesh>
+          </geometry>
+        </collision>
+        <visual name='cone_98_visual'>
+          <geometry>
+            <mesh>
+              <uri>/models/cone/meshes/cone.stl</uri>
+              <scale>0.001 0.001 0.001</scale>
+            </mesh>
+          </geometry>
+          <material>
+            <ambient>0 0 1 1</ambient>
+            <diffuse>0 0 1 1</diffuse>
+            <specular>0 0 1 1</specular>
+          </material>
+        </visual>
+        
+        <enable_wind>false</enable_wind>
+      </link>
+      <pose>15.8445442388823 2.848789774709278 0.0 1.57 0 0</pose>
+      <static>true</static>
+      </model>
+      
+     <model name='cone_99'>
+      <link name='cone_99_link'>
+        <inertial>
+			<mass>0</mass>
+			<inertia>
+			<ixx>0.166667</ixx>
+			<ixy>0</ixy>
+			<ixz>0</ixz>
+			<iyy>0.166667</iyy>
+			<iyz>0</iyz>
+			<izz>0.166667</izz>
+			</inertia>
+		</inertial>
+        <collision name='cone_99_collision'>
+          <geometry>
+            <mesh>
+              <uri>/models/cone/meshes/cone.stl</uri>
+              <scale>0.001 0.001 0.001</scale>
+            </mesh>
+          </geometry>
+        </collision>
+        <visual name='cone_99_visual'>
+          <geometry>
+            <mesh>
+              <uri>/models/cone/meshes/cone.stl</uri>
+              <scale>0.001 0.001 0.001</scale>
+            </mesh>
+          </geometry>
+          <material>
+            <ambient>0 0 1 1</ambient>
+            <diffuse>0 0 1 1</diffuse>
+            <specular>0 0 1 1</specular>
+          </material>
+        </visual>
+        
+        <enable_wind>false</enable_wind>
+      </link>
+      <pose>17.12407762511277 1.1510110729270515 0.0 1.57 0 0</pose>
+      <static>true</static>
+      </model>
+      
+     <model name='cone_100'>
+      <link name='cone_100_link'>
+        <inertial>
+			<mass>0</mass>
+			<inertia>
+			<ixx>0.166667</ixx>
+			<ixy>0</ixy>
+			<ixz>0</ixz>
+			<iyy>0.166667</iyy>
+			<iyz>0</iyz>
+			<izz>0.166667</izz>
+			</inertia>
+		</inertial>
+        <collision name='cone_100_collision'>
+          <geometry>
+            <mesh>
+              <uri>/models/cone/meshes/cone.stl</uri>
+              <scale>0.001 0.001 0.001</scale>
+            </mesh>
+          </geometry>
+        </collision>
+        <visual name='cone_100_visual'>
+          <geometry>
+            <mesh>
+              <uri>/models/cone/meshes/cone.stl</uri>
+              <scale>0.001 0.001 0.001</scale>
+            </mesh>
+          </geometry>
+          <material>
+            <ambient>0 0 1 1</ambient>
+            <diffuse>0 0 1 1</diffuse>
+            <specular>0 0 1 1</specular>
+          </material>
+        </visual>
+        
+        <enable_wind>false</enable_wind>
+      </link>
+      <pose>17.484373874502417 -0.12989751166767505 0.0 1.57 0 0</pose>
+      <static>true</static>
+      </model>
+      
+     <model name='cone_101'>
+      <link name='cone_101_link'>
+        <inertial>
+			<mass>0</mass>
+			<inertia>
+			<ixx>0.166667</ixx>
+			<ixy>0</ixy>
+			<ixz>0</ixz>
+			<iyy>0.166667</iyy>
+			<iyz>0</iyz>
+			<izz>0.166667</izz>
+			</inertia>
+		</inertial>
+        <collision name='cone_101_collision'>
+          <geometry>
+            <mesh>
+              <uri>/models/cone/meshes/cone.stl</uri>
+              <scale>0.001 0.001 0.001</scale>
+            </mesh>
+          </geometry>
+        </collision>
+        <visual name='cone_101_visual'>
+          <geometry>
+            <mesh>
+              <uri>/models/cone/meshes/cone.stl</uri>
+              <scale>0.001 0.001 0.001</scale>
+            </mesh>
+          </geometry>
+          <material>
+            <ambient>0 0 1 1</ambient>
+            <diffuse>0 0 1 1</diffuse>
+            <specular>0 0 1 1</specular>
+          </material>
+        </visual>
+        
+        <enable_wind>false</enable_wind>
+      </link>
+      <pose>17.533818073110815 -1.537410176462597 0.0 1.57 0 0</pose>
+      <static>true</static>
+      </model>
+      
+     <model name='cone_102'>
+      <link name='cone_102_link'>
+        <inertial>
+			<mass>0</mass>
+			<inertia>
+			<ixx>0.166667</ixx>
+			<ixy>0</ixy>
+			<ixz>0</ixz>
+			<iyy>0.166667</iyy>
+			<iyz>0</iyz>
+			<izz>0.166667</izz>
+			</inertia>
+		</inertial>
+        <collision name='cone_102_collision'>
+          <geometry>
+            <mesh>
+              <uri>/models/cone/meshes/cone.stl</uri>
+              <scale>0.001 0.001 0.001</scale>
+            </mesh>
+          </geometry>
+        </collision>
+        <visual name='cone_102_visual'>
+          <geometry>
+            <mesh>
+              <uri>/models/cone/meshes/cone.stl</uri>
+              <scale>0.001 0.001 0.001</scale>
+            </mesh>
+          </geometry>
+          <material>
+            <ambient>0 0 1 1</ambient>
+            <diffuse>0 0 1 1</diffuse>
+            <specular>0 0 1 1</specular>
+          </material>
+        </visual>
+        
+        <enable_wind>false</enable_wind>
+      </link>
+      <pose>17.084862537222143 -3.112401402658886 0.0 1.57 0 0</pose>
+      <static>true</static>
+      </model>
+      
+     <model name='cone_103'>
+      <link name='cone_103_link'>
+        <inertial>
+			<mass>0</mass>
+			<inertia>
+			<ixx>0.166667</ixx>
+			<ixy>0</ixy>
+			<ixz>0</ixz>
+			<iyy>0.166667</iyy>
+			<iyz>0</iyz>
+			<izz>0.166667</izz>
+			</inertia>
+		</inertial>
+        <collision name='cone_103_collision'>
+          <geometry>
+            <mesh>
+              <uri>/models/cone/meshes/cone.stl</uri>
+              <scale>0.001 0.001 0.001</scale>
+            </mesh>
+          </geometry>
+        </collision>
+        <visual name='cone_103_visual'>
+          <geometry>
+            <mesh>
+              <uri>/models/cone/meshes/cone.stl</uri>
+              <scale>0.001 0.001 0.001</scale>
+            </mesh>
+          </geometry>
+          <material>
+            <ambient>0 0 1 1</ambient>
+            <diffuse>0 0 1 1</diffuse>
+            <specular>0 0 1 1</specular>
+          </material>
+        </visual>
+        
+        <enable_wind>false</enable_wind>
+      </link>
+      <pose>16.148649997549292 -4.343488133615917 0.0 1.57 0 0</pose>
+      <static>true</static>
+      </model>
+      
+     <model name='cone_104'>
+      <link name='cone_104_link'>
+        <inertial>
+			<mass>0</mass>
+			<inertia>
+			<ixx>0.166667</ixx>
+			<ixy>0</ixy>
+			<ixz>0</ixz>
+			<iyy>0.166667</iyy>
+			<iyz>0</iyz>
+			<izz>0.166667</izz>
+			</inertia>
+		</inertial>
+        <collision name='cone_104_collision'>
+          <geometry>
+            <mesh>
+              <uri>/models/cone/meshes/cone.stl</uri>
+              <scale>0.001 0.001 0.001</scale>
+            </mesh>
+          </geometry>
+        </collision>
+        <visual name='cone_104_visual'>
+          <geometry>
+            <mesh>
+              <uri>/models/cone/meshes/cone.stl</uri>
+              <scale>0.001 0.001 0.001</scale>
+            </mesh>
+          </geometry>
+          <material>
+            <ambient>0 0 1 1</ambient>
+            <diffuse>0 0 1 1</diffuse>
+            <specular>0 0 1 1</specular>
+          </material>
+        </visual>
+        
+        <enable_wind>false</enable_wind>
+      </link>
+      <pose>14.505070514517065 -5.5772699481911125 0.0 1.57 0 0</pose>
+      <static>true</static>
+      </model>
+      
+     <model name='cone_105'>
+      <link name='cone_105_link'>
+        <inertial>
+			<mass>0</mass>
+			<inertia>
+			<ixx>0.166667</ixx>
+			<ixy>0</ixy>
+			<ixz>0</ixz>
+			<iyy>0.166667</iyy>
+			<iyz>0</iyz>
+			<izz>0.166667</izz>
+			</inertia>
+		</inertial>
+        <collision name='cone_105_collision'>
+          <geometry>
+            <mesh>
+              <uri>/models/cone/meshes/cone.stl</uri>
+              <scale>0.001 0.001 0.001</scale>
+            </mesh>
+          </geometry>
+        </collision>
+        <visual name='cone_105_visual'>
+          <geometry>
+            <mesh>
+              <uri>/models/cone/meshes/cone.stl</uri>
+              <scale>0.001 0.001 0.001</scale>
+            </mesh>
+          </geometry>
+          <material>
+            <ambient>0 0 1 1</ambient>
+            <diffuse>0 0 1 1</diffuse>
+            <specular>0 0 1 1</specular>
+          </material>
+        </visual>
+        
+        <enable_wind>false</enable_wind>
+      </link>
+      <pose>12.7785041998198 -6.326470769113964 0.0 1.57 0 0</pose>
+      <static>true</static>
+      </model>
+      
+     <model name='cone_106'>
+      <link name='cone_106_link'>
+        <inertial>
+			<mass>0</mass>
+			<inertia>
+			<ixx>0.166667</ixx>
+			<ixy>0</ixy>
+			<ixz>0</ixz>
+			<iyy>0.166667</iyy>
+			<iyz>0</iyz>
+			<izz>0.166667</izz>
+			</inertia>
+		</inertial>
+        <collision name='cone_106_collision'>
+          <geometry>
+            <mesh>
+              <uri>/models/cone/meshes/cone.stl</uri>
+              <scale>0.001 0.001 0.001</scale>
+            </mesh>
+          </geometry>
+        </collision>
+        <visual name='cone_106_visual'>
+          <geometry>
+            <mesh>
+              <uri>/models/cone/meshes/cone.stl</uri>
+              <scale>0.001 0.001 0.001</scale>
+            </mesh>
+          </geometry>
+          <material>
+            <ambient>0 0 1 1</ambient>
+            <diffuse>0 0 1 1</diffuse>
+            <specular>0 0 1 1</specular>
+          </material>
+        </visual>
+        
+        <enable_wind>false</enable_wind>
+      </link>
+      <pose>11.430451221304175 -7.057355321115917 0.0 1.57 0 0</pose>
+      <static>true</static>
+      </model>
+      
+     <model name='cone_107'>
+      <link name='cone_107_link'>
+        <inertial>
+			<mass>0</mass>
+			<inertia>
+			<ixx>0.166667</ixx>
+			<ixy>0</ixy>
+			<ixz>0</ixz>
+			<iyy>0.166667</iyy>
+			<iyz>0</iyz>
+			<izz>0.166667</izz>
+			</inertia>
+		</inertial>
+        <collision name='cone_107_collision'>
+          <geometry>
+            <mesh>
+              <uri>/models/cone/meshes/cone.stl</uri>
+              <scale>0.001 0.001 0.001</scale>
+            </mesh>
+          </geometry>
+        </collision>
+        <visual name='cone_107_visual'>
+          <geometry>
+            <mesh>
+              <uri>/models/cone/meshes/cone.stl</uri>
+              <scale>0.001 0.001 0.001</scale>
+            </mesh>
+          </geometry>
+          <material>
+            <ambient>0 0 1 1</ambient>
+            <diffuse>0 0 1 1</diffuse>
+            <specular>0 0 1 1</specular>
+          </material>
+        </visual>
+        
+        <enable_wind>false</enable_wind>
+      </link>
+      <pose>10.529682941274878 -8.649745381540722 0.0 1.57 0 0</pose>
+      <static>true</static>
+      </model>
+      
+     <model name='cone_108'>
+      <link name='cone_108_link'>
+        <inertial>
+			<mass>0</mass>
+			<inertia>
+			<ixx>0.166667</ixx>
+			<ixy>0</ixy>
+			<ixz>0</ixz>
+			<iyy>0.166667</iyy>
+			<iyz>0</iyz>
+			<izz>0.166667</izz>
+			</inertia>
+		</inertial>
+        <collision name='cone_108_collision'>
+          <geometry>
+            <mesh>
+              <uri>/models/cone/meshes/cone.stl</uri>
+              <scale>0.001 0.001 0.001</scale>
+            </mesh>
+          </geometry>
+        </collision>
+        <visual name='cone_108_visual'>
+          <geometry>
+            <mesh>
+              <uri>/models/cone/meshes/cone.stl</uri>
+              <scale>0.001 0.001 0.001</scale>
+            </mesh>
+          </geometry>
+          <material>
+            <ambient>0 0 1 1</ambient>
+            <diffuse>0 0 1 1</diffuse>
+            <specular>0 0 1 1</specular>
+          </material>
+        </visual>
+        
+        <enable_wind>false</enable_wind>
+      </link>
+      <pose>10.801033801870581 -9.49995747870869 0.0 1.57 0 0</pose>
+      <static>true</static>
+      </model>
+      
+     <model name='cone_109'>
+      <link name='cone_109_link'>
+        <inertial>
+			<mass>0</mass>
+			<inertia>
+			<ixx>0.166667</ixx>
+			<ixy>0</ixy>
+			<ixz>0</ixz>
+			<iyy>0.166667</iyy>
+			<iyz>0</iyz>
+			<izz>0.166667</izz>
+			</inertia>
+		</inertial>
+        <collision name='cone_109_collision'>
+          <geometry>
+            <mesh>
+              <uri>/models/cone/meshes/cone.stl</uri>
+              <scale>0.001 0.001 0.001</scale>
+            </mesh>
+          </geometry>
+        </collision>
+        <visual name='cone_109_visual'>
+          <geometry>
+            <mesh>
+              <uri>/models/cone/meshes/cone.stl</uri>
+              <scale>0.001 0.001 0.001</scale>
+            </mesh>
+          </geometry>
+          <material>
+            <ambient>0 0 1 1</ambient>
+            <diffuse>0 0 1 1</diffuse>
+            <specular>0 0 1 1</specular>
+          </material>
+        </visual>
+        
+        <enable_wind>false</enable_wind>
+      </link>
+      <pose>11.722050494985815 -10.537457860178417 0.0 1.57 0 0</pose>
+      <static>true</static>
+      </model>
+      
+     <model name='cone_110'>
+      <link name='cone_110_link'>
+        <inertial>
+			<mass>0</mass>
+			<inertia>
+			<ixx>0.166667</ixx>
+			<ixy>0</ixy>
+			<ixz>0</ixz>
+			<iyy>0.166667</iyy>
+			<iyz>0</iyz>
+			<izz>0.166667</izz>
+			</inertia>
+		</inertial>
+        <collision name='cone_110_collision'>
+          <geometry>
+            <mesh>
+              <uri>/models/cone/meshes/cone.stl</uri>
+              <scale>0.001 0.001 0.001</scale>
+            </mesh>
+          </geometry>
+        </collision>
+        <visual name='cone_110_visual'>
+          <geometry>
+            <mesh>
+              <uri>/models/cone/meshes/cone.stl</uri>
+              <scale>0.001 0.001 0.001</scale>
+            </mesh>
+          </geometry>
+          <material>
+            <ambient>0 0 1 1</ambient>
+            <diffuse>0 0 1 1</diffuse>
+            <specular>0 0 1 1</specular>
+          </material>
+        </visual>
+        
+        <enable_wind>false</enable_wind>
+      </link>
+      <pose>12.869414157705542 -11.709121144480175 0.0 1.57 0 0</pose>
+      <static>true</static>
+      </model>
+      
+     <model name='cone_111'>
+      <link name='cone_111_link'>
+        <inertial>
+			<mass>0</mass>
+			<inertia>
+			<ixx>0.166667</ixx>
+			<ixy>0</ixy>
+			<ixz>0</ixz>
+			<iyy>0.166667</iyy>
+			<iyz>0</iyz>
+			<izz>0.166667</izz>
+			</inertia>
+		</inertial>
+        <collision name='cone_111_collision'>
+          <geometry>
+            <mesh>
+              <uri>/models/cone/meshes/cone.stl</uri>
+              <scale>0.001 0.001 0.001</scale>
+            </mesh>
+          </geometry>
+        </collision>
+        <visual name='cone_111_visual'>
+          <geometry>
+            <mesh>
+              <uri>/models/cone/meshes/cone.stl</uri>
+              <scale>0.001 0.001 0.001</scale>
+            </mesh>
+          </geometry>
+          <material>
+            <ambient>0 0 1 1</ambient>
+            <diffuse>0 0 1 1</diffuse>
+            <specular>0 0 1 1</specular>
+          </material>
+        </visual>
+        
+        <enable_wind>false</enable_wind>
+      </link>
+      <pose>14.003390140371557 -13.177764332956738 0.0 1.57 0 0</pose>
+      <static>true</static>
+      </model>
+      
+     <model name='cone_112'>
+      <link name='cone_112_link'>
+        <inertial>
+			<mass>0</mass>
+			<inertia>
+			<ixx>0.166667</ixx>
+			<ixy>0</ixy>
+			<ixz>0</ixz>
+			<iyy>0.166667</iyy>
+			<iyz>0</iyz>
+			<izz>0.166667</izz>
+			</inertia>
+		</inertial>
+        <collision name='cone_112_collision'>
+          <geometry>
+            <mesh>
+              <uri>/models/cone/meshes/cone.stl</uri>
+              <scale>0.001 0.001 0.001</scale>
+            </mesh>
+          </geometry>
+        </collision>
+        <visual name='cone_112_visual'>
+          <geometry>
+            <mesh>
+              <uri>/models/cone/meshes/cone.stl</uri>
+              <scale>0.001 0.001 0.001</scale>
+            </mesh>
+          </geometry>
+          <material>
+            <ambient>0 0 1 1</ambient>
+            <diffuse>0 0 1 1</diffuse>
+            <specular>0 0 1 1</specular>
+          </material>
+        </visual>
+        
+        <enable_wind>false</enable_wind>
+      </link>
+      <pose>14.62424165709519 -14.8783411151833 0.0 1.57 0 0</pose>
+      <static>true</static>
+      </model>
+      
+     <model name='cone_113'>
+      <link name='cone_113_link'>
+        <inertial>
+			<mass>0</mass>
+			<inertia>
+			<ixx>0.166667</ixx>
+			<ixy>0</ixy>
+			<ixz>0</ixz>
+			<iyy>0.166667</iyy>
+			<iyz>0</iyz>
+			<izz>0.166667</izz>
+			</inertia>
+		</inertial>
+        <collision name='cone_113_collision'>
+          <geometry>
+            <mesh>
+              <uri>/models/cone/meshes/cone.stl</uri>
+              <scale>0.001 0.001 0.001</scale>
+            </mesh>
+          </geometry>
+        </collision>
+        <visual name='cone_113_visual'>
+          <geometry>
+            <mesh>
+              <uri>/models/cone/meshes/cone.stl</uri>
+              <scale>0.001 0.001 0.001</scale>
+            </mesh>
+          </geometry>
+          <material>
+            <ambient>0 0 1 1</ambient>
+            <diffuse>0 0 1 1</diffuse>
+            <specular>0 0 1 1</specular>
+          </material>
+        </visual>
+        
+        <enable_wind>false</enable_wind>
+      </link>
+      <pose>14.186426944570776 -16.47166386908955 0.0 1.57 0 0</pose>
+      <static>true</static>
+      </model>
+      
+     <model name='cone_114'>
+      <link name='cone_114_link'>
+        <inertial>
+			<mass>0</mass>
+			<inertia>
+			<ixx>0.166667</ixx>
+			<ixy>0</ixy>
+			<ixz>0</ixz>
+			<iyy>0.166667</iyy>
+			<iyz>0</iyz>
+			<izz>0.166667</izz>
+			</inertia>
+		</inertial>
+        <collision name='cone_114_collision'>
+          <geometry>
+            <mesh>
+              <uri>/models/cone/meshes/cone.stl</uri>
+              <scale>0.001 0.001 0.001</scale>
+            </mesh>
+          </geometry>
+        </collision>
+        <visual name='cone_114_visual'>
+          <geometry>
+            <mesh>
+              <uri>/models/cone/meshes/cone.stl</uri>
+              <scale>0.001 0.001 0.001</scale>
+            </mesh>
+          </geometry>
+          <material>
+            <ambient>0 0 1 1</ambient>
+            <diffuse>0 0 1 1</diffuse>
+            <specular>0 0 1 1</specular>
+          </material>
+        </visual>
+        
+        <enable_wind>false</enable_wind>
+      </link>
+      <pose>13.1397102545073 -17.356227315134472 0.0 1.57 0 0</pose>
+      <static>true</static>
+      </model>
+      
+     <model name='cone_115'>
+      <link name='cone_115_link'>
+        <inertial>
+			<mass>0</mass>
+			<inertia>
+			<ixx>0.166667</ixx>
+			<ixy>0</ixy>
+			<ixz>0</ixz>
+			<iyy>0.166667</iyy>
+			<iyz>0</iyz>
+			<izz>0.166667</izz>
+			</inertia>
+		</inertial>
+        <collision name='cone_115_collision'>
+          <geometry>
+            <mesh>
+              <uri>/models/cone/meshes/cone.stl</uri>
+              <scale>0.001 0.001 0.001</scale>
+            </mesh>
+          </geometry>
+        </collision>
+        <visual name='cone_115_visual'>
+          <geometry>
+            <mesh>
+              <uri>/models/cone/meshes/cone.stl</uri>
+              <scale>0.001 0.001 0.001</scale>
+            </mesh>
+          </geometry>
+          <material>
+            <ambient>0 0 1 1</ambient>
+            <diffuse>0 0 1 1</diffuse>
+            <specular>0 0 1 1</specular>
+          </material>
+        </visual>
+        
+        <enable_wind>false</enable_wind>
+      </link>
+      <pose>11.065028018789526 -17.85108510322041 0.0 1.57 0 0</pose>
+      <static>true</static>
+      </model>
+      
+     <model name='cone_116'>
+      <link name='cone_116_link'>
+        <inertial>
+			<mass>0</mass>
+			<inertia>
+			<ixx>0.166667</ixx>
+			<ixy>0</ixy>
+			<ixz>0</ixz>
+			<iyy>0.166667</iyy>
+			<iyz>0</iyz>
+			<izz>0.166667</izz>
+			</inertia>
+		</inertial>
+        <collision name='cone_116_collision'>
+          <geometry>
+            <mesh>
+              <uri>/models/cone/meshes/cone.stl</uri>
+              <scale>0.001 0.001 0.001</scale>
+            </mesh>
+          </geometry>
+        </collision>
+        <visual name='cone_116_visual'>
+          <geometry>
+            <mesh>
+              <uri>/models/cone/meshes/cone.stl</uri>
+              <scale>0.001 0.001 0.001</scale>
+            </mesh>
+          </geometry>
+          <material>
+            <ambient>0 0 1 1</ambient>
+            <diffuse>0 0 1 1</diffuse>
+            <specular>0 0 1 1</specular>
+          </material>
+        </visual>
+        
+        <enable_wind>false</enable_wind>
+      </link>
+      <pose>9.084011859731909 -17.76799718207783 0.0 1.57 0 0</pose>
+      <static>true</static>
+      </model>
+      
+     <model name='cone_117'>
+      <link name='cone_117_link'>
+        <inertial>
+			<mass>0</mass>
+			<inertia>
+			<ixx>0.166667</ixx>
+			<ixy>0</ixy>
+			<ixz>0</ixz>
+			<iyy>0.166667</iyy>
+			<iyz>0</iyz>
+			<izz>0.166667</izz>
+			</inertia>
+		</inertial>
+        <collision name='cone_117_collision'>
+          <geometry>
+            <mesh>
+              <uri>/models/cone/meshes/cone.stl</uri>
+              <scale>0.001 0.001 0.001</scale>
+            </mesh>
+          </geometry>
+        </collision>
+        <visual name='cone_117_visual'>
+          <geometry>
+            <mesh>
+              <uri>/models/cone/meshes/cone.stl</uri>
+              <scale>0.001 0.001 0.001</scale>
+            </mesh>
+          </geometry>
+          <material>
+            <ambient>0 0 1 1</ambient>
+            <diffuse>0 0 1 1</diffuse>
+            <specular>0 0 1 1</specular>
+          </material>
+        </visual>
+        
+        <enable_wind>false</enable_wind>
+      </link>
+      <pose>7.213002033071753 -17.78029195136494 0.0 1.57 0 0</pose>
+      <static>true</static>
+      </model>
+      
+     <model name='cone_118'>
+      <link name='cone_118_link'>
+        <inertial>
+			<mass>0</mass>
+			<inertia>
+			<ixx>0.166667</ixx>
+			<ixy>0</ixy>
+			<ixz>0</ixz>
+			<iyy>0.166667</iyy>
+			<iyz>0</iyz>
+			<izz>0.166667</izz>
+			</inertia>
+		</inertial>
+        <collision name='cone_118_collision'>
+          <geometry>
+            <mesh>
+              <uri>/models/cone/meshes/cone.stl</uri>
+              <scale>0.001 0.001 0.001</scale>
+            </mesh>
+          </geometry>
+        </collision>
+        <visual name='cone_118_visual'>
+          <geometry>
+            <mesh>
+              <uri>/models/cone/meshes/cone.stl</uri>
+              <scale>0.001 0.001 0.001</scale>
+            </mesh>
+          </geometry>
+          <material>
+            <ambient>0 0 1 1</ambient>
+            <diffuse>0 0 1 1</diffuse>
+            <specular>0 0 1 1</specular>
+          </material>
+        </visual>
+        
+        <enable_wind>false</enable_wind>
+      </link>
+      <pose>5.647240466909643 -17.68820897407002 0.0 1.57 0 0</pose>
+      <static>true</static>
+      </model>
+      
+     <model name='cone_119'>
+      <link name='cone_119_link'>
+        <inertial>
+			<mass>0</mass>
+			<inertia>
+			<ixx>0.166667</ixx>
+			<ixy>0</ixy>
+			<ixz>0</ixz>
+			<iyy>0.166667</iyy>
+			<iyz>0</iyz>
+			<izz>0.166667</izz>
+			</inertia>
+		</inertial>
+        <collision name='cone_119_collision'>
+          <geometry>
+            <mesh>
+              <uri>/models/cone/meshes/cone.stl</uri>
+              <scale>0.001 0.001 0.001</scale>
+            </mesh>
+          </geometry>
+        </collision>
+        <visual name='cone_119_visual'>
+          <geometry>
+            <mesh>
+              <uri>/models/cone/meshes/cone.stl</uri>
+              <scale>0.001 0.001 0.001</scale>
+            </mesh>
+          </geometry>
+          <material>
+            <ambient>0 0 1 1</ambient>
+            <diffuse>0 0 1 1</diffuse>
+            <specular>0 0 1 1</specular>
+          </material>
+        </visual>
+        
+        <enable_wind>false</enable_wind>
+      </link>
+      <pose>4.006800479727026 -17.60402242011494 0.0 1.57 0 0</pose>
+      <static>true</static>
+      </model>
+      
+     <model name='cone_120'>
+      <link name='cone_120_link'>
+        <inertial>
+			<mass>0</mass>
+			<inertia>
+			<ixx>0.166667</ixx>
+			<ixy>0</ixy>
+			<ixz>0</ixz>
+			<iyy>0.166667</iyy>
+			<iyz>0</iyz>
+			<izz>0.166667</izz>
+			</inertia>
+		</inertial>
+        <collision name='cone_120_collision'>
+          <geometry>
+            <mesh>
+              <uri>/models/cone/meshes/cone.stl</uri>
+              <scale>0.001 0.001 0.001</scale>
+            </mesh>
+          </geometry>
+        </collision>
+        <visual name='cone_120_visual'>
+          <geometry>
+            <mesh>
+              <uri>/models/cone/meshes/cone.stl</uri>
+              <scale>0.001 0.001 0.001</scale>
+            </mesh>
+          </geometry>
+          <material>
+            <ambient>0 0 1 1</ambient>
+            <diffuse>0 0 1 1</diffuse>
+            <specular>0 0 1 1</specular>
+          </material>
+        </visual>
+        
+        <enable_wind>false</enable_wind>
+      </link>
+      <pose>2.5436523626615966 -17.57294789618916 0.0 1.57 0 0</pose>
+      <static>true</static>
+      </model>
+      
+     <model name='cone_121'>
+      <link name='cone_121_link'>
+        <inertial>
+			<mass>0</mass>
+			<inertia>
+			<ixx>0.166667</ixx>
+			<ixy>0</ixy>
+			<ixz>0</ixz>
+			<iyy>0.166667</iyy>
+			<iyz>0</iyz>
+			<izz>0.166667</izz>
+			</inertia>
+		</inertial>
+        <collision name='cone_121_collision'>
+          <geometry>
+            <mesh>
+              <uri>/models/cone/meshes/cone.stl</uri>
+              <scale>0.001 0.001 0.001</scale>
+            </mesh>
+          </geometry>
+        </collision>
+        <visual name='cone_121_visual'>
+          <geometry>
+            <mesh>
+              <uri>/models/cone/meshes/cone.stl</uri>
+              <scale>0.001 0.001 0.001</scale>
+            </mesh>
+          </geometry>
+          <material>
+            <ambient>0 0 1 1</ambient>
+            <diffuse>0 0 1 1</diffuse>
+            <specular>0 0 1 1</specular>
+          </material>
+        </visual>
+        
+        <enable_wind>false</enable_wind>
+      </link>
+      <pose>0.9347027014067137 -17.326587117380566 0.0 1.57 0 0</pose>
+      <static>true</static>
+      </model>
+      
+     <model name='cone_122'>
+      <link name='cone_122_link'>
+        <inertial>
+			<mass>0</mass>
+			<inertia>
+			<ixx>0.166667</ixx>
+			<ixy>0</ixy>
+			<ixz>0</ixz>
+			<iyy>0.166667</iyy>
+			<iyz>0</iyz>
+			<izz>0.166667</izz>
+			</inertia>
+		</inertial>
+        <collision name='cone_122_collision'>
+          <geometry>
+            <mesh>
+              <uri>/models/cone/meshes/cone.stl</uri>
+              <scale>0.001 0.001 0.001</scale>
+            </mesh>
+          </geometry>
+        </collision>
+        <visual name='cone_122_visual'>
+          <geometry>
+            <mesh>
+              <uri>/models/cone/meshes/cone.stl</uri>
+              <scale>0.001 0.001 0.001</scale>
+            </mesh>
+          </geometry>
+          <material>
+            <ambient>0 0 1 1</ambient>
+            <diffuse>0 0 1 1</diffuse>
+            <specular>0 0 1 1</specular>
+          </material>
+        </visual>
+        
+        <enable_wind>false</enable_wind>
+      </link>
+      <pose>-0.9270927240083253 -17.57197133368916 0.0 1.57 0 0</pose>
+      <static>true</static>
+      </model>
+      
+     <model name='cone_123'>
+      <link name='cone_123_link'>
+        <inertial>
+			<mass>0</mass>
+			<inertia>
+			<ixx>0.166667</ixx>
+			<ixy>0</ixy>
+			<ixz>0</ixz>
+			<iyy>0.166667</iyy>
+			<iyz>0</iyz>
+			<izz>0.166667</izz>
+			</inertia>
+		</inertial>
+        <collision name='cone_123_collision'>
+          <geometry>
+            <mesh>
+              <uri>/models/cone/meshes/cone.stl</uri>
+              <scale>0.001 0.001 0.001</scale>
+            </mesh>
+          </geometry>
+        </collision>
+        <visual name='cone_123_visual'>
+          <geometry>
+            <mesh>
+              <uri>/models/cone/meshes/cone.stl</uri>
+              <scale>0.001 0.001 0.001</scale>
+            </mesh>
+          </geometry>
+          <material>
+            <ambient>0 0 1 1</ambient>
+            <diffuse>0 0 1 1</diffuse>
+            <specular>0 0 1 1</specular>
+          </material>
+        </visual>
+        
+        <enable_wind>false</enable_wind>
+      </link>
+      <pose>-2.528748684091333 -18.2506555683083 0.0 1.57 0 0</pose>
+      <static>true</static>
+      </model>
+      
+     <model name='cone_124'>
+      <link name='cone_124_link'>
+        <inertial>
+			<mass>0</mass>
+			<inertia>
+			<ixx>0.166667</ixx>
+			<ixy>0</ixy>
+			<ixz>0</ixz>
+			<iyy>0.166667</iyy>
+			<iyz>0</iyz>
+			<izz>0.166667</izz>
+			</inertia>
+		</inertial>
+        <collision name='cone_124_collision'>
+          <geometry>
+            <mesh>
+              <uri>/models/cone/meshes/cone.stl</uri>
+              <scale>0.001 0.001 0.001</scale>
+            </mesh>
+          </geometry>
+        </collision>
+        <visual name='cone_124_visual'>
+          <geometry>
+            <mesh>
+              <uri>/models/cone/meshes/cone.stl</uri>
+              <scale>0.001 0.001 0.001</scale>
+            </mesh>
+          </geometry>
+          <material>
+            <ambient>0 0 1 1</ambient>
+            <diffuse>0 0 1 1</diffuse>
+            <specular>0 0 1 1</specular>
+          </material>
+        </visual>
+        
+        <enable_wind>false</enable_wind>
+      </link>
+      <pose>-4.320699863595728 -18.246642506784863 0.0 1.57 0 0</pose>
+      <static>true</static>
+      </model>
+      
+     <model name='cone_125'>
+      <link name='cone_125_link'>
+        <inertial>
+			<mass>0</mass>
+			<inertia>
+			<ixx>0.166667</ixx>
+			<ixy>0</ixy>
+			<ixz>0</ixz>
+			<iyy>0.166667</iyy>
+			<iyz>0</iyz>
+			<izz>0.166667</izz>
+			</inertia>
+		</inertial>
+        <collision name='cone_125_collision'>
+          <geometry>
+            <mesh>
+              <uri>/models/cone/meshes/cone.stl</uri>
+              <scale>0.001 0.001 0.001</scale>
+            </mesh>
+          </geometry>
+        </collision>
+        <visual name='cone_125_visual'>
+          <geometry>
+            <mesh>
+              <uri>/models/cone/meshes/cone.stl</uri>
+              <scale>0.001 0.001 0.001</scale>
+            </mesh>
+          </geometry>
+          <material>
+            <ambient>0 0 1 1</ambient>
+            <diffuse>0 0 1 1</diffuse>
+            <specular>0 0 1 1</specular>
+          </material>
+        </visual>
+        
+        <enable_wind>false</enable_wind>
+      </link>
+      <pose>-5.758675747079614 -17.60862675971455 0.0 1.57 0 0</pose>
+      <static>true</static>
+      </model>
+      
+     <model name='cone_126'>
+      <link name='cone_126_link'>
+        <inertial>
+			<mass>0</mass>
+			<inertia>
+			<ixx>0.166667</ixx>
+			<ixy>0</ixy>
+			<ixz>0</ixz>
+			<iyy>0.166667</iyy>
+			<iyz>0</iyz>
+			<izz>0.166667</izz>
+			</inertia>
+		</inertial>
+        <collision name='cone_126_collision'>
+          <geometry>
+            <mesh>
+              <uri>/models/cone/meshes/cone.stl</uri>
+              <scale>0.001 0.001 0.001</scale>
+            </mesh>
+          </geometry>
+        </collision>
+        <visual name='cone_126_visual'>
+          <geometry>
+            <mesh>
+              <uri>/models/cone/meshes/cone.stl</uri>
+              <scale>0.001 0.001 0.001</scale>
+            </mesh>
+          </geometry>
+          <material>
+            <ambient>0 0 1 1</ambient>
+            <diffuse>0 0 1 1</diffuse>
+            <specular>0 0 1 1</specular>
+          </material>
+        </visual>
+        
+        <enable_wind>false</enable_wind>
+      </link>
+      <pose>-6.871490650338892 -16.42533055610127 0.0 1.57 0 0</pose>
+      <static>true</static>
+      </model>
+      
+     <model name='cone_127'>
+      <link name='cone_127_link'>
+        <inertial>
+			<mass>0</mass>
+			<inertia>
+			<ixx>0.166667</ixx>
+			<ixy>0</ixy>
+			<ixz>0</ixz>
+			<iyy>0.166667</iyy>
+			<iyz>0</iyz>
+			<izz>0.166667</izz>
+			</inertia>
+		</inertial>
+        <collision name='cone_127_collision'>
+          <geometry>
+            <mesh>
+              <uri>/models/cone/meshes/cone.stl</uri>
+              <scale>0.001 0.001 0.001</scale>
+            </mesh>
+          </geometry>
+        </collision>
+        <visual name='cone_127_visual'>
+          <geometry>
+            <mesh>
+              <uri>/models/cone/meshes/cone.stl</uri>
+              <scale>0.001 0.001 0.001</scale>
+            </mesh>
+          </geometry>
+          <material>
+            <ambient>0 0 1 1</ambient>
+            <diffuse>0 0 1 1</diffuse>
+            <specular>0 0 1 1</specular>
+          </material>
+        </visual>
+        
+        <enable_wind>false</enable_wind>
+      </link>
+      <pose>-7.290973835153345 -14.608941472238964 0.0 1.57 0 0</pose>
+      <static>true</static>
+      </model>
+      
+     <model name='cone_128'>
+      <link name='cone_128_link'>
+        <inertial>
+			<mass>0</mass>
+			<inertia>
+			<ixx>0.166667</ixx>
+			<ixy>0</ixy>
+			<ixz>0</ixz>
+			<iyy>0.166667</iyy>
+			<iyz>0</iyz>
+			<izz>0.166667</izz>
+			</inertia>
+		</inertial>
+        <collision name='cone_128_collision'>
+          <geometry>
+            <mesh>
+              <uri>/models/cone/meshes/cone.stl</uri>
+              <scale>0.001 0.001 0.001</scale>
+            </mesh>
+          </geometry>
+        </collision>
+        <visual name='cone_128_visual'>
+          <geometry>
+            <mesh>
+              <uri>/models/cone/meshes/cone.stl</uri>
+              <scale>0.001 0.001 0.001</scale>
+            </mesh>
+          </geometry>
+          <material>
+            <ambient>0 0 1 1</ambient>
+            <diffuse>0 0 1 1</diffuse>
+            <specular>0 0 1 1</specular>
+          </material>
+        </visual>
+        
+        <enable_wind>false</enable_wind>
+      </link>
+      <pose>-6.847904377145532 -12.821689046091503 0.0 1.57 0 0</pose>
+      <static>true</static>
+      </model>
+      
+     <model name='cone_129'>
+      <link name='cone_129_link'>
+        <inertial>
+			<mass>0</mass>
+			<inertia>
+			<ixx>0.166667</ixx>
+			<ixy>0</ixy>
+			<ixz>0</ixz>
+			<iyy>0.166667</iyy>
+			<iyz>0</iyz>
+			<izz>0.166667</izz>
+			</inertia>
+		</inertial>
+        <collision name='cone_129_collision'>
+          <geometry>
+            <mesh>
+              <uri>/models/cone/meshes/cone.stl</uri>
+              <scale>0.001 0.001 0.001</scale>
+            </mesh>
+          </geometry>
+        </collision>
+        <visual name='cone_129_visual'>
+          <geometry>
+            <mesh>
+              <uri>/models/cone/meshes/cone.stl</uri>
+              <scale>0.001 0.001 0.001</scale>
+            </mesh>
+          </geometry>
+          <material>
+            <ambient>0 0 1 1</ambient>
+            <diffuse>0 0 1 1</diffuse>
+            <specular>0 0 1 1</specular>
+          </material>
+        </visual>
+        
+        <enable_wind>false</enable_wind>
+      </link>
+      <pose>-5.824886493844751 -11.331035054392284 0.0 1.57 0 0</pose>
+      <static>true</static>
+      </model>
+      
+     <model name='cone_130'>
+      <link name='cone_130_link'>
+        <inertial>
+			<mass>0</mass>
+			<inertia>
+			<ixx>0.166667</ixx>
+			<ixy>0</ixy>
+			<ixz>0</ixz>
+			<iyy>0.166667</iyy>
+			<iyz>0</iyz>
+			<izz>0.166667</izz>
+			</inertia>
+		</inertial>
+        <collision name='cone_130_collision'>
+          <geometry>
+            <mesh>
+              <uri>/models/cone/meshes/cone.stl</uri>
+              <scale>0.001 0.001 0.001</scale>
+            </mesh>
+          </geometry>
+        </collision>
+        <visual name='cone_130_visual'>
+          <geometry>
+            <mesh>
+              <uri>/models/cone/meshes/cone.stl</uri>
+              <scale>0.001 0.001 0.001</scale>
+            </mesh>
+          </geometry>
+          <material>
+            <ambient>0 0 1 1</ambient>
+            <diffuse>0 0 1 1</diffuse>
+            <specular>0 0 1 1</specular>
+          </material>
+        </visual>
+        
+        <enable_wind>false</enable_wind>
+      </link>
+      <pose>-3.926256351632837 -10.040784276194042 0.0 1.57 0 0</pose>
+      <static>true</static>
+      </model>
+      
+     <model name='cone_131'>
+      <link name='cone_131_link'>
+        <inertial>
+			<mass>0</mass>
+			<inertia>
+			<ixx>0.166667</ixx>
+			<ixy>0</ixy>
+			<ixz>0</ixz>
+			<iyy>0.166667</iyy>
+			<iyz>0</iyz>
+			<izz>0.166667</izz>
+			</inertia>
+		</inertial>
+        <collision name='cone_131_collision'>
+          <geometry>
+            <mesh>
+              <uri>/models/cone/meshes/cone.stl</uri>
+              <scale>0.001 0.001 0.001</scale>
+            </mesh>
+          </geometry>
+        </collision>
+        <visual name='cone_131_visual'>
+          <geometry>
+            <mesh>
+              <uri>/models/cone/meshes/cone.stl</uri>
+              <scale>0.001 0.001 0.001</scale>
+            </mesh>
+          </geometry>
+          <material>
+            <ambient>0 0 1 1</ambient>
+            <diffuse>0 0 1 1</diffuse>
+            <specular>0 0 1 1</specular>
+          </material>
+        </visual>
+        
+        <enable_wind>false</enable_wind>
+      </link>
+      <pose>-2.3180066873261964 -9.116973317331738 0.0 1.57 0 0</pose>
+      <static>true</static>
+      </model>
+      
+     <model name='cone_132'>
+      <link name='cone_132_link'>
+        <inertial>
+			<mass>0</mass>
+			<inertia>
+			<ixx>0.166667</ixx>
+			<ixy>0</ixy>
+			<ixz>0</ixz>
+			<iyy>0.166667</iyy>
+			<iyz>0</iyz>
+			<izz>0.166667</izz>
+			</inertia>
+		</inertial>
+        <collision name='cone_132_collision'>
+          <geometry>
+            <mesh>
+              <uri>/models/cone/meshes/cone.stl</uri>
+              <scale>0.001 0.001 0.001</scale>
+            </mesh>
+          </geometry>
+        </collision>
+        <visual name='cone_132_visual'>
+          <geometry>
+            <mesh>
+              <uri>/models/cone/meshes/cone.stl</uri>
+              <scale>0.001 0.001 0.001</scale>
+            </mesh>
+          </geometry>
+          <material>
+            <ambient>0 0 1 1</ambient>
+            <diffuse>0 0 1 1</diffuse>
+            <specular>0 0 1 1</specular>
+          </material>
+        </visual>
+        
+        <enable_wind>false</enable_wind>
+      </link>
+      <pose>-0.591281109018091 -7.888965047068066 0.0 1.57 0 0</pose>
+      <static>true</static>
+      </model>
+      
+     <model name='cone_133'>
+      <link name='cone_133_link'>
+        <inertial>
+			<mass>0</mass>
+			<inertia>
+			<ixx>0.166667</ixx>
+			<ixy>0</ixy>
+			<ixz>0</ixz>
+			<iyy>0.166667</iyy>
+			<iyz>0</iyz>
+			<izz>0.166667</izz>
+			</inertia>
+		</inertial>
+        <collision name='cone_133_collision'>
+          <geometry>
+            <mesh>
+              <uri>/models/cone/meshes/cone.stl</uri>
+              <scale>0.001 0.001 0.001</scale>
+            </mesh>
+          </geometry>
+        </collision>
+        <visual name='cone_133_visual'>
+          <geometry>
+            <mesh>
+              <uri>/models/cone/meshes/cone.stl</uri>
+              <scale>0.001 0.001 0.001</scale>
+            </mesh>
+          </geometry>
+          <material>
+            <ambient>0 0 1 1</ambient>
+            <diffuse>0 0 1 1</diffuse>
+            <specular>0 0 1 1</specular>
+          </material>
+        </visual>
+        
+        <enable_wind>false</enable_wind>
+      </link>
+      <pose>0.9568603704740966 -6.1340784198708 0.0 1.57 0 0</pose>
+      <static>true</static>
+      </model>
+      
+     <model name='cone_134'>
+      <link name='cone_134_link'>
+        <inertial>
+			<mass>0</mass>
+			<inertia>
+			<ixx>0.166667</ixx>
+			<ixy>0</ixy>
+			<ixz>0</ixz>
+			<iyy>0.166667</iyy>
+			<iyz>0</iyz>
+			<izz>0.166667</izz>
+			</inertia>
+		</inertial>
+        <collision name='cone_134_collision'>
+          <geometry>
+            <mesh>
+              <uri>/models/cone/meshes/cone.stl</uri>
+              <scale>0.001 0.001 0.001</scale>
+            </mesh>
+          </geometry>
+        </collision>
+        <visual name='cone_134_visual'>
+          <geometry>
+            <mesh>
+              <uri>/models/cone/meshes/cone.stl</uri>
+              <scale>0.001 0.001 0.001</scale>
+            </mesh>
+          </geometry>
+          <material>
+            <ambient>0 0 1 1</ambient>
+            <diffuse>0 0 1 1</diffuse>
+            <specular>0 0 1 1</specular>
+          </material>
+        </visual>
+        
+        <enable_wind>false</enable_wind>
+      </link>
+      <pose>2.0737312506010497 -4.507258809275097 0.0 1.57 0 0</pose>
+      <static>true</static>
+      </model>
+      
+     <model name='cone_135'>
+      <link name='cone_135_link'>
+        <inertial>
+			<mass>0</mass>
+			<inertia>
+			<ixx>0.166667</ixx>
+			<ixy>0</ixy>
+			<ixz>0</ixz>
+			<iyy>0.166667</iyy>
+			<iyz>0</iyz>
+			<izz>0.166667</izz>
+			</inertia>
+		</inertial>
+        <collision name='cone_135_collision'>
+          <geometry>
+            <mesh>
+              <uri>/models/cone/meshes/cone.stl</uri>
+              <scale>0.001 0.001 0.001</scale>
+            </mesh>
+          </geometry>
+        </collision>
+        <visual name='cone_135_visual'>
+          <geometry>
+            <mesh>
+              <uri>/models/cone/meshes/cone.stl</uri>
+              <scale>0.001 0.001 0.001</scale>
+            </mesh>
+          </geometry>
+          <material>
+            <ambient>0 0 1 1</ambient>
+            <diffuse>0 0 1 1</diffuse>
+            <specular>0 0 1 1</specular>
+          </material>
+        </visual>
+        
+        <enable_wind>false</enable_wind>
+      </link>
+      <pose>2.7849682043364012 -2.8921827442116204 0.0 1.57 0 0</pose>
+      <static>true</static>
+      </model>
+      
+     <model name='cone_136'>
+      <link name='cone_136_link'>
+        <inertial>
+			<mass>0</mass>
+			<inertia>
+			<ixx>0.166667</ixx>
+			<ixy>0</ixy>
+			<ixz>0</ixz>
+			<iyy>0.166667</iyy>
+			<iyz>0</iyz>
+			<izz>0.166667</izz>
+			</inertia>
+		</inertial>
+        <collision name='cone_136_collision'>
+          <geometry>
+            <mesh>
+              <uri>/models/cone/meshes/cone.stl</uri>
+              <scale>0.001 0.001 0.001</scale>
+            </mesh>
+          </geometry>
+        </collision>
+        <visual name='cone_136_visual'>
+          <geometry>
+            <mesh>
+              <uri>/models/cone/meshes/cone.stl</uri>
+              <scale>0.001 0.001 0.001</scale>
+            </mesh>
+          </geometry>
+          <material>
+            <ambient>0 0 1 1</ambient>
+            <diffuse>0 0 1 1</diffuse>
+            <specular>0 0 1 1</specular>
+          </material>
+        </visual>
+        
+        <enable_wind>false</enable_wind>
+      </link>
+      <pose>3.118630237417456 -1.5121683246559563 0.0 1.57 0 0</pose>
+      <static>true</static>
+      </model>
+      
+     <model name='cone_137'>
+      <link name='cone_137_link'>
+        <inertial>
+			<mass>0</mass>
+			<inertia>
+			<ixx>0.166667</ixx>
+			<ixy>0</ixy>
+			<ixz>0</ixz>
+			<iyy>0.166667</iyy>
+			<iyz>0</iyz>
+			<izz>0.166667</izz>
+			</inertia>
+		</inertial>
+        <collision name='cone_137_collision'>
+          <geometry>
+            <mesh>
+              <uri>/models/cone/meshes/cone.stl</uri>
+              <scale>0.001 0.001 0.001</scale>
+            </mesh>
+          </geometry>
+        </collision>
+        <visual name='cone_137_visual'>
+          <geometry>
+            <mesh>
+              <uri>/models/cone/meshes/cone.stl</uri>
+              <scale>0.001 0.001 0.001</scale>
+            </mesh>
+          </geometry>
+          <material>
+            <ambient>0 0 1 1</ambient>
+            <diffuse>0 0 1 1</diffuse>
+            <specular>0 0 1 1</specular>
+          </material>
+        </visual>
+        
+        <enable_wind>false</enable_wind>
+      </link>
+      <pose>2.7910297582914794 0.02594622307353589 0.0 1.57 0 0</pose>
+      <static>true</static>
+      </model>
+      
+     <model name='cone_138'>
+      <link name='cone_138_link'>
+        <inertial>
+			<mass>0</mass>
+			<inertia>
+			<ixx>0.166667</ixx>
+			<ixy>0</ixy>
+			<ixz>0</ixz>
+			<iyy>0.166667</iyy>
+			<iyz>0</iyz>
+			<izz>0.166667</izz>
+			</inertia>
+		</inertial>
+        <collision name='cone_138_collision'>
+          <geometry>
+            <mesh>
+              <uri>/models/cone/meshes/cone.stl</uri>
+              <scale>0.001 0.001 0.001</scale>
+            </mesh>
+          </geometry>
+        </collision>
+        <visual name='cone_138_visual'>
+          <geometry>
+            <mesh>
+              <uri>/models/cone/meshes/cone.stl</uri>
+              <scale>0.001 0.001 0.001</scale>
+            </mesh>
+          </geometry>
+          <material>
+            <ambient>0 0 1 1</ambient>
+            <diffuse>0 0 1 1</diffuse>
+            <specular>0 0 1 1</specular>
+          </material>
+        </visual>
+        
+        <enable_wind>false</enable_wind>
+      </link>
+      <pose>1.8052824209501708 0.8060098522239265 0.0 1.57 0 0</pose>
+      <static>true</static>
+      </model>
+      
+     <model name='cone_139'>
+      <link name='cone_139_link'>
+        <inertial>
+			<mass>0</mass>
+			<inertia>
+			<ixx>0.166667</ixx>
+			<ixy>0</ixy>
+			<ixz>0</ixz>
+			<iyy>0.166667</iyy>
+			<iyz>0</iyz>
+			<izz>0.166667</izz>
+			</inertia>
+		</inertial>
+        <collision name='cone_139_collision'>
+          <geometry>
+            <mesh>
+              <uri>/models/cone/meshes/cone.stl</uri>
+              <scale>0.001 0.001 0.001</scale>
+            </mesh>
+          </geometry>
+        </collision>
+        <visual name='cone_139_visual'>
+          <geometry>
+            <mesh>
+              <uri>/models/cone/meshes/cone.stl</uri>
+              <scale>0.001 0.001 0.001</scale>
+            </mesh>
+          </geometry>
+          <material>
+            <ambient>0 0 1 1</ambient>
+            <diffuse>0 0 1 1</diffuse>
+            <specular>0 0 1 1</specular>
+          </material>
+        </visual>
+        
+        <enable_wind>false</enable_wind>
+      </link>
+      <pose>-0.019032650155786257 1.352329813771778 0.0 1.57 0 0</pose>
+      <static>true</static>
+      </model>
+      
+     <model name='cone_140'>
+      <link name='cone_140_link'>
+        <inertial>
+			<mass>0</mass>
+			<inertia>
+			<ixx>0.166667</ixx>
+			<ixy>0</ixy>
+			<ixz>0</ixz>
+			<iyy>0.166667</iyy>
+			<iyz>0</iyz>
+			<izz>0.166667</izz>
+			</inertia>
+		</inertial>
+        <collision name='cone_140_collision'>
+          <geometry>
+            <mesh>
+              <uri>/models/cone/meshes/cone.stl</uri>
+              <scale>0.001 0.001 0.001</scale>
+            </mesh>
+          </geometry>
+        </collision>
+        <visual name='cone_140_visual'>
+          <geometry>
+            <mesh>
+              <uri>/models/cone/meshes/cone.stl</uri>
+              <scale>0.001 0.001 0.001</scale>
+            </mesh>
+          </geometry>
+          <material>
+            <ambient>0 0 1 1</ambient>
+            <diffuse>0 0 1 1</diffuse>
+            <specular>0 0 1 1</specular>
+          </material>
+        </visual>
+        
+        <enable_wind>false</enable_wind>
+      </link>
+      <pose>-1.6931382943818605 2.0691305034690437 0.0 1.57 0 0</pose>
+      <static>true</static>
+      </model>
+      
+     <model name='cone_141'>
+      <link name='cone_141_link'>
+        <inertial>
+			<mass>0</mass>
+			<inertia>
+			<ixx>0.166667</ixx>
+			<ixy>0</ixy>
+			<ixz>0</ixz>
+			<iyy>0.166667</iyy>
+			<iyz>0</iyz>
+			<izz>0.166667</izz>
+			</inertia>
+		</inertial>
+        <collision name='cone_141_collision'>
+          <geometry>
+            <mesh>
+              <uri>/models/cone/meshes/cone.stl</uri>
+              <scale>0.001 0.001 0.001</scale>
+            </mesh>
+          </geometry>
+        </collision>
+        <visual name='cone_141_visual'>
+          <geometry>
+            <mesh>
+              <uri>/models/cone/meshes/cone.stl</uri>
+              <scale>0.001 0.001 0.001</scale>
+            </mesh>
+          </geometry>
+          <material>
+            <ambient>0 0 1 1</ambient>
+            <diffuse>0 0 1 1</diffuse>
+            <specular>0 0 1 1</specular>
+          </material>
+        </visual>
+        
+        <enable_wind>false</enable_wind>
+      </link>
+      <pose>-3.2613851358125245 2.7268730037742195 0.0 1.57 0 0</pose>
+      <static>true</static>
+      </model>
+      
+     <model name='cone_142'>
+      <link name='cone_142_link'>
+        <inertial>
+			<mass>0</mass>
+			<inertia>
+			<ixx>0.166667</ixx>
+			<ixy>0</ixy>
+			<ixz>0</ixz>
+			<iyy>0.166667</iyy>
+			<iyz>0</iyz>
+			<izz>0.166667</izz>
+			</inertia>
+		</inertial>
+        <collision name='cone_142_collision'>
+          <geometry>
+            <mesh>
+              <uri>/models/cone/meshes/cone.stl</uri>
+              <scale>0.001 0.001 0.001</scale>
+            </mesh>
+          </geometry>
+        </collision>
+        <visual name='cone_142_visual'>
+          <geometry>
+            <mesh>
+              <uri>/models/cone/meshes/cone.stl</uri>
+              <scale>0.001 0.001 0.001</scale>
+            </mesh>
+          </geometry>
+          <material>
+            <ambient>0 0 1 1</ambient>
+            <diffuse>0 0 1 1</diffuse>
+            <specular>0 0 1 1</specular>
+          </material>
+        </visual>
+        
+        <enable_wind>false</enable_wind>
+      </link>
+      <pose>-4.815172367257837 3.6697603099875984 0.0 1.57 0 0</pose>
+      <static>true</static>
+      </model>
+      
+     <model name='cone_143'>
+      <link name='cone_143_link'>
+        <inertial>
+			<mass>0</mass>
+			<inertia>
+			<ixx>0.166667</ixx>
+			<ixy>0</ixy>
+			<ixz>0</ixz>
+			<iyy>0.166667</iyy>
+			<iyz>0</iyz>
+			<izz>0.166667</izz>
+			</inertia>
+		</inertial>
+        <collision name='cone_143_collision'>
+          <geometry>
+            <mesh>
+              <uri>/models/cone/meshes/cone.stl</uri>
+              <scale>0.001 0.001 0.001</scale>
+            </mesh>
+          </geometry>
+        </collision>
+        <visual name='cone_143_visual'>
+          <geometry>
+            <mesh>
+              <uri>/models/cone/meshes/cone.stl</uri>
+              <scale>0.001 0.001 0.001</scale>
+            </mesh>
+          </geometry>
+          <material>
+            <ambient>0 0 1 1</ambient>
+            <diffuse>0 0 1 1</diffuse>
+            <specular>0 0 1 1</specular>
+          </material>
+        </visual>
+        
+        <enable_wind>false</enable_wind>
+      </link>
+      <pose>-6.047040634317163 4.5579067104392585 0.0 1.57 0 0</pose>
+      <static>true</static>
+      </model>
+      
+     <model name='cone_144'>
+      <link name='cone_144_link'>
+        <inertial>
+			<mass>0</mass>
+			<inertia>
+			<ixx>0.166667</ixx>
+			<ixy>0</ixy>
+			<ixz>0</ixz>
+			<iyy>0.166667</iyy>
+			<iyz>0</iyz>
+			<izz>0.166667</izz>
+			</inertia>
+		</inertial>
+        <collision name='cone_144_collision'>
+          <geometry>
+            <mesh>
+              <uri>/models/cone/meshes/cone.stl</uri>
+              <scale>0.001 0.001 0.001</scale>
+            </mesh>
+          </geometry>
+        </collision>
+        <visual name='cone_144_visual'>
+          <geometry>
+            <mesh>
+              <uri>/models/cone/meshes/cone.stl</uri>
+              <scale>0.001 0.001 0.001</scale>
+            </mesh>
+          </geometry>
+          <material>
+            <ambient>0 0 1 1</ambient>
+            <diffuse>0 0 1 1</diffuse>
+            <specular>0 0 1 1</specular>
+          </material>
+        </visual>
+        
+        <enable_wind>false</enable_wind>
+      </link>
+      <pose>-7.0861694146821534 5.544029795461231 0.0 1.57 0 0</pose>
+      <static>true</static>
+      </model>
+      
+     <model name='cone_145'>
+      <link name='cone_145_link'>
+        <inertial>
+			<mass>0</mass>
+			<inertia>
+			<ixx>0.166667</ixx>
+			<ixy>0</ixy>
+			<ixz>0</ixz>
+			<iyy>0.166667</iyy>
+			<iyz>0</iyz>
+			<izz>0.166667</izz>
+			</inertia>
+		</inertial>
+        <collision name='cone_145_collision'>
+          <geometry>
+            <mesh>
+              <uri>/models/cone/meshes/cone.stl</uri>
+              <scale>0.001 0.001 0.001</scale>
+            </mesh>
+          </geometry>
+        </collision>
+        <visual name='cone_145_visual'>
+          <geometry>
+            <mesh>
+              <uri>/models/cone/meshes/cone.stl</uri>
+              <scale>0.001 0.001 0.001</scale>
+            </mesh>
+          </geometry>
+          <material>
+            <ambient>0 0 1 1</ambient>
+            <diffuse>0 0 1 1</diffuse>
+            <specular>0 0 1 1</specular>
+          </material>
+        </visual>
+        
+        <enable_wind>false</enable_wind>
+      </link>
+      <pose>-8.076265030069116 6.758222185903126 0.0 1.57 0 0</pose>
+      <static>true</static>
+      </model>
+      
+     <model name='cone_146'>
+      <link name='cone_146_link'>
+        <inertial>
+			<mass>0</mass>
+			<inertia>
+			<ixx>0.166667</ixx>
+			<ixy>0</ixy>
+			<ixz>0</ixz>
+			<iyy>0.166667</iyy>
+			<iyz>0</iyz>
+			<izz>0.166667</izz>
+			</inertia>
+		</inertial>
+        <collision name='cone_146_collision'>
+          <geometry>
+            <mesh>
+              <uri>/models/cone/meshes/cone.stl</uri>
+              <scale>0.001 0.001 0.001</scale>
+            </mesh>
+          </geometry>
+        </collision>
+        <visual name='cone_146_visual'>
+          <geometry>
+            <mesh>
+              <uri>/models/cone/meshes/cone.stl</uri>
+              <scale>0.001 0.001 0.001</scale>
+            </mesh>
+          </geometry>
+          <material>
+            <ambient>0 0 1 1</ambient>
+            <diffuse>0 0 1 1</diffuse>
+            <specular>0 0 1 1</specular>
+          </material>
+        </visual>
+        
+        <enable_wind>false</enable_wind>
+      </link>
+      <pose>-9.33727973000503 7.918348871999317 0.0 1.57 0 0</pose>
+      <static>true</static>
+      </model>
+      
+     <model name='cone_147'>
+      <link name='cone_147_link'>
+        <inertial>
+			<mass>0</mass>
+			<inertia>
+			<ixx>0.166667</ixx>
+			<ixy>0</ixy>
+			<ixz>0</ixz>
+			<iyy>0.166667</iyy>
+			<iyz>0</iyz>
+			<izz>0.166667</izz>
+			</inertia>
+		</inertial>
+        <collision name='cone_147_collision'>
+          <geometry>
+            <mesh>
+              <uri>/models/cone/meshes/cone.stl</uri>
+              <scale>0.001 0.001 0.001</scale>
+            </mesh>
+          </geometry>
+        </collision>
+        <visual name='cone_147_visual'>
+          <geometry>
+            <mesh>
+              <uri>/models/cone/meshes/cone.stl</uri>
+              <scale>0.001 0.001 0.001</scale>
+            </mesh>
+          </geometry>
+          <material>
+            <ambient>0 0 1 1</ambient>
+            <diffuse>0 0 1 1</diffuse>
+            <specular>0 0 1 1</specular>
+          </material>
+        </visual>
+        
+        <enable_wind>false</enable_wind>
+      </link>
+      <pose>-11.041660719079736 8.96954878502422 0.0 1.57 0 0</pose>
+      <static>true</static>
+      </model>
+      
+     <model name='cone_148'>
+      <link name='cone_148_link'>
+        <inertial>
+			<mass>0</mass>
+			<inertia>
+			<ixx>0.166667</ixx>
+			<ixy>0</ixy>
+			<ixz>0</ixz>
+			<iyy>0.166667</iyy>
+			<iyz>0</iyz>
+			<izz>0.166667</izz>
+			</inertia>
+		</inertial>
+        <collision name='cone_148_collision'>
+          <geometry>
+            <mesh>
+              <uri>/models/cone/meshes/cone.stl</uri>
+              <scale>0.001 0.001 0.001</scale>
+            </mesh>
+          </geometry>
+        </collision>
+        <visual name='cone_148_visual'>
+          <geometry>
+            <mesh>
+              <uri>/models/cone/meshes/cone.stl</uri>
+              <scale>0.001 0.001 0.001</scale>
+            </mesh>
+          </geometry>
+          <material>
+            <ambient>0 0 1 1</ambient>
+            <diffuse>0 0 1 1</diffuse>
+            <specular>0 0 1 1</specular>
+          </material>
+        </visual>
+        
+        <enable_wind>false</enable_wind>
+      </link>
+      <pose>-12.563033573789362 9.091482722096973 0.0 1.57 0 0</pose>
+      <static>true</static>
+      </model>
+      
+     <model name='cone_149'>
+      <link name='cone_149_link'>
+        <inertial>
+			<mass>0</mass>
+			<inertia>
+			<ixx>0.166667</ixx>
+			<ixy>0</ixy>
+			<ixz>0</ixz>
+			<iyy>0.166667</iyy>
+			<iyz>0</iyz>
+			<izz>0.166667</izz>
+			</inertia>
+		</inertial>
+        <collision name='cone_149_collision'>
+          <geometry>
+            <mesh>
+              <uri>/models/cone/meshes/cone.stl</uri>
+              <scale>0.001 0.001 0.001</scale>
+            </mesh>
+          </geometry>
+        </collision>
+        <visual name='cone_149_visual'>
+          <geometry>
+            <mesh>
+              <uri>/models/cone/meshes/cone.stl</uri>
+              <scale>0.001 0.001 0.001</scale>
+            </mesh>
+          </geometry>
+          <material>
+            <ambient>0 0 1 1</ambient>
+            <diffuse>0 0 1 1</diffuse>
+            <specular>0 0 1 1</specular>
+          </material>
+        </visual>
+        
+        <enable_wind>false</enable_wind>
+      </link>
+      <pose>-14.067109518213037 9.277820669942432 0.0 1.57 0 0</pose>
+      <static>true</static>
+      </model>
+      
+     <model name='cone_150'>
+      <link name='cone_150_link'>
+        <inertial>
+			<mass>0</mass>
+			<inertia>
+			<ixx>0.166667</ixx>
+			<ixy>0</ixy>
+			<ixz>0</ixz>
+			<iyy>0.166667</iyy>
+			<iyz>0</iyz>
+			<izz>0.166667</izz>
+			</inertia>
+		</inertial>
+        <collision name='cone_150_collision'>
+          <geometry>
+            <mesh>
+              <uri>/models/cone/meshes/cone.stl</uri>
+              <scale>0.001 0.001 0.001</scale>
+            </mesh>
+          </geometry>
+        </collision>
+        <visual name='cone_150_visual'>
+          <geometry>
+            <mesh>
+              <uri>/models/cone/meshes/cone.stl</uri>
+              <scale>0.001 0.001 0.001</scale>
+            </mesh>
+          </geometry>
+          <material>
+            <ambient>0 0 1 1</ambient>
+            <diffuse>0 0 1 1</diffuse>
+            <specular>0 0 1 1</specular>
+          </material>
+        </visual>
+        
+        <enable_wind>false</enable_wind>
+      </link>
+      <pose>-15.964321785135034 9.401712500386768 0.0 1.57 0 0</pose>
+      <static>true</static>
+      </model>
+      
+     <model name='cone_151'>
+      <link name='cone_151_link'>
+        <inertial>
+			<mass>0</mass>
+			<inertia>
+			<ixx>0.166667</ixx>
+			<ixy>0</ixy>
+			<ixz>0</ixz>
+			<iyy>0.166667</iyy>
+			<iyz>0</iyz>
+			<izz>0.166667</izz>
+			</inertia>
+		</inertial>
+        <collision name='cone_151_collision'>
+          <geometry>
+            <mesh>
+              <uri>/models/cone/meshes/cone.stl</uri>
+              <scale>0.001 0.001 0.001</scale>
+            </mesh>
+          </geometry>
+        </collision>
+        <visual name='cone_151_visual'>
+          <geometry>
+            <mesh>
+              <uri>/models/cone/meshes/cone.stl</uri>
+              <scale>0.001 0.001 0.001</scale>
+            </mesh>
+          </geometry>
+          <material>
+            <ambient>0 0 1 1</ambient>
+            <diffuse>0 0 1 1</diffuse>
+            <specular>0 0 1 1</specular>
+          </material>
+        </visual>
+        
+        <enable_wind>false</enable_wind>
+      </link>
+      <pose>-17.748347931070093 9.873760306172901 0.0 1.57 0 0</pose>
+      <static>true</static>
+      </model>
+      
+     <model name='cone_152'>
+      <link name='cone_152_link'>
+        <inertial>
+			<mass>0</mass>
+			<inertia>
+			<ixx>0.166667</ixx>
+			<ixy>0</ixy>
+			<ixz>0</ixz>
+			<iyy>0.166667</iyy>
+			<iyz>0</iyz>
+			<izz>0.166667</izz>
+			</inertia>
+		</inertial>
+        <collision name='cone_152_collision'>
+          <geometry>
+            <mesh>
+              <uri>/models/cone/meshes/cone.stl</uri>
+              <scale>0.001 0.001 0.001</scale>
+            </mesh>
+          </geometry>
+        </collision>
+        <visual name='cone_152_visual'>
+          <geometry>
+            <mesh>
+              <uri>/models/cone/meshes/cone.stl</uri>
+              <scale>0.001 0.001 0.001</scale>
+            </mesh>
+          </geometry>
+          <material>
+            <ambient>0 0 1 1</ambient>
+            <diffuse>0 0 1 1</diffuse>
+            <specular>0 0 1 1</specular>
+          </material>
+        </visual>
+        
+        <enable_wind>false</enable_wind>
+      </link>
+      <pose>-18.56309097306228 10.916698538594776 0.0 1.57 0 0</pose>
+      <static>true</static>
+      </model>
+      
+     <model name='cone_153'>
+      <link name='cone_153_link'>
+        <inertial>
+			<mass>0</mass>
+			<inertia>
+			<ixx>0.166667</ixx>
+			<ixy>0</ixy>
+			<ixz>0</ixz>
+			<iyy>0.166667</iyy>
+			<iyz>0</iyz>
+			<izz>0.166667</izz>
+			</inertia>
+		</inertial>
+        <collision name='cone_153_collision'>
+          <geometry>
+            <mesh>
+              <uri>/models/cone/meshes/cone.stl</uri>
+              <scale>0.001 0.001 0.001</scale>
+            </mesh>
+          </geometry>
+        </collision>
+        <visual name='cone_153_visual'>
+          <geometry>
+            <mesh>
+              <uri>/models/cone/meshes/cone.stl</uri>
+              <scale>0.001 0.001 0.001</scale>
+            </mesh>
+          </geometry>
+          <material>
+            <ambient>0 0 1 1</ambient>
+            <diffuse>0 0 1 1</diffuse>
+            <specular>0 0 1 1</specular>
+          </material>
+        </visual>
+        
+        <enable_wind>false</enable_wind>
+      </link>
+      <pose>-19.078202419442896 12.212738119893604 0.0 1.57 0 0</pose>
+      <static>true</static>
+      </model>
+      
+     <model name='cone_154'>
+      <link name='cone_154_link'>
+        <inertial>
+			<mass>0</mass>
+			<inertia>
+			<ixx>0.166667</ixx>
+			<ixy>0</ixy>
+			<ixz>0</ixz>
+			<iyy>0.166667</iyy>
+			<iyz>0</iyz>
+			<izz>0.166667</izz>
+			</inertia>
+		</inertial>
+        <collision name='cone_154_collision'>
+          <geometry>
+            <mesh>
+              <uri>/models/cone/meshes/cone.stl</uri>
+              <scale>0.001 0.001 0.001</scale>
+            </mesh>
+          </geometry>
+        </collision>
+        <visual name='cone_154_visual'>
+          <geometry>
+            <mesh>
+              <uri>/models/cone/meshes/cone.stl</uri>
+              <scale>0.001 0.001 0.001</scale>
+            </mesh>
+          </geometry>
+          <material>
+            <ambient>0 0 1 1</ambient>
+            <diffuse>0 0 1 1</diffuse>
+            <specular>0 0 1 1</specular>
+          </material>
+        </visual>
+        
+        <enable_wind>false</enable_wind>
+      </link>
+      <pose>-19.18277042405105 14.024864279561573 0.0 1.57 0 0</pose>
+      <static>true</static>
+      </model>
+      
+     <model name='cone_155'>
+      <link name='cone_155_link'>
+        <inertial>
+			<mass>0</mass>
+			<inertia>
+			<ixx>0.166667</ixx>
+			<ixy>0</ixy>
+			<ixz>0</ixz>
+			<iyy>0.166667</iyy>
+			<iyz>0</iyz>
+			<izz>0.166667</izz>
+			</inertia>
+		</inertial>
+        <collision name='cone_155_collision'>
+          <geometry>
+            <mesh>
+              <uri>/models/cone/meshes/cone.stl</uri>
+              <scale>0.001 0.001 0.001</scale>
+            </mesh>
+          </geometry>
+        </collision>
+        <visual name='cone_155_visual'>
+          <geometry>
+            <mesh>
+              <uri>/models/cone/meshes/cone.stl</uri>
+              <scale>0.001 0.001 0.001</scale>
+            </mesh>
+          </geometry>
+          <material>
+            <ambient>0 0 1 1</ambient>
+            <diffuse>0 0 1 1</diffuse>
+            <specular>0 0 1 1</specular>
+          </material>
+        </visual>
+        
+        <enable_wind>false</enable_wind>
+      </link>
+      <pose>-18.722534351510767 15.704417669110828 0.0 1.57 0 0</pose>
+      <static>true</static>
+      </model>
+      
+     <model name='cone_156'>
+      <link name='cone_156_link'>
+        <inertial>
+			<mass>0</mass>
+			<inertia>
+			<ixx>0.166667</ixx>
+			<ixy>0</ixy>
+			<ixz>0</ixz>
+			<iyy>0.166667</iyy>
+			<iyz>0</iyz>
+			<izz>0.166667</izz>
+			</inertia>
+		</inertial>
+        <collision name='cone_156_collision'>
+          <geometry>
+            <mesh>
+              <uri>/models/cone/meshes/cone.stl</uri>
+              <scale>0.001 0.001 0.001</scale>
+            </mesh>
+          </geometry>
+        </collision>
+        <visual name='cone_156_visual'>
+          <geometry>
+            <mesh>
+              <uri>/models/cone/meshes/cone.stl</uri>
+              <scale>0.001 0.001 0.001</scale>
+            </mesh>
+          </geometry>
+          <material>
+            <ambient>0 0 1 1</ambient>
+            <diffuse>0 0 1 1</diffuse>
+            <specular>0 0 1 1</specular>
+          </material>
+        </visual>
+        
+        <enable_wind>false</enable_wind>
+      </link>
+      <pose>-18.158132248086694 17.15121539764934 0.0 1.57 0 0</pose>
+      <static>true</static>
+      </model>
+      
+     <model name='cone_157'>
+      <link name='cone_157_link'>
+        <inertial>
+			<mass>0</mass>
+			<inertia>
+			<ixx>0.166667</ixx>
+			<ixy>0</ixy>
+			<ixz>0</ixz>
+			<iyy>0.166667</iyy>
+			<iyz>0</iyz>
+			<izz>0.166667</izz>
+			</inertia>
+		</inertial>
+        <collision name='cone_157_collision'>
+          <geometry>
+            <mesh>
+              <uri>/models/cone/meshes/cone.stl</uri>
+              <scale>0.001 0.001 0.001</scale>
+            </mesh>
+          </geometry>
+        </collision>
+        <visual name='cone_157_visual'>
+          <geometry>
+            <mesh>
+              <uri>/models/cone/meshes/cone.stl</uri>
+              <scale>0.001 0.001 0.001</scale>
+            </mesh>
+          </geometry>
+          <material>
+            <ambient>0 0 1 1</ambient>
+            <diffuse>0 0 1 1</diffuse>
+            <specular>0 0 1 1</specular>
+          </material>
+        </visual>
+        
+        <enable_wind>false</enable_wind>
+      </link>
+      <pose>-16.499534301919702 18.245415055089527 0.0 1.57 0 0</pose>
+      <static>true</static>
+      </model>
+      
+     <model name='cone_158'>
+      <link name='cone_158_link'>
+        <inertial>
+			<mass>0</mass>
+			<inertia>
+			<ixx>0.166667</ixx>
+			<ixy>0</ixy>
+			<ixz>0</ixz>
+			<iyy>0.166667</iyy>
+			<iyz>0</iyz>
+			<izz>0.166667</izz>
+			</inertia>
+		</inertial>
+        <collision name='cone_158_collision'>
+          <geometry>
+            <mesh>
+              <uri>/models/cone/meshes/cone.stl</uri>
+              <scale>0.001 0.001 0.001</scale>
+            </mesh>
+          </geometry>
+        </collision>
+        <visual name='cone_158_visual'>
+          <geometry>
+            <mesh>
+              <uri>/models/cone/meshes/cone.stl</uri>
+              <scale>0.001 0.001 0.001</scale>
+            </mesh>
+          </geometry>
+          <material>
+            <ambient>0 0 1 1</ambient>
+            <diffuse>0 0 1 1</diffuse>
+            <specular>0 0 1 1</specular>
+          </material>
+        </visual>
+        
+        <enable_wind>false</enable_wind>
+      </link>
+      <pose>-15.20744448201156 18.277838432126575 0.0 1.57 0 0</pose>
+      <static>true</static>
+      </model>
+      
+     <model name='cone_159'>
+      <link name='cone_159_link'>
+        <inertial>
+			<mass>0</mass>
+			<inertia>
+			<ixx>0.166667</ixx>
+			<ixy>0</ixy>
+			<ixz>0</ixz>
+			<iyy>0.166667</iyy>
+			<iyz>0</iyz>
+			<izz>0.166667</izz>
+			</inertia>
+		</inertial>
+        <collision name='cone_159_collision'>
+          <geometry>
+            <mesh>
+              <uri>/models/cone/meshes/cone.stl</uri>
+              <scale>0.001 0.001 0.001</scale>
+            </mesh>
+          </geometry>
+        </collision>
+        <visual name='cone_159_visual'>
+          <geometry>
+            <mesh>
+              <uri>/models/cone/meshes/cone.stl</uri>
+              <scale>0.001 0.001 0.001</scale>
+            </mesh>
+          </geometry>
+          <material>
+            <ambient>0 0 1 1</ambient>
+            <diffuse>0 0 1 1</diffuse>
+            <specular>0 0 1 1</specular>
+          </material>
+        </visual>
+        
+        <enable_wind>false</enable_wind>
+      </link>
+      <pose>-13.747228526038889 18.2356525891357 0.0 1.57 0 0</pose>
+      <static>true</static>
+      </model>
+    </sdf>
