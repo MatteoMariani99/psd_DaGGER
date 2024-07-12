@@ -39,14 +39,21 @@ class PyBulletContinuousEnv(gym.Env):
         p.resetSimulation()
         p.setGravity(0, 0, -9.81)
 
+        train = True
                 
-        track_list = [0,1,2,4,5] # lista degli ID dei tracciati
-        self.track_number = random.choice(track_list)
+        track_list_train = [0,1,2,4,5] # lista degli ID dei tracciati
+        #track_list_train = [1] #prova con modello singolo
+        track_list_test = [7,9]
+        
+        if train:
+            self.track_number = random.choice(track_list_train)
+        else:
+            self.track_number = random.choice(track_list_test)
         
         
         #p.resetDebugVisualizerCamera(cameraDistance=20, cameraYaw=0, cameraPitch=-89, cameraTargetPosition=[5,10,0])
         
-        p.resetDebugVisualizerCamera(cameraDistance=20, cameraYaw=0, cameraPitch=-89, cameraTargetPosition=[0,0,0])
+        p.resetDebugVisualizerCamera(cameraDistance=25, cameraYaw=0, cameraPitch=-89, cameraTargetPosition=[0,0,0])
  
         # carico il tracciato
         p.loadURDF("world&car/plane/plane.urdf")
@@ -62,17 +69,17 @@ class PyBulletContinuousEnv(gym.Env):
         # index_env = random.randint(0,len(env_list)-1)
         #self.car_id = p.loadURDF("world&car/simplecar.urdf", env_list[index_env][0],env_list[index_env][1])
 
-        
-        
+        # buono il 9
+        #self.track_number = 9
         
         # TRACK 0
         if self.track_number==0:
-            self.car_id = p.loadURDF("world&car/simplecar.urdf", [-7.6,6,.3], p.getQuaternionFromEuler([0,0,np.deg2rad(90)]))
+            self.car_id = p.loadURDF("world&car/simplecar.urdf", [-9.93,8.84,.3], p.getQuaternionFromEuler([0,0,np.deg2rad(90)]))
         
         elif self.track_number==1:
         # TRACK 1
-            self.car_id = p.loadURDF("world&car/simplecar.urdf",[12.22, -6.26,.3], p.getQuaternionFromEuler([0,0,np.deg2rad(-135)]))
-        
+            self.car_id = p.loadURDF("world&car/simplecar.urdf",[12.22, -6.26,.3], p.getQuaternionFromEuler([0,0,np.deg2rad(-125)]))
+            
         elif self.track_number==2:
         # TRACK 2
             self.car_id = p.loadURDF("world&car/simplecar.urdf",[7.32, -16.6,.3], p.getQuaternionFromEuler([0,0,np.deg2rad(180)]))
@@ -85,16 +92,18 @@ class PyBulletContinuousEnv(gym.Env):
         # TRACK 5
             self.car_id = p.loadURDF("world&car/simplecar.urdf",[1.27, -6.78,.3], p.getQuaternionFromEuler([0,0,np.deg2rad(115)]))
         
-        
-        # TESTING 
+        elif self.track_number==6:
         # TRACK 6
-        #self.car_id = p.loadURDF("world&car/simplecar.urdf",[6.7, -7.05,.3], p.getQuaternionFromEuler([0,0,np.deg2rad(180)]))
+            self.car_id = p.loadURDF("world&car/simplecar.urdf",[-17.2, 10.91,.3], p.getQuaternionFromEuler([0,0,np.deg2rad(45)]))
         
+        elif self.track_number==7:
         # TRACK 7
-        #self.car_id = p.loadURDF("world&car/simplecar.urdf",[-13.5, 9.43,.3], p.getQuaternionFromEuler([0,0,np.deg2rad(30)]))
+            self.car_id = p.loadURDF("world&car/simplecar.urdf",[-13.5, 9.43,.3], p.getQuaternionFromEuler([0,0,np.deg2rad(30)]))
         
+        elif self.track_number==9:
         # TRACK 9
-        #self.car_id = p.loadURDF("world&car/simplecar.urdf",[6.7, 18.8,.3], p.getQuaternionFromEuler([0,0,np.deg2rad(0)]))
+            self.car_id = p.loadURDF("world&car/simplecar.urdf",[6.7, 18.8,.3], p.getQuaternionFromEuler([0,0,np.deg2rad(0)]))
+        
         
         
         p.loadSDF(f"world/track/track{self.track_number}.sdf",globalScaling = 1)

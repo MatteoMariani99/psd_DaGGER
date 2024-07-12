@@ -35,7 +35,7 @@ def getCones(track_number):
     
 
 if __name__== "__main__":
-    leftSide, rightSide, cLine = getCones(2) 
+    leftSide, rightSide, cLine = getCones(1) 
     print("l ",len(leftSide))
     print("r ",len(rightSide))
     print("c ",len(cLine))

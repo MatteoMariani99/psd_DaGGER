@@ -28,7 +28,7 @@ if torch.cuda.is_available():
 
 
 
-NUM_ITS = 41 # default è 20. Viene utilizzato 1 lap per iteration. Le iteration rappresentano il
+NUM_ITS = 49 # default è 20. Viene utilizzato 1 lap per iteration. Le iteration rappresentano il
 # numero di volte che noi stoppiamo l'esperto per salvare i dati e fare il training della rete.
 # è un po' come se fosse il numero di episodi.
 beta_i  = 0.9 # parametro usato nella policy PI: tale valore verrà modificato tramite la 
@@ -221,14 +221,14 @@ if __name__ == "__main__":
                 # rete
                 pi = curr_beta * a + (1 - curr_beta) * prediction.detach().cpu().numpy().flatten()
 
-                print("Policy pred: ",prediction.detach().cpu().numpy().flatten())
-                print("Policy a: ",a)
+                #print("Policy pred: ",prediction.detach().cpu().numpy().flatten())
+                #print("Policy a: ",a)
                 
-                if steps%2==0:
-                    samples["state"].append(state)            # state has shape (96, 96, 1)
-                    samples["action"].append(np.array(a))     # action has shape (1, 3), STORE THE EXPERT ACTION
-                    samples["next_state"].append(next_state)
-                    samples["terminal"].append(done)
+                #if steps%2==0:
+                samples["state"].append(state)            # state has shape (96, 96, 1)
+                samples["action"].append(np.array(a))     # action has shape (1, 3), STORE THE EXPERT ACTION
+                samples["next_state"].append(next_state)
+                samples["terminal"].append(done)
                 
                 state = next_state
                 steps += 1
@@ -264,7 +264,7 @@ if __name__ == "__main__":
                     # agent.save("dagger_test_models/model_{}.pth".format(model_number+1))
                     
                     
-                    train_loss = train_agent.train_model(X_train, y_train, "dagger_test_models/model_{}.pth".format(model_number+1), num_epochs=10)
+                    train_loss = train_agent.train_model(X_train, y_train, "dagger_test_models/model_{}.pth".format(model_number+1), num_epochs=15)
                     writer.add_scalar("Loss/train", train_loss, iteration)
                     
                     model_number += 1

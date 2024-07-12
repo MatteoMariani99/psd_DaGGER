@@ -18,7 +18,7 @@ pts = np.array([[0, 0], [480, 0],
 
 pts = pts.reshape((-1, 1, 2))
 
-def run_episode(max_timesteps=1000):
+def run_episode(max_timesteps=1500):
     
     #episode_reward = 0
     step = 0
@@ -26,14 +26,14 @@ def run_episode(max_timesteps=1000):
     state= env.get_observation()
     
     while True:
-        start = time.time()
+        #start = time.time()
         
-        color_rgb = env.getCamera_image()
-        bird_eye = cv2.resize(color_rgb, (480, 320))
+        # color_rgb = env.getCamera_image()
+        # bird_eye = cv2.resize(color_rgb, (480, 320))
 
-        cv2.fillPoly(bird_eye, pts=[pts], color=(0, 0, 0))
+        # cv2.fillPoly(bird_eye, pts=[pts], color=(0, 0, 0))
 
-        steering_wheel = draw_steering_angle.SteeringWheel(bird_eye)
+        # steering_wheel = draw_steering_angle.SteeringWheel(bird_eye)
     
         prediction = agent(torch.from_numpy(state[np.newaxis,np.newaxis,...]).type(torch.FloatTensor).to(device))
         # np.newaxis aumenta la dimensione dell'array di 1 (es. se è un array 1D diventa 2D)
@@ -43,34 +43,36 @@ def run_episode(max_timesteps=1000):
         a = prediction.detach().cpu().numpy().flatten()
            
         # # disegno il volante per lo sterzo 
-        steering_wheel.draw_steering_wheel_on_image(a[0]*180/math.pi,(20,10))
-        # aggiungo la barra verticale per la velocità
-        vel_image = steering_wheel.update_frame_with_bar(a[1])
+        # steering_wheel.draw_steering_wheel_on_image(a[0]*180/math.pi,(20,10))
+        # # aggiungo la barra verticale per la velocità
+        # vel_image = steering_wheel.update_frame_with_bar(a[1])
         
-        text = " rad/s"
-        full_text = f"{str(round(a[0],3))}{text}" 
-        text1 = " m/s"
-        full_text1 = f"{str(round(a[1],2))}{text1}" 
+        # text = " rad/s"
+        # full_text = f"{str(round(a[0],3))}{text}" 
+        # text1 = " m/s"
+        # full_text1 = f"{str(round(a[1],2))}{text1}" 
         
-        # Display del testo a video
-        cv2.putText(vel_image, full_text, (90,40), cv2.FONT_HERSHEY_SIMPLEX,  
-                        0.6, (255,255,255), 1, cv2.LINE_AA) 
-        cv2.putText(vel_image, full_text1, (360,40), cv2.FONT_HERSHEY_SIMPLEX,  
-                        0.6, (255,255,255), 1, cv2.LINE_AA) 
+        # # Display del testo a video
+        # cv2.putText(vel_image, full_text, (90,40), cv2.FONT_HERSHEY_SIMPLEX,  
+        #                 0.6, (255,255,255), 1, cv2.LINE_AA) 
+        # cv2.putText(vel_image, full_text1, (360,40), cv2.FONT_HERSHEY_SIMPLEX,  
+        #                 0.6, (255,255,255), 1, cv2.LINE_AA) 
 
         #image_obs = state
-        image_obs = cv2.resize(state, (480, 320))
-        image_obs = cv2.cvtColor(image_obs, cv2.COLOR_GRAY2RGB)
+        # image_obs = cv2.resize(state, (480, 320))
+        # image_obs = cv2.cvtColor(image_obs, cv2.COLOR_GRAY2RGB)
 
-        cv2.imshow("Camera2", cv2.vconcat([vel_image, image_obs]))
-        cv2.waitKey(1) 
+        # cv2.imshow("Camera2", cv2.vconcat([vel_image, image_obs]))
+        # cv2.waitKey(1) 
 
         
         # take action, receive new state & reward
         #a = [0,0]
         
         next_state, _, done = env.step(a)
-        print("-----seconds-----", time.time()-start)
+        cv2.imshow("Camera2", cv2.resize(next_state,(480,320)))
+        cv2.waitKey(1) 
+        # print("-----seconds-----", time.time()-start)
         #cv2.imshow("Camera",next_state)
         
         
@@ -80,7 +82,7 @@ def run_episode(max_timesteps=1000):
 
         if done or step > max_timesteps: 
             break
-        print("-----seconds-----", time.time()-start)
+        #print("-----seconds-----", time.time()-start)
 
     #return episode_reward
 
@@ -105,8 +107,9 @@ if __name__ == "__main__":
     #                 export_params=True)
 
     # carico il modello ottimo ottenuto
-    #agent.load("dagger_test_models/modelli ottimi/vel10_variabile.pth")
-    agent.load("dagger_test_models/modelli ottimi/cones/vel10_variabile.pth")
+    
+    agent.load("dagger_test_models/modelli ottimi/cones/multi_track.pth")
+    #agent.load("dagger_test_models/modelli ottimi/cones/single_track.pth")
     agent.to(device)
 
   

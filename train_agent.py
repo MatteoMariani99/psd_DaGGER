@@ -118,7 +118,7 @@ if __name__ == "__main__":
     
     if not optimize:
         # utilizzo di params ottimi
-        loss = train_model(X_train, y_train, 'dagger_test_models/modelli ottimi/cones/multi_track.pth', num_epochs=20, learning_rate= 0.002217342432015554, batch_size=16)
+        loss = train_model(X_train, y_train, 'dagger_test_models/modelli ottimi/cones/multi_track_49_iter.pth', num_epochs=19, learning_rate= 0.0017755259020865324, batch_size=16)
         loss_val = validate_model( X_valid, y_valid, model)
     
     else:
@@ -131,7 +131,7 @@ if __name__ == "__main__":
     #optuna-dashboard sqlite:///db.sqlite3
     
     # migliore:
-    #Best: {'learning_rate': 0.002217342432015554, 
+    #Best: {'learning_rate': 0.0017755259020865324, 
     # 'batch_size': 16, 
-    # 'num_epochs': 20}
+    # 'num_epochs': 19}
 
