@@ -14,7 +14,7 @@ zed_camera_joint = 7 # simplecar
 
 
 class PyBulletContinuousEnv(gym.Env):
-    def __init__(self, total_episode_step=999):
+    def __init__(self, total_episode_step=1999):
         super(PyBulletContinuousEnv, self).__init__()
 
         # Connessione a PyBullet e setup della simulazione
@@ -39,11 +39,11 @@ class PyBulletContinuousEnv(gym.Env):
         p.resetSimulation()
         p.setGravity(0, 0, -9.81)
 
-        train = True
+        train = False
                 
         track_list_train = [0,1,2,4,5] # lista degli ID dei tracciati
-        #track_list_train = [1] #prova con modello singolo
-        track_list_test = [7,9]
+        track_list_train = [5] #prova con modello singolo
+        track_list_test = [6]
         
         if train:
             self.track_number = random.choice(track_list_train)
@@ -53,7 +53,7 @@ class PyBulletContinuousEnv(gym.Env):
         
         #p.resetDebugVisualizerCamera(cameraDistance=20, cameraYaw=0, cameraPitch=-89, cameraTargetPosition=[5,10,0])
         
-        p.resetDebugVisualizerCamera(cameraDistance=25, cameraYaw=0, cameraPitch=-89, cameraTargetPosition=[0,0,0])
+        p.resetDebugVisualizerCamera(cameraDistance=25, cameraYaw=0, cameraPitch=-89, cameraTargetPosition=[0,-2,0])
  
         # carico il tracciato
         p.loadURDF("world&car/plane/plane.urdf")
@@ -94,11 +94,13 @@ class PyBulletContinuousEnv(gym.Env):
         
         elif self.track_number==6:
         # TRACK 6
-            self.car_id = p.loadURDF("world&car/simplecar.urdf",[-17.2, 10.91,.3], p.getQuaternionFromEuler([0,0,np.deg2rad(45)]))
+            #self.car_id = p.loadURDF("world&car/simplecar.urdf",[-17.2, 10.91,.3], p.getQuaternionFromEuler([0,0,np.deg2rad(45)]))
+            self.car_id = p.loadURDF("world&car/simplecar.urdf",[-19.8, 12.8,.3], p.getQuaternionFromEuler([0,0,np.deg2rad(45)]))
         
         elif self.track_number==7:
         # TRACK 7
-            self.car_id = p.loadURDF("world&car/simplecar.urdf",[-13.5, 9.43,.3], p.getQuaternionFromEuler([0,0,np.deg2rad(30)]))
+            #self.car_id = p.loadURDF("world&car/simplecar.urdf",[-13.5, 9.43,.3], p.getQuaternionFromEuler([0,0,np.deg2rad(30)]))
+            self.car_id = p.loadURDF("world&car/simplecar.urdf",[-20.1, 7,.3], p.getQuaternionFromEuler([0,0,np.deg2rad(30)]))
         
         elif self.track_number==9:
         # TRACK 9

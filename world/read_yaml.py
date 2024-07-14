@@ -13,7 +13,7 @@ right_position = []
 
 # TESTING: 6,7,9
 
-track_number = 1
+track_number = 6
 
 print(track_number)
 
@@ -47,7 +47,7 @@ for right in right_cones_id:
 # rd_w = abs(rd_area/ rd_len)
 #print(rd_w)
 # Valore desiderato (in metri) diviso valore attuale
-scale_factor = 0.5
+scale_factor = 0.7
 #0.006/rd_w
 #print(rd_w)
 
