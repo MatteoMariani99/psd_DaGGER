@@ -1,19 +1,6 @@
 CONSIDERAZIONI
 
 
-
-
-WORKFLOW
-1- creare da zero uno script per l'ambiente (simile a quello fatto per la PPO) -> (vedi pagina tra i preferiti di firefox)
-2- nella creazione delle funzioni, tener in considerazione le azioni (quali sono le nostre?) e per le osservazioni (immagini 96x96 rgb o gray)
-3- fatto ciò inserire un sdf di un percorso e provare ad includerlo nell'ambiente (prova con il barca.sdf) (è una riga di codice)
-4- fatto ciò provar a far muovere la macchina all'interno del percorso in modo da capire se fila tutto liscio con i comandi da tastiera
-5- verificare che lo stato (ovvero le immagini ricevute dalla zed) siano coerenti e della dimensione corretta
-6- copiare il modello di rete definito per il car-racingV0
-7- l'ambiente utilizzato dal dagger.py è lo script car_racing.py -> capire come gestire la tastiera (expert) e la rete -> nel senso capire come switchare dall'uno all'altro come fa lo script. Il tutto dovrebbe già essere gestito con la politica pi in quanto inizialmente il controllo dell'expert è massimo mentre poi diminuisce tramite il beta.
-
-
-
 OPTUNA
 utilizzo di optuna per trovare gli hyperparametri ottimi. Questa ottimizzazione va fatta dopo aver raccolto tutti i dati per il training (quindi sul dataset finale) oppure ad ogni step prima del training in modo poi da passare i valori ottimi.
 
@@ -63,15 +50,15 @@ possibile scale del batch size e del learning rate tramite il tuner
  
  yOLOV8: input(image zed depth image), output(coordinate x,y del centro cono bounding box)
  
- vector_coordinate: input(coordinate x,y del centro dei coni visti bounding box)
+ ottenuti i centri, si mappano i punti in birdEye
  
- immagine HSV per togliere tutto eccetto i coni
+ interpolazione lineare per aumentare il numero di punti del polinomio ed avere una linea "più continua"
  
- birdeye; input(image_hsv), output(black/white image resize 96,84)
+ viene definito un polinomio con i punti dell'interpolazione precedente per i coni di sinistra e per quelli di destra
  
- fit_lines: pts = cv2.fillPoly(img, [pts], 255) -> definisce un poligono tramite l'insieme di punti e lo riempie
- 				[pts]= (np.array(vector_coordinate])
- 				img = birdeye
+ si riempiono queste due andando a formare un poligono bianco che rappresenta la strada
+ 
+ 
 		
 
  
