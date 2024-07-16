@@ -2,41 +2,41 @@ import cv2
 import numpy as np
 import pickle
 import os
-from datetime import datetime
 import gzip
-import json
 import train_agent
 import torch
-from model import Model
-import time
-from environment_cones import PyBulletContinuousEnv
+from torch.utils.tensorboard import SummaryWriter
+
+#? Import ambienti
+from environment_cones import ConesEnv
+from environment_road import RoadEnv
 from get_track import *
 from get_cones import *
+from model import Model
 
-from torch.utils.tensorboard import SummaryWriter
+# utile al salvataggio dei dati su tensorboard
 writer = SummaryWriter()
-
 
 device = torch.device("cuda:0" if torch.cuda.is_available() else "cpu")
 if torch.cuda.is_available():
     print("Using GPU")
+else:
+    print("Using CPU")
 
-# OBSERVATION SPACE: bird eye image 96x96x1
+# OBSERVATION SPACE: bird eye image 84x96x1
 # ACTION SPACE: [LEFT/RIGHT, UP/DOWN]
 # LEFT/RIGHT: -1, +1
-# UP/DOWN: -1 / +1
+# DOWN/UP: -1 / +1
 
 
 
-NUM_ITS = 49 # default è 20. Viene utilizzato 1 lap per iteration. Le iteration rappresentano il
-# numero di volte che noi stoppiamo l'esperto per salvare i dati e fare il training della rete.
-# è un po' come se fosse il numero di episodi.
+NUM_ITS = 49 # Le iteration rappresentano il numero di episodi per il quale vogliamo eseguire la simulazione.
 beta_i  = 0.9 # parametro usato nella policy PI: tale valore verrà modificato tramite la 
 # formula curr_beta = beta_i**model_number con model_number che incrementa di 1 ogni volta. 
 # Inizialmente avremo 0.9^0, poi 0.9^1 poi 0.9^2 e così via il beta diminuirà esponenzialmente.
 # Ciò significa che avremo una probabilità di utilizzare la politica dell'expert che decresce 
 # a mano a mano che si procede con il training.
-T = 4000 # ogni iteration contiene N passi
+T = 4000 # numero di passi utili prima di eseguire il training (step = 1000 e quindi ogni 4 volte eseguiamo il training)
 
 s = """  ____    _                         
  |  _ \  / \   __ _  __ _  ___ _ __ 
@@ -52,35 +52,25 @@ def wait():
     _ = input()
 
 
-# funzione utile a salvare i dati del percorso utili per il training della rete
+
 def store_data(data, datasets_dir="./data_test"):
-    # save data
+    """
+    Funzione utile a salvare i dati del percorso per il training della rete
+    
+    Parameters:
+        - data: dati contenenti immagini e label della simulazione
+        - dataset_dir: nome della directory in cui salvare i dati
+        
+    Returns:
+        - loss: calcolo della loss 
+    """
     if not os.path.exists(datasets_dir):
         os.mkdir(datasets_dir)
     data_file = os.path.join(datasets_dir, 'data_dagger.pkl.gzip')
-    # apro il file e ci aggancio le nuove immagini
+    
+    # apertura file e scrittura dati
     f = gzip.open(data_file,'wb')
     pickle.dump(data, f)
-
-
-# funzione che salva i risultati dell'episodio: rewards, rewards mean, rewards std
-def save_results(episode_rewards, results_dir="./results_test"):
-    # save results
-    if not os.path.exists(results_dir):
-        os.mkdir(results_dir)
-
-    # save statistics in a dictionary and write them into a .json file
-    results = dict()
-    results["number_episodes"] = len(episode_rewards)
-    results["episode_rewards"] = episode_rewards
-
-    results["mean_all_episodes"] = np.array(episode_rewards).mean()
-    results["std_all_episodes"] = np.array(episode_rewards).std()
- 
-    fname = os.path.join(results_dir, "results_test-%s.json" % datetime.now().strftime("%Y%m%d-%H%M%S"))
-    fh = open(fname, "w")
-    json.dump(results, fh)
-    print('... finished')
 
 
 
@@ -95,38 +85,44 @@ if __name__ == "__main__":
     wait()
 
 
-    if not os.path.exists("dagger_test_models"):
-        os.mkdir("dagger_test_models")
+    if not os.path.exists("dagger_models"):
+        os.mkdir("dagger_models")
  
-    # è ciò che estrapoliamo dall'ambiente con l'aggiunta delle azioni e dell'azione terminale di done
+    # rappresenta i dati che salveremo successivamente:
+    # state: immagini in birdeye
+    # action: sono le azioni che applichiamo sull'ambiente
+    # terminal: quando si concludono gli step
     samples = {
         "state": [],
-        "next_state": [],
         "action": [],
         "terminal" : [],
     }
 
+    # scelta ambiente
+    cones = True
+    if cones:
     # istanza dell'ambiente
-    env = PyBulletContinuousEnv()
+        env = ConesEnv()
+    else:
+        env = RoadEnv()
     
     # istanza del modello
     agent = Model()
-    agent.save("dagger_test_models/model_0.pth") # salvo il primo modello (vuoto)
+    agent.save("dagger_models/model_0.pth") # salvo il primo modello (vuoto)
     agent.to(device) # passo alla gpu
     
-    episode_rewards = [] # vettore contenente le rewards per ogni episodio
-    steps = 0
+    steps = 0 # inizializzo il numero di step da eseguire per una simulazione
     model_number = 0 # inizializzo il numero del modello: aumentandolo varierà beta
-    old_model_number = 0 # non serve ai fini pratici
+    old_model_number = 0 
     
 
     
-    # qui inizia il vero e proprio algoritmo: num di iterazioni è il numero di episodi che vogliamo
+    # qui inizia il vero e proprio algoritmo: NUM_ITS è il numero di episodi che vogliamo
     for iteration in range(NUM_ITS):
         
-        # reinizializzo il modello in quanto da questo ciclo poi non uscirò più
+        # reinizializzazione del modello in quanto da questo ciclo non s uscirà
         agent = Model()
-        agent.load("dagger_test_models/model_{}.pth".format(model_number)) # carico l'ultimo modello
+        agent.load("dagger_models/model_{}.pth".format(model_number), device) # carico l'ultimo modello
         agent.to(device)
         curr_beta = beta_i ** model_number # calcolo il coefficiente beta
 
@@ -136,32 +132,29 @@ if __name__ == "__main__":
             print("Beta value: {}".format(curr_beta))
             old_model_number = model_number
 
-        episode_reward = 0 # inizializzo le reward
         env.reset() # inizializzo l'ambiente
-        
         
         state = env.get_observation() # ottengo le osservazioni ovvero le immagini 84x96x1 che andranno poi passate alla rete
         
-        # pi: input to the environment: è la policy utilizzata per collezionare le traiettorie
-        # a : expert input
-
+        
         # Schema
-        # 1- uso la politica dell'expert per generare le traiettorie che finiranno nel dataset D
+        # 1- uso la politica dell'expert per generare le traiettorie che finiranno nel dataset 
         # 2- train di una policy che meglio imita l'expert su queste traiettorie
-        # 3- uso la politica allenata e insieme anche l'expert per collezionare nuove traiettorie
+        # 3- uso la politica allenata insieme all'expert per collezionare nuove traiettorie
         # e allenare una nuova rete.
-        # inizializzato ferma la macchina
+        
+        # pi: è la policy utilizzata per collezionare le traiettorie (expert + rete)
+        # a : expert input
         pi = np.array([0.0, 0.0]).astype('float32') # inizializzo la policy
         a = np.zeros_like(pi) # inizializzo la policy dell'expert
         
  
         # ottengo i punti centrali della strada
-        #_,_,centerLine = computeTrack(debug=False)
-        _,_,centerLine = getCones(env.track_number)
-        
-        
-        # invertita pr 1,4 le left e right in get_cones
-        
+        if cones:
+            _,_,centerLine = getCones(env.track_number)
+        else:
+            _,_,centerLine = computeTrack(debug=False)
+
         
         # assemblo la lista dei punti a partire dal punto che mi serve
         # es. se parto dalla posizione (10,10) posso trovarmi a metà lista: in questo modo faccio si che 
@@ -174,9 +167,10 @@ if __name__ == "__main__":
         for i in total_index:
             goal = centerLine[i][:2] # non prendo la z
             
+            # calcolo le coordinate polari dalla macchina al punto che devo raggiungere ottenendo in uscita distanza (m) e angolo (rad)
             r, yaw_error = env.rect_to_polar_relative(goal)
 
-            # viene messo sia qui che sotto in modo da uscire prima dal ciclo for e poi dal while
+            # viene messo sia qui che sotto in modo da uscire prima dal ciclo while e poi dal ciclo for
             # done = True quando abbiamo completato il numero di step in env
             if done:
                 break
@@ -190,53 +184,37 @@ if __name__ == "__main__":
                 # mappa l'output in velocità angolare e lineare da comandare al veicolo
                 vel_ang,vel_lin = env.p_control(yaw_error)
                         
-                # definisco le azioni dell'esperto come vel_ang in uscita al controllore e forward costante a 10
+                # definisco le azioni dell'esperto come vel_ang e vel_lin in uscita al controllore 
                 a = np.array([vel_ang, vel_lin]).astype('float32')
                 
-                # passo di simulazione che restituisce lo stato, reward e il flag done
-                # nel nostro caso l'ambiente va creato from scratch e va implementata la logica
-                # per acquisire le immagini e la funzione di ricompense (anche se quest'ultima non
-                # è necessaria)
-                #start1 = time.time()
-                next_state, rewards, done = env.step(pi) 
-                cv2.imshow("YOLOv8 Tracking", next_state)
-                # Display the annotated frame
-                #cv2.imshow("YOLOv8 detect", annotated_frame)
-                #cv2.imshow('IMAGE', img)
+                # passo di simulazione che restituisce lo stato (immagini bird eye) e il flag done
+                next_state, _, done = env.step(pi) 
+                cv2.imshow("Bird eye", next_state)
                 cv2.waitKey(1)
-                #print("-----secondi-----", time.time()-start1)
                 
-
-                # preprocess image and find prediction ->  policy(state)
                 # passo alla rete lo stato (image) e ottengo le predizioni.
-                
                 # np.newaxis aumenta la dimensione dell'array di 1 (es. se è un array 1D diventa 2D)
                 # torch.from_numpy crea un tensore a partire da un'array numpy
                 # il modello ritorna le azioni (left/right, up/down)
                 prediction = agent(torch.from_numpy(next_state[np.newaxis,np.newaxis,...]).type(torch.FloatTensor).to(device))
                 
-                # calculate linear combination of expert and network policy
+                
                 # pi è la policy: inizialmente ci sarà solo a ovvero le azioni dell'esperto: a mano a mano
                 # tramite il coefficiente beta, si avrà anche un peso derivante dalle azioni calcolate dalla
                 # rete
                 pi = curr_beta * a + (1 - curr_beta) * prediction.detach().cpu().numpy().flatten()
 
-                #print("Policy pred: ",prediction.detach().cpu().numpy().flatten())
-                #print("Policy a: ",a)
-                
-                #if steps%2==0:
                 samples["state"].append(state)            # state has shape (96, 96, 1)
                 samples["action"].append(np.array(a))     # action has shape (1, 3), STORE THE EXPERT ACTION
-                samples["next_state"].append(next_state)
                 samples["terminal"].append(done)
                 
                 state = next_state
                 steps += 1
                 
-                # dopo T = N step avviene il train della rete
+                # dopo step = T = 4000 avviene il training della rete
                 if steps % T == 0:
                     
-                    env.stoppingCar()
+                    env.stoppingCar() # si ferma la macchina
                     
                     print('... saving data')
                     store_data(samples, "./data_test")
@@ -244,7 +222,7 @@ if __name__ == "__main__":
                     # X_train sono le immagini
                     # y_train sono le label
                     # viene richiamata la funzione train_agent.read_data() che permette di leggere
-                    # i dati pickle e scomporli in train e validation set
+                    # i dati dal formato pickle e scomporli in train e validation set
                     X_train, y_train, X_valid, y_valid = train_agent.read_data("./data_test", "data_dagger.pkl.gzip")
 
                     print("Immagini per il training: ",X_train.shape)
@@ -261,25 +239,24 @@ if __name__ == "__main__":
                     # # training modello con pytorch lightning
                     # trainer.fit(model=light_model)
                     
-                    # agent.save("dagger_test_models/model_{}.pth".format(model_number+1))
+                    # agent.save("dagger_models/model_{}.pth".format(model_number+1))
                     
-                    
-                    train_loss = train_agent.train_model(X_train, y_train, "dagger_test_models/model_{}.pth".format(model_number+1), num_epochs=15)
-                    writer.add_scalar("Loss/train", train_loss, iteration)
+                    # loop di training per il calcolo della loss
+                    train_loss = train_agent.train_model(X_train, y_train, "dagger_models/model_{}.pth".format(model_number+1), num_epochs=15)
+                    writer.add_scalar("Loss/train", train_loss, iteration) # caricamento su tensorboard 
                     
                     model_number += 1
+                    
+                    # loop di validazione 
                     val_loss = train_agent.validate_model(X_valid,y_valid, agent)
-                    writer.add_scalar("Loss/val", val_loss, iteration)
+                    writer.add_scalar("Loss/val", val_loss, iteration) # caricamento su tensorboard 
                     writer.flush()
                     print("Training and validation complete. Press return to continue to the next iteration")
                     wait()
                     break
 
             
-            # done esce da env.step in cui però gli step massimi sono 1000
-            # in questo modo facciamo steps%T in modo che sia True solamente dopo 4 richiami di 
-            # env.step ovvero 4000 step massimi
-
+                # se ho raggiunto il numero massimo di step concludo la simulazione e passo alla successiva
                 if done: 
                     break
 

@@ -1,11 +1,11 @@
 import cv2
 import numpy as np
 
-
+# funzione utile a disegnare il volante e la barra verticale
 class SteeringWheel():
     def __init__(self, background_image):
         self.background_image = background_image
-        self.wheel_path = 'materiale/steer.png'
+        self.wheel_path = 'docs/steer.png'
 
     def load_image(self,image_path):
         image = cv2.imread(image_path, cv2.IMREAD_UNCHANGED)
@@ -46,7 +46,6 @@ class SteeringWheel():
 
     def draw_steering_wheel_on_image(self, steer_angle, position):
         # Load background and steering wheel images
-        #background = self.load_image(background_path)
         steering_wheel = self.load_image(self.wheel_path)
         
         # Rotate steering wheel based on steer_angle
@@ -55,7 +54,6 @@ class SteeringWheel():
         # Overlay the rotated steering wheel on the background
         self.overlay_image(rotated_wheel, position[0], position[1])
         
-        #return result_image
     
     def draw_vertical_bar(self, image, value):
         """Draw a vertical bar on the image."""
@@ -73,13 +71,13 @@ class SteeringWheel():
                np.int32)
  
         pts = pts.reshape((-1, 1, 2))
+        
         # Draw the bar
         cv2.fillPoly(image, pts=[pts], color=(255, 255, 255))
         cv2.putText(image, "10", (280,10), cv2.FONT_HERSHEY_SIMPLEX,  
                         0.3, (255,255,255), 1, cv2.LINE_AA) 
         cv2.putText(image, "0", (285,58), cv2.FONT_HERSHEY_SIMPLEX,  
                         0.3, (255,255,255), 1, cv2.LINE_AA)
-        #cv2.rectangle(image, (400, 10), (410, 10-current_height), color, -1)
         
         return image
 

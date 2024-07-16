@@ -1,7 +1,7 @@
 import torch
 import torch.nn as nn
-from torchsummary import summary
 
+# Implementazione del modello tramite il framework PyTorch
 class Model(nn.Module):
 
     def __init__(self):
@@ -49,8 +49,8 @@ class Model(nn.Module):
         
         return self.lin3(x)
     
-    def load(self, path):
-        self.load_state_dict(torch.load(path,map_location="cuda:0"))
+    def load(self, path, device):
+        self.load_state_dict(torch.load(path,map_location=device))
 
     def save(self, path):
         torch.save(self.state_dict(), path)

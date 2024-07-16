@@ -1,5 +1,4 @@
 import random
-import time
 import gym
 import numpy as np
 import pybullet as p
@@ -8,41 +7,39 @@ import cv2
 from get_track import *
 from ultralytics import YOLO
 
-
+# giunto relativo alla camera sul veicolo "simplecar"
 zed_camera_joint = 7 # simplecar
 
 
 
-class PyBulletContinuousEnv(gym.Env):
+class ConesEnv(gym.Env):
     def __init__(self, total_episode_step=1999):
-        super(PyBulletContinuousEnv, self).__init__()
+        super(ConesEnv, self).__init__()
 
         # Connessione a PyBullet e setup della simulazione
         p.connect(p.GUI)
         p.setGravity(0, 0, -9.81)
         p.setAdditionalSearchPath(pybullet_data.getDataPath())
-        #p.setRealTimeSimulation(1)
 
-        # numero totale di episodi
-        self.total_episode_steps = total_episode_step
-        # matrice per l'omografia
-        self.HomoMat = None
-        # inizializzo il modello per la predizione dei coni
-        self.model = YOLO('best.pt','gpu')
+        self.total_episode_steps = total_episode_step # numero totale di episodi
+        self.HomoMat = None # matrice per l'omografia
+        self.model = YOLO('best.pt','gpu') # inizializzo il modello per la predizione dei coni
 
 
-    # funzione utile a inizializzare l'ambiente 
+    
     def reset(self):
+        """
+        Funzione che permette di inizializzare l'ambiente (tracciato e veicolo)
+        """
         self.current_steps = 0
         
         # Reset della simulazione
         p.resetSimulation()
         p.setGravity(0, 0, -9.81)
 
-        train = False
+        train = False # se train uguale false, allora consideriamo i tracciato per il testing
                 
         track_list_train = [0,1,2,4,5] # lista degli ID dei tracciati
-        #track_list_train = [5] #prova con modello singolo
         track_list_test = [6]
         
         if train:
@@ -51,97 +48,94 @@ class PyBulletContinuousEnv(gym.Env):
             self.track_number = random.choice(track_list_test)
         
         
-        #p.resetDebugVisualizerCamera(cameraDistance=20, cameraYaw=0, cameraPitch=-89, cameraTargetPosition=[5,10,0])
-        
+        # posizionamento camera di Pybullet per la vista completa del tracciato
         p.resetDebugVisualizerCamera(cameraDistance=25, cameraYaw=0, cameraPitch=-89, cameraTargetPosition=[0,-2,0])
  
-        # carico il tracciato
-        p.loadURDF("world&car/plane/plane.urdf")
+        # caricamento del piano
+        p.loadURDF("world/models/plane/plane.urdf")
    
-        # punti di spawn della macchina per la road
-        # env1 = [[7,-4,.3], p.getQuaternionFromEuler([0,0,np.deg2rad(180)])]
-        # env2 = [[7,20,.3], p.getQuaternionFromEuler([0,0,np.deg2rad(0)])]
-        # env3 = [[-7.6,6,.3], p.getQuaternionFromEuler([0,0,np.deg2rad(90)])]
-        # env4 = [[7.3,13.9,.3], p.getQuaternionFromEuler([0,0,np.deg2rad(145)])]
-        
-        
-        # env_list = [env1,env2,env3,env4]
-        # index_env = random.randint(0,len(env_list)-1)
-        #self.car_id = p.loadURDF("world&car/simplecar.urdf", env_list[index_env][0],env_list[index_env][1])
-
-        
         # TRACK 0
         if self.track_number==0:
-            self.car_id = p.loadURDF("world&car/simplecar.urdf", [-9.93,8.84,.3], p.getQuaternionFromEuler([0,0,np.deg2rad(90)]))
+            self.car_id = p.loadURDF("world/models/car/simplecar.urdf", [-9.93,8.84,.3], p.getQuaternionFromEuler([0,0,np.deg2rad(90)]))
         
-        elif self.track_number==1:
         # TRACK 1
-            self.car_id = p.loadURDF("world&car/simplecar.urdf",[12.22, -6.26,.3], p.getQuaternionFromEuler([0,0,np.deg2rad(-125)]))
-            
-        elif self.track_number==2:
+        elif self.track_number==1:
+            self.car_id = p.loadURDF("world/models/car/simplecar.urdf",[12.22, -6.26,.3], p.getQuaternionFromEuler([0,0,np.deg2rad(-125)]))
+        
         # TRACK 2
-            self.car_id = p.loadURDF("world&car/simplecar.urdf",[7.32, -16.6,.3], p.getQuaternionFromEuler([0,0,np.deg2rad(180)]))
+        elif self.track_number==2:
+            self.car_id = p.loadURDF("world/models/car/simplecar.urdf",[7.32, -16.6,.3], p.getQuaternionFromEuler([0,0,np.deg2rad(180)]))
         
-        elif self.track_number==4:
         # TRACK 4
-            self.car_id = p.loadURDF("world&car/simplecar.urdf",[-11.9, 10.23,.3], p.getQuaternionFromEuler([0,0,np.deg2rad(45)]))
+        elif self.track_number==4:
+            self.car_id = p.loadURDF("world/models/car/simplecar.urdf",[-11.9, 10.23,.3], p.getQuaternionFromEuler([0,0,np.deg2rad(45)]))
         
-        elif self.track_number==5:
         # TRACK 5
-            self.car_id = p.loadURDF("world&car/simplecar.urdf",[1.27, -6.78,.3], p.getQuaternionFromEuler([0,0,np.deg2rad(115)]))
+        elif self.track_number==5:
+            self.car_id = p.loadURDF("world/models/car/simplecar.urdf",[1.27, -6.78,.3], p.getQuaternionFromEuler([0,0,np.deg2rad(115)]))
         
-        elif self.track_number==6:
         # TRACK 6
-            #self.car_id = p.loadURDF("world&car/simplecar.urdf",[-17.2, 10.91,.3], p.getQuaternionFromEuler([0,0,np.deg2rad(45)]))
-            self.car_id = p.loadURDF("world&car/simplecar.urdf",[-19.8, 12.8,.3], p.getQuaternionFromEuler([0,0,np.deg2rad(45)]))
+        elif self.track_number==6:
+            self.car_id = p.loadURDF("world/models/car/simplecar.urdf",[-19.8, 12.8,.3], p.getQuaternionFromEuler([0,0,np.deg2rad(45)]))
         
-        elif self.track_number==7:
         # TRACK 7
-            #self.car_id = p.loadURDF("world&car/simplecar.urdf",[-13.5, 9.43,.3], p.getQuaternionFromEuler([0,0,np.deg2rad(30)]))
-            self.car_id = p.loadURDF("world&car/simplecar.urdf",[-20.1, 7,.3], p.getQuaternionFromEuler([0,0,np.deg2rad(30)]))
+        elif self.track_number==7:
+            self.car_id = p.loadURDF("world/models/car/simplecar.urdf",[-20.1, 7,.3], p.getQuaternionFromEuler([0,0,np.deg2rad(30)]))
         
-        elif self.track_number==9:
         # TRACK 9
-            self.car_id = p.loadURDF("world&car/simplecar.urdf",[6.7, 18.8,.3], p.getQuaternionFromEuler([0,0,np.deg2rad(0)]))
+        elif self.track_number==9:
+            self.car_id = p.loadURDF("world/models/car/simplecar.urdf",[6.7, 18.8,.3], p.getQuaternionFromEuler([0,0,np.deg2rad(0)]))
         
         
-        
-        p.loadSDF(f"world/track/track{self.track_number}.sdf",globalScaling = 1)
+        # caricamento del tracciato selezionato
+        p.loadSDF(f"world/models/track/track{self.track_number}.sdf",globalScaling = 1)
 
 
-    # Le osservazioni sono le immagini 84x96x1 rgb prese dalla zed
+
     def get_observation(self):
+        """
+        Funzione che restituisce le osservazioni, ovvero immagini 84x96x1 birdEye, utili all'algoritmo.
         
-        rgb_image = self.getCamera_image()
+        Returns:
+            - reshaped_bird_eye: immagini birdEye con resize a 84x96x1
+        """
+        bgr_image = self.getCamera_image()
         
         # eseguo la predizione ed ottengo info sui bounding box e sulle classi trovate
-        boxes_xywh, boxes_cls = self.conesPrediction(rgb_image)
+        boxes_xywh, boxes_cls = self.conesPrediction(bgr_image)
         
         # funzione che, date le info sui box, mi restituisce tutti i centri dei coni blu e gialli
         blue_center, yellow_center = self.divide_centers(boxes_xywh,boxes_cls)
         
-        # funzione che mi definisce la bird eye dopo aver eseguito una serie di controllo per eliminare i coni lontani 
+        # funzione che mi definisce la bird eye dopo aver eseguito una serie di controlli per eliminare i coni lontani 
         reshaped_bird_eye = self.birdEyeView_cones(blue_center, yellow_center)
-        
         
         return reshaped_bird_eye
 
 
-    # funzione step che definisce il passo di simulazione
+    
     def step(self, action):
-        self.action = action
+        """
+        Funzione usata per eseguire il passo di simulazione una volta calcolate le azioni.
+        
+        Parameters:
+        - action: rappresenta la velocità angolare (action[0]) e la velocità lineare (action[1]) da comandare al veicolo
+        
+        Returns:
+        - state: immagini 84x96x1 birdEye
+        - reward: (non utilizzata)
+        - done: flag che rappresenta l'azone terminale
+        """
         
         print("Step: ", self.current_steps)
         self.current_steps += 1
         done = False
 
-        # il primo elemento delle azioni è lo sterzo, mentre il secondo è la velocità
-        steer = action[0]
-        forward = action[1]
+        steer = action[0] # comando di sterzo
+        forward = action[1] # comando di velocità lineare
         
         
-        # SIMPLECAR
-        # ctrl+shift+l per fare il replace di una variabile
+        # Setting delle velocità ai rispettivi giunti della SIMPLECAR
         # ruote anteriori
         p.setJointMotorControl2(self.car_id,1,p.VELOCITY_CONTROL,targetVelocity=forward)
         p.setJointMotorControl2(self.car_id,3,p.VELOCITY_CONTROL,targetVelocity=forward)
@@ -152,15 +146,13 @@ class PyBulletContinuousEnv(gym.Env):
         p.setJointMotorControl2(self.car_id,0,p.POSITION_CONTROL,targetPosition=steer)
         p.setJointMotorControl2(self.car_id,2,p.POSITION_CONTROL,targetPosition=steer)
 
-        #p.setTimeStep(0.02)
         # per andare a 10Hz
         for _ in range(24):
             p.stepSimulation()
 
-        # Ottengo lo stato che sarebbero le ossservazioni (immagine 84x96x1)
-        state = self.get_observation()
+        state = self.get_observation() # ottengo le immagini birdEye 84x96x1
 
-        reward = 1 # per ora lascio 1
+        reward = 1 # inutile 
         
         # quando il numero di step super quello degli episodi, done diventa true e si conclude l'episodio
         if self.current_steps > self.total_episode_steps:
@@ -169,46 +161,76 @@ class PyBulletContinuousEnv(gym.Env):
         return state, reward, done
 
 
-    # chiudo tutto
+    
     def close(self):
+        """
+        Funzione che permette di chiudere la comunicazione con PyBullet
+        """
         p.disconnect()
 
 
-    # ottengo l'immagine dalla zed montata sul robot e ritorno l'immagine RGB 640X480x3
+    
     def getCamera_image(self):
+        """
+        Funzione che estrapola l'immagine BGR dalla camera posta sul veicolo.
+        
+        Returns:
+        - bgrImg: immagine frontale BGR 640x480x3
+        """
         camInfo = p.getDebugVisualizerCamera()
         ls = p.getLinkState(self.car_id,zed_camera_joint, computeForwardKinematics=True)
         camPos = ls[0]
         camOrn = ls[1]
         camMat = p.getMatrixFromQuaternion(camOrn)
-        #upVector = [0,0,1]
         forwardVec = [camMat[0],camMat[3],camMat[6]]
-        #sideVec =  [camMat[1],camMat[4],camMat[7]]
         camUpVec =  [camMat[2],camMat[5],camMat[8]]
         camTarget = [camPos[0]+forwardVec[0]*10,camPos[1]+forwardVec[1]*10,camPos[2]+forwardVec[2]*10]
-        #camUpTarget = [camPos[0]+camUpVec[0],camPos[1]+camUpVec[1],camPos[2]+camUpVec[2]]
         viewMat = p.computeViewMatrix(camPos, camTarget, camUpVec)
         projMat = camInfo[3]
         
-        width, height, rgbImg, depthImg, segImg= p.getCameraImage(640,480,viewMatrix=viewMat,projectionMatrix=projMat, renderer=p.ER_BULLET_HARDWARE_OPENGL)
+        width, height, bgrImg, depthImg, segImg= p.getCameraImage(640,480,viewMatrix=viewMat,projectionMatrix=projMat, renderer=p.ER_BULLET_HARDWARE_OPENGL)
 
-        return rgbImg[:,:,:3]
+        return bgrImg[:,:,:3]
 
 
-    # funzione che esegue la predizione del modello di classificazione
+    
     def conesPrediction(self, img):
-        img = cv2.cvtColor(img,cv2.COLOR_BGR2RGB)
+        """
+        Funzione che esegue la predizione dei coni tramite il modello YoloV8.
         
-        results = self.model.predict(img,conf=0.8)
+        Parameters:
+        - img: immagine BGR su cui identificare i coni.
+        
+        Returns:
+        - boxes_xywh: centro in coordinate xy del cono e altezza/larghezza dal centro.
+        - boxes_cls: classe del cono relativa a quel bounding box identificato
+        
+        """
+        img = cv2.cvtColor(img,cv2.COLOR_BGR2RGB) # trasformo l'immagine in RGB
+        
+        results = self.model.predict(img,conf=0.8) # identifico solo i coni che hanno una probabilità di esserlo maggiore dell'80%
         boxes_xywh = results[0].boxes.xywh  # boxes mi da xywh di tutti i coni visti
         boxes_cls = results[0].boxes.cls  # boxes mi da le classi di tutti i coni visti
         
-        #annotated_frame = results[0].plot()
+        #annotated_frame = results[0].plot() # per fare il plot dei coni + bounding box
         
         return boxes_xywh, boxes_cls
 
 
+
     def divide_centers(self,boxes_xywh, boxes_cls):
+        """
+        Funzione permette di calcolare il centro per ciascun cono giallo e blu.
+        
+        Parameters:
+        - boxes_xywh: centro in coordinate xy del cono e altezza/larghezza dal centro.
+        - boxes_cls: classe del cono relativa a quel bounding box identificato
+        
+        Returns:
+        - blue_center: elenco dei centri dei coni blu
+        - yellow_center: elenco dei centri dei coni gialli
+        
+        """
         yellow_center,blue_center = [],[]
 
         for box,cls in zip(boxes_xywh,boxes_cls):
@@ -223,8 +245,15 @@ class PyBulletContinuousEnv(gym.Env):
 
 
 
-    # velocità rispetto al frame macchina
     def getVelocity(self):
+        """
+        Funzione che calcola la velocità rispetto al frame locale della macchina.
+        
+        Returns:
+        - linear_velocity: velocità lineare in terna locale
+        - angular_velocity: velocità angolare in terna locale
+        
+        """
         linearVelocity, angularVelocity = p.getBaseVelocity(self.car_id)
         base_pose =  p.getBasePositionAndOrientation(self.car_id)
 
@@ -238,19 +267,21 @@ class PyBulletContinuousEnv(gym.Env):
         # Velocità angolare nel frame locale
         local_angular_velocity = np.dot(np.linalg.inv(rotation_matrix), np.array(angularVelocity))
         
-        # Extract the velocity values
+        # Estrazione valori di velocità
         linear_velocity = np.array(local_linear_velocity)[0] # x velocity
         angular_velocity = np.array(local_angular_velocity)[2] # z angular
 
         return linear_velocity, angular_velocity
     
 
-    # fermo la macchina alla fine della simulazione prima del training
+
     def stoppingCar(self):
+        """
+        Funzione che ferma il veicolo una volta terminata la simulazione.
+        """
         steer = 0
         forward = 0
         
-        # ctrl+shift+l per fare il replace di una variabile
         # ruote anteriori
         p.setJointMotorControl2(self.car_id,1,p.VELOCITY_CONTROL,targetVelocity=forward)
         p.setJointMotorControl2(self.car_id,3,p.VELOCITY_CONTROL,targetVelocity=forward)
@@ -264,51 +295,75 @@ class PyBulletContinuousEnv(gym.Env):
         print("Car stopped!")
 
 
-    # funzione che restituisce la posizione e orientazione della macchina
+    
     def getCarPosition(self):
+        """
+        Funzione che fornisce posizione e orientazione della macchina.
+        
+        Returns:
+        - car_position: posizione della macchina in terna global
+        - car_orientation: orientazione della macchina in terna global
+        
+        """
         car_position, car_orientation = p.getBasePositionAndOrientation(self.car_id)
         
         return car_position, car_orientation
     
     
-    # mappa l'angolo tra +- pi
+    
     def wrap2pi(self,angle):
+        """
+        Funzione che mappa l'angolo tra +- pi.
+        """
         return (angle + np.pi) % (2 * np.pi) - np.pi
 
 
-    # funzione che mi restituisce le coordinate polari del goal (punto della pista) che devo raggiungere con l'expert
+
     def rect_to_polar_relative(self,goal):
         """
         Funzione usata per la trasformazione in coordinate polari del goal
         
         Parameters:
-        - robot_id: id del robot
+        - goal: punto per il quale bisogna calcolare le coordinate polari
         
         Returns:
-        - r: raggio, ovvero la distanza tra robot e goal
-        - theta: angolo di orientazione del robot rispetto al goal
+        - r: raggio, ovvero la distanza tra veicolo e goal
+        - theta: angolo di orientazione del veicolo rispetto al goal
         """
         
-        # calcolo la posizione correte del robot specificato
+        # calcolo la posizione corrente del veicolo
         car_position, car_orientation = self.getCarPosition()
         
         # calcolo l'angolo di yaw
         _,_,yaw = p.getEulerFromQuaternion(car_orientation)
         
-        # Calculate the polar coordinates (distance, angle) of the vector
+        # calcolo delle coordinate polari
         vector_to_goal = np.array([goal[0] - car_position[0], goal[1] - car_position[1]])
         r = np.linalg.norm(vector_to_goal)
         theta = self.wrap2pi(np.arctan2(vector_to_goal[1], vector_to_goal[0])-self.wrap2pi(yaw))
         return r, theta
 
 
-    # funzione che restituisce la posizione da cui partire in termini di coordinate e il corrispondente indice della lista
+
     def choosePositionAndIndex(self,position,index):
+        """
+        Funzione che calcola la posizione da cui partire (in termini di coordinate) e il corrispondente indice della lista dei punti intermedi.
+        
+        Parameters:
+        - position: coordinate del punto prescelto per la partenza
+        - index: indice della lista dei punti intermedi di quel punto
+        
+        Returns:
+        - positionToStart: posizione effettivamente scelta per la partenza
+        - indexToStart: indice relativo al punto effettivamente scelto
+        """
         if len(position!=0):
             for i,j in zip(range(len(position)),position):
                 r, yaw_error = self.rect_to_polar_relative(j[:2])
                 vel_ang,_ = self.p_control(yaw_error)
                 
+                # se trovo un punto di partenza con una velocità angolare troppo elevata
+                # significa che il punto è dietro di me e quindi lo scarto
                 if vel_ang < 1.5:
                     positionToStart = j[:2]
                     indexToStart = index[i]
@@ -324,8 +379,18 @@ class PyBulletContinuousEnv(gym.Env):
         return positionToStart, indexToStart
     
     
-    # funzione relativa al controllore P: in uscita ottengo sterzo (proporzionale all'errore sulla yaw) e velocità dell'expert
+    
     def p_control(self,yaw_error):
+        """
+        Funzione che definisce il controllore P.
+        
+        Parameters:
+        - yaw_error: angolo di orientazione del veicolo rispetto al goal
+        
+        Returns:
+        - vel_ang: velocità angolare da comandare al veicolo
+        - vel_lin: velocità lineare da comandare al veicolo
+        """
         kp = 0.9
         vel_ang = kp*yaw_error
         vel_lin = 10 # m/s
@@ -335,7 +400,14 @@ class PyBulletContinuousEnv(gym.Env):
         return vel_ang, vel_lin
     
 
+
     def getHomographyFromPts(self):
+        """
+        Funzione che calcola l'omografia utile a passare in vista BirdEye.
+        
+        Returns:
+        - HomoMat: matrice 3x3 perla trasformazione omografica
+        """
         if self.HomoMat is not None:
             return self.HomoMat
         # scelta dei 4 punti nell'immagine di partenza da mappare poi nei punti di destinazione dst dell'immagine finale
@@ -350,7 +422,6 @@ class PyBulletContinuousEnv(gym.Env):
         # 155,317     489,317         579,371       86,371 
        
         #HomoMat = cv2.getPerspectiveTransform(conePts4Homography,coneDesiredPts)
-        #print(HomoMat)
        
         self.HomoMat = np.array([[   -0.46095,     -1.3316,      468.43],
                              [ 9.4581e-16,     -2.0326,      551.64],
@@ -360,20 +431,41 @@ class PyBulletContinuousEnv(gym.Env):
 
 
     def sortedPoints(self, blue_center:np.array, yellow_center:np.array):
-       
+        """
+        Funzione che riordina i centri dei coni lungo la coordinata y.
+        
+        Parameters:
+        - blue_center: centro dei coni blu
+        - yellow_center: centro dei coni gialli
+        
+        Returns:
+        - pts_blue: centri dei coni blu riordinati 
+        - pts_yellow: centri dei coni gialli riordnati
+        """
         # riordino l'array
         # la colonna prima è quella con priorità più bassa -> riordino lungo le y
         sorted_indices_b = np.lexsort((blue_center[:, 0], blue_center[:, 1]))
         sorted_indices_y = np.lexsort((yellow_center[:, 0], yellow_center[:, 1]))
        
-        pts_blue = blue_center[sorted_indices_b].astype(int)
-        pts_yellow = yellow_center[sorted_indices_y].astype(int)
+        pts_blue = blue_center[sorted_indices_b].astype(int) # cast a int in quanto sono pixel
+        pts_yellow = yellow_center[sorted_indices_y].astype(int) # cast a int in quanto sono pixel
         
         return pts_blue, pts_yellow
 
 
+
     def birdEyeView_cones(self,blue_center: np.array, yellow_center: np.array):
+        """
+        Funzione che permette di mappare i centri dei coni dalla vista frontale a quella birdEye: inoltre 
+        costruisce il poligono che rappresenta la corsia.
         
+        Parameters:
+        - blue_center: centro dei coni blu
+        - yellow_center: centro dei coni gialli
+        
+        Returns:
+        - reshapedBird: birdEye 84x96x1 
+        """
         # funzione che esegue l'interpolazione
         def getLine(cones):
             """Torna un insieme di punti campione a partire da punti sparsi nell'immagine"""
@@ -384,7 +476,6 @@ class PyBulletContinuousEnv(gym.Env):
         
         # ottengo la matrice utile ad eseguire l'omografia
         HomoMat = self.getHomographyFromPts()
-
 
         # aggiungo un cono blu o uno giallo ai lati dell'immagine quando siamo in curva  
         if blue_center.shape[0] == 0:
@@ -403,7 +494,7 @@ class PyBulletContinuousEnv(gym.Env):
         pts_bird_y = applyHomo(pts_yellow)
     
        
-        # Dopo la vista verticale posso eliminare altri coni...
+        # Dopo la vista verticale posso eliminare altri coni.
         # elimino i coni che sono molto distanti dal centro immagine ovvero dal centro camera
         dist = lambda p : abs(p[0,0]-320)+abs(p[0,1]-480)
         select = lambda v: v[np.array([dist(ve) for ve in v])<980]
@@ -414,9 +505,9 @@ class PyBulletContinuousEnv(gym.Env):
         bird = np.zeros((480,640), dtype=np.uint8)
 
 
-        # Eseguo una serie di controlli per calcolare l'indice del primo elemento appena dentro la dimensione dell'immagine (sia per il blue
+        # Eseguo una serie di controlli per calcolare l'indice del primo elemento appena dentro la dimensione dell'immagine (sia per il blu
         # che per il giallo): questo mi permette di andare a definire un "point" che sarebbe quello da passare al floodFill in quanto questa 
-        # funzione richiede un punto all'interno dell'immagine per poter riempire il poligono
+        # funzione richiede un punto all'interno dell'immagine per poter riempire il poligono.
         # la dimensione è 0 quando yellow center non è vuoto ma il punto è troppo lontano e quindi con il select viene tolto
         if pts_bird_b.shape[0]>1:
             cv2.polylines(bird, [getLine(pts_bird_b)], isClosed=False,color=(255), thickness=1, lineType=cv2.LINE_AA)
@@ -458,14 +549,22 @@ class PyBulletContinuousEnv(gym.Env):
 
 
 
-    # funzione che mi restituisce la lista completa e riordinata della linea centrale: l'inzio è la posizione di partenza 
-    # della macchina
     def computeIndexToStart(self, centerLine):
+        """
+        Funzione che restituisce la lista completa e riordinata della linea centrale: l'inzio è la posizione di partenza 
+        della macchina
+        
+        Parameters:
+        - centerLine: punti della linea intermedia tra i coni
+        
+        Returns:
+        - total_index: lista riordinata di indici 
+        """
         positionToStart = []
         threshold = 0.25
         car_position, _ = self.getCarPosition()
     
-        # lista delle possibili posizioni di partenza
+        # lista delle possibili posizioni di partenza: se non trovo un punto di partenza incremento la threshold
         while len(positionToStart)==0:
             index,position = getPointToStart(centerLine,car_position[:2], threshold)
             positionToStart, indexToStart = self.choosePositionAndIndex(position,index)
