@@ -9,12 +9,13 @@ Il primo passo è stato quello di studiare lo stato dell’arte in modo da reper
 
 ## Struttura
 La repository è così strutturata:
-- **Materiale**: racchiude gli articoli dello stato dell'arte per lo studio del problema;
-- **World&car**: racchiude tutti i file urdf e sdf per il caricamento dell'auto e del tracciato;
-- **Scripts**: TO DO;
-- **data_test**: contiene tutte le imamgini ottenute (dataset aggregato);
-- **dagger_test_models**: contiene i modelli allenati durante la procedura di training;
-- **world**: contiene il tracciato dei coni.
+- **Docs**: racchiude gli articoli dello stato dell'arte per lo studio del problema;
+- **World**: racchiude tutti i file urdf e sdf per il caricamento dell'auto e del tracciato;
+- **Scripts**: racchiude tutti i file utili al funzionamento dell'algoritmo;
+- **data_test**: contiene tutte le imamgini/label ottenute (dataset aggregato);
+- **dagger_models**: contiene i modelli allenati durante la procedura di training;
+- **runs**: contiene i dati del training riproducibili su TensorBoard;
+- **images_video**: contiene immagini relative al training (loss) e i video di test;
 
 
 
