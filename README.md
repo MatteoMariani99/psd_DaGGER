@@ -29,6 +29,6 @@ policy = a * beta + predette * (1-beta)
 dove a rappresenta le azioni dell'expert e predette quelle della rete; il coefficiente beta rappresenta una sorta di peso (inizialmente beta = 1 e quindi abbiamo solo azioni dell'expert: finito il primo training beta = 0.9 e così via). 
 Se si vogliono eseguire un numero elevato di iterazioni, alla fine beta sarà pari a 0 e ci saranno solo le azioni della rete a comandare l'auto.
 
-![Immagine dagger](https://github.com/MatteoMariani99/psd_DaGGER/blob/main/materiale/dagger.png)
+![Immagine dagger](https://github.com/MatteoMariani99/psd_DaGGER/blob/main/docs/dagger.png)
 
 
