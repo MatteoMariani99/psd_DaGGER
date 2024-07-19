@@ -41,7 +41,7 @@ conda activate dagger
 ```
 In questo modo vengono installate tutte le dipendenze necessarie per il funzionamento dell'algoritmo.
 
-Per poter eseguire il testing basta eseguire lo script test_agent.py:
+Per poter eseguire il testing basta eseguire lo script:
 ```bash
 python3 test_agent.py
 ```
