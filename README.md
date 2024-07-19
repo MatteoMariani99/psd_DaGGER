@@ -17,6 +17,35 @@ La repository è così strutturata:
 - **runs**: contiene i dati del training riproducibili su TensorBoard;
 - **images_video**: contiene immagini relative al training (loss) e i video di test;
 
+## Installazione
+In primis è necessario eseguire il clone della repository tramite il comando:
+```bash
+git clone https://github.com/MatteoMariani99/psd_DaGGER.git
+```
+Il modo più semplice per poter seguire l'algoritmo è quello di installare [anaconda](https://www.anaconda.com/) e successivamente eseguire i seguenti comandi:
+
+```bash
+conda env create -f dagger_cpu.yml
+```
+se si possiede una GPU Nvidia è possibile invece sfruttarne le capacità creando l'ambiente:
+```bash
+conda env create -f dagger.yml
+```
+Una volta fatto ciò è possibile eseguire l'algoritmo all'interno dell'ambiente che deve essere attivato tramite il comando:
+```bash
+conda activate dagger_cpu
+```
+o
+```bash
+conda activate dagger
+```
+In questo modo vengono installate tutte le dipendenze necessarie per il funzionamento dell'algoritmo.
+
+Per poter eseguire il testing basta eseguire lo script test_agent.py:
+```bash
+python3 test_agent.py
+```
+
 
 
 ## Implementazione
