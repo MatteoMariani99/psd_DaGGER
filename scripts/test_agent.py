@@ -15,17 +15,15 @@ device = torch.device("cuda:0" if torch.cuda.is_available() else "cpu")
 print("Torch Device:", device)
 
 
-# punti per volante e barra verticale
-pts = (np.array([[0, 0], [480, 0],
-        [480, 70], [0, 70]],
-        np.int32)).reshape((-1, 1, 2))
-
 
 # funzione usata per mostrare volante e velocità
 #def draw_steer_speed(state):
     # color_rgb = env.getCamera_image()
     # bird_eye = cv2.resize(color_rgb, (480, 320))
-
+    # punti per volante e barra verticale
+    # pts = (np.array([[0, 0], [480, 0],
+    #         [480, 70], [0, 70]],
+    #         np.int32)).reshape((-1, 1, 2))
     # cv2.fillPoly(bird_eye, pts=[pts], color=(0, 0, 0))
 
     # steering_wheel = draw_steering_angle.SteeringWheel(bird_eye)
