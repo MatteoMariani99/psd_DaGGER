@@ -3,7 +3,7 @@
 
 ## Descrizione
 L'obiettivo di questo progetto è la navigazione autonoma di una **auto da modellismo** su un tracciato di strada asfaltata e uno di coni (gialli e blu) per delimitare la corsia.
-Il primo passo è stato quello di studiare lo stato dell’arte in modo da reperire quante più informazioni possibili: in particolare viene preso come riferimento il seguente articolo [Dagger article](https://arxiv.org/abs/1011.0686) in modo da avere una linea guida per lo sviluppo e l’implementazione.
+Il primo passo è stato quello di studiare lo stato dell’arte in modo da reperire quante più informazioni possibili: in particolare viene preso come riferimento il seguente articolo [Dagger article](https://arxiv.org/pdf/1011.0686) in modo da avere una linea guida per lo sviluppo e l’implementazione.
 
 
 ## Struttura
