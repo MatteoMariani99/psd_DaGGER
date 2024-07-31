@@ -50,11 +50,11 @@ python3 test_agent.py
 ## Implementazione
 L’articolo scelto descrive una policy denominata Dagger (Dataset Aggregation) un algoritmo iterativo che allena una policy deterministica basandosi sulle osservazioni ottenute dalla guida di un esperto (umano, p, mpc...).
 Inizialmente si crea un dataset collezionando immagini dall'ambiente (sotto la policy del solo expert). Dopo aver collezionato N immagini, si procede con un primo training della policy per aggiornare i pesi della rete e minimizzare la loss tramite MSE (azioni expert - azioni predette).
-Una volta allenata la prima policy, le azioni intraprese sull'ambiente non saranno date solo dall'esperto ma in parte anche dalla rete, spiegazione:
+Una volta allenata la prima policy, le azioni intraprese sull'ambiente non saranno date solo dall'esperto ma in parte anche dalla rete:
 
-policy = a * beta + predette * (1-beta)
+policy = a * beta + agent * (1-beta)
 
-dove a rappresenta le azioni dell'expert e predette quelle della rete; il coefficiente beta rappresenta una sorta di peso (inizialmente beta = 1 e quindi abbiamo solo azioni dell'expert: finito il primo training beta = 0.9 e così via). 
+dove "a" rappresenta le azioni dell'expert e "agent" quelle della rete; il coefficiente beta rappresenta una sorta di peso (inizialmente beta = 1 e quindi abbiamo solo azioni dell'expert: finito il primo training beta = 0.9 e così via). 
 Se si vogliono eseguire un numero elevato di iterazioni, alla fine beta sarà pari a 0 e ci saranno solo le azioni della rete a comandare l'auto.
 
 ![Immagine dagger](https://github.com/MatteoMariani99/psd_DaGGER/blob/main/docs/dagger.png)
