@@ -30,6 +30,7 @@ se si possiede una GPU Nvidia è possibile invece sfruttarne le capacità creand
 ```bash
 conda env create -f dagger.yml
 ```
+In questo modo vengono installate tutte le dipendenze necessarie per il funzionamento dell'algoritmo.
 Una volta fatto ciò è possibile eseguire l'algoritmo all'interno dell'ambiente che deve essere attivato tramite il comando:
 ```bash
 conda activate dagger_cpu
@@ -38,7 +39,6 @@ o
 ```bash
 conda activate dagger
 ```
-In questo modo vengono installate tutte le dipendenze necessarie per il funzionamento dell'algoritmo.
 
 Per poter eseguire il testing basta eseguire lo script:
 ```bash
