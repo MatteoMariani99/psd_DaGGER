@@ -3,8 +3,7 @@
 
 ## Descrizione
 L'obiettivo di questo progetto è la navigazione autonoma di una **auto da modellismo** su un tracciato di strada asfaltata e uno di coni (gialli e blu) per delimitare la corsia.
-Il primo passo è stato quello di studiare lo stato dell’arte in modo da reperire quante più informazioni possibili: in particolare viene preso come riferimento il seguente articolo 
-(A Reduction of Imitation Learning and Structured Prediction to No-Regret Online Learning. Stéphane Ross, Geoffrey J. Gordon, J. Andrew Bagnell) in modo da avere una linea guida per lo sviluppo e l’implementazione.
+Il primo passo è stato quello di studiare lo stato dell’arte in modo da reperire quante più informazioni possibili: in particolare viene preso come riferimento il seguente articolo [Dagger article](https://linktodocumentation) in modo da avere una linea guida per lo sviluppo e l’implementazione.
 
 
 ## Struttura
