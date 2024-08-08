@@ -93,7 +93,9 @@ def run_episode(max_timesteps=2000):
     
         # data l'azione sopra ottenuta, si ottiene la nuova immagine
         next_state, _, done = env.step(a)
-        cv2.imshow("Camera", cv2.vconcat([cv2.resize(next_state,(480,320)), state_image]))
+        #cv2.imshow("Camera", cv2.vconcat([cv2.resize(next_state,(480,320)), state_image]))
+        cv2.imshow("Camera", cv2.resize(next_state,(640,480)))
+        cv2.imshow("Camera2", cv2.cvtColor(env.getCamera_image(), cv2.COLOR_BGR2RGB))
 
         k = cv2.waitKey(1)
         if k==ord('p'):
