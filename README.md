@@ -34,9 +34,10 @@ Se si vuole eseguire un numero elevato di iterazioni, $\beta$ -> 0 e le azioni p
 
 Per l'implementazione dell'algoritmo sono state prese in considerazione due tipologie di tracciato:
 - **tracciato su strada**: è il tracciato del percorso di Formula1 di Barcellona-Catalogna;
-- **tracciato con coni**: è il tracciato delimitato da coni gialli e blu (si considerano una serie di circuiti della Formula Student).
-
+  
 ![Immagine dagger](https://github.com/MatteoMariani99/psd_DaGGER/blob/main/docs/immagini/strada.png)
+- **tracciato con coni**: è il tracciato delimitato da coni gialli e blu (si considerano una serie di circuiti della Formula Student).
+  
 ![Immagine dagger](https://github.com/MatteoMariani99/psd_DaGGER/blob/main/docs/immagini/coni.png)
 
 Per il **tracciato con i coni** è stato necessario utilizzare il modello [Yolov8](https://github.com/ultralytics/ultralytics?tab=readme-ov-file) per il riconoscimento e l'identificazione, tramite bounding box, all'interno dell'immagine. 
@@ -46,8 +47,9 @@ Per il **tracciato con i coni** è stato necessario utilizzare il modello [Yolov
 ## Installazione
 In primis è necessario eseguire il clone della repository tramite il comando:
 ```bash
-git clone https://github.com/MatteoMariani99/psd_DaGGER.git
+git clone --recurse-submodules https://github.com/MatteoMariani99/psd_DaGGER.git
 ```
+Il tag --recurse-submodules è necessario per clonare anche il submodule relativo alla cone detection.
 Il modo più semplice per poter utilizzare l'algoritmo è quello di installare [anaconda](https://www.anaconda.com/) e successivamente eseguire i seguenti comandi all'interno della repository:
 
 ```bash
@@ -68,7 +70,6 @@ conda activate dagger
 ```
 
 In [Visual Studio Code](https://code.visualstudio.com) è possibile installare l'apposita estensione **Python Environment Manager** per la gestione degli ambienti python/conda: in questo modo è possibile attivare l'ambiente che si desidera senza dover eseguire i comandi sopra riportati.
-
 
 
 Per poter eseguire il testing basta eseguire lo script:
