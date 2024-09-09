@@ -49,7 +49,7 @@ In primis è necessario eseguire il clone della repository tramite il comando:
 ```bash
 git clone --recurse-submodules https://github.com/MatteoMariani99/psd_DaGGER.git
 ```
-Il tag --recurse-submodules è necessario per clonare anche il submodule relativo alla cone detection.
+Il tag --recurse-submodules è necessario per clonare anche il submodule relativo alla cone detection.\
 Il modo più semplice per poter utilizzare l'algoritmo è quello di installare [anaconda](https://www.anaconda.com/) e successivamente eseguire i seguenti comandi all'interno della repository:
 
 ```bash
