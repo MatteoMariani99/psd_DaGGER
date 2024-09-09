@@ -40,7 +40,7 @@ class ConesEnv(gym.Env):
         train = False # se train uguale false, allora consideriamo i tracciato per il testing
                 
         track_list_train = [0,1,2,4,5] # lista degli ID dei tracciati
-        track_list_test = [6]
+        track_list_test = [6,7,9]
         
         if train:
             self.track_number = random.choice(track_list_train)
@@ -84,7 +84,7 @@ class ConesEnv(gym.Env):
         
         # TRACK 9
         elif self.track_number==9:
-            self.car_id = p.loadURDF("world/models/car/simplecar.urdf",[6.7, 18.8,.3], p.getQuaternionFromEuler([0,0,np.deg2rad(0)]))
+            self.car_id = p.loadURDF("world/models/car/simplecar.urdf",[10.7, 18.8,.3], p.getQuaternionFromEuler([0,0,np.deg2rad(0)]))
         
         
         # caricamento del tracciato selezionato
@@ -212,7 +212,7 @@ class ConesEnv(gym.Env):
         boxes_xywh = results[0].boxes.xywh  # boxes mi da xywh di tutti i coni visti
         boxes_cls = results[0].boxes.cls  # boxes mi da le classi di tutti i coni visti
         
-        #annotated_frame = results[0].plot() # per fare il plot dei coni + bounding box
+        # annotated_frame = results[0].plot() # per fare il plot dei coni + bounding box
         
         return boxes_xywh, boxes_cls
 

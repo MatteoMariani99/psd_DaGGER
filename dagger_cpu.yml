@@ -133,4 +133,4 @@ dependencies:
       - ultralytics==8.2.58
       - ultralytics-thop==2.0.0
       - yarl==1.9.4
-prefix: /home/matteo99/anaconda3/envs/prova
+prefix: /home/matteo99/anaconda3/envs/dagger_cpu

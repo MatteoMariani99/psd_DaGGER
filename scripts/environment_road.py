@@ -12,7 +12,7 @@ zed_camera_joint = 7 # simplecar
 
 
 class RoadEnv(gym.Env):
-    def __init__(self, total_episode_step=2000):
+    def __init__(self, total_episode_step=1999):
         super(RoadEnv, self).__init__()
 
         # Connessione a PyBullet e setup della simulazione
@@ -40,13 +40,19 @@ class RoadEnv(gym.Env):
         p.loadSDF("world/models/road/meshes/barca_track_modified.sdf", globalScaling=1)
 
         # punti di spawn della macchina
-        env1 = [[-10,1,.3], p.getQuaternionFromEuler([0,0,np.deg2rad(180)])]
-        env2 = [[-12,-11,.3], p.getQuaternionFromEuler([0,0,np.deg2rad(180)])]
-        env3 = [[-9,-6.5,.3], p.getQuaternionFromEuler([0,0,np.deg2rad(0)])]
-        env4 = [[0,0,.3], p.getQuaternionFromEuler([0,0,np.deg2rad(55)])]
-        env5 = [[35.5,2,.3], p.getQuaternionFromEuler([0,0,np.deg2rad(-90)])]
-
-        env_list = [env1,env2,env3,env4,env5]
+        train = False
+        if train:
+            env1 = [[-10,1,.3], p.getQuaternionFromEuler([0,0,np.deg2rad(180)])]
+            env2 = [[-12,-11,.3], p.getQuaternionFromEuler([0,0,np.deg2rad(180)])]
+            env3 = [[-9,-6.5,.3], p.getQuaternionFromEuler([0,0,np.deg2rad(0)])]
+            env4 = [[0,0,.3], p.getQuaternionFromEuler([0,0,np.deg2rad(55)])]
+            env5 = [[35.5,2,.3], p.getQuaternionFromEuler([0,0,np.deg2rad(-90)])]
+            env_list = [env1, env2, env3, env4, env5]
+        else:
+            env5 = [[35.5,2,.3], p.getQuaternionFromEuler([0,0,np.deg2rad(-90)])]
+            env6 = [[27.6,-4.1,.3], p.getQuaternionFromEuler([0,0,np.deg2rad(90)])] # reverse for testing
+            env_list = [env5, env6]
+            
         index_env = random.randint(0,len(env_list)-1)
         self.car_id = p.loadURDF("world/models/car/simplecar.urdf", env_list[index_env][0],env_list[index_env][1])
         
@@ -323,14 +329,14 @@ class RoadEnv(gym.Env):
         botEdge = findEdge(greenMask, 460).flatten()
         
         # calcolo l'omografia una sola volta
-        if self.HomoMat is None and len(topEdge)==2 and len(botEdge)==2:
-            origPts = np.array([[topEdge[0], 320],[topEdge[1], 320],[botEdge[1], 460],[botEdge[0], 460]]).astype(np.float32)
-            destPts = np.array([[250,360],[390,360],[390,460],[250,460]]).astype(np.float32)
-            self.HomoMat =cv2.getPerspectiveTransform(origPts, destPts)
+        # if self.HomoMat is None and len(topEdge)==2 and len(botEdge)==2:
+        #     origPts = np.array([[topEdge[0], 320],[topEdge[1], 320],[botEdge[1], 460],[botEdge[0], 460]]).astype(np.float32)
+        #     destPts = np.array([[250,360],[390,360],[390,460],[250,460]]).astype(np.float32)
+        #     self.HomoMat =cv2.getPerspectiveTransform(origPts, destPts)
         
-        # self.HomoMat = np.array([[-2.98962782e-01, -1.24344112e+00,  3.93075046e+02],
-        #     [-3.38241831e-15, -2.16351434e+00,  5.70860281e+02],
-        #     [-8.01126080e-18, -4.17937767e-03,  1.00000000e+00]])
+        self.HomoMat = np.array([[-2.98962782e-01, -1.24344112e+00,  3.93075046e+02],
+            [-3.38241831e-15, -2.16351434e+00,  5.70860281e+02],
+            [-8.01126080e-18, -4.17937767e-03,  1.00000000e+00]])
         return self.HomoMat
 
 

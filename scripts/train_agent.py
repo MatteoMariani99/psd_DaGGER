@@ -168,12 +168,12 @@ if __name__ == "__main__":
     # True: si esegue il training con l'ottimizzazione dei parametri 
     optimize = False
  
-    # lettura dei dati
+    # lettura dei dati  
     X_train, y_train, X_valid, y_valid = read_data("./data_test", frac=0.1)
     
     
     if not optimize:
-        loss = train_model(X_train, y_train, 'dagger_models/modelli ottimi/cones/multi_track_49_iter.pth', num_epochs=19, learning_rate= 0.0017755259020865324, batch_size=16)
+        loss = train_model(X_train, y_train, 'dagger_models/modelli ottimi/road/new_variabile_10.pth', num_epochs=20, learning_rate= 0.002044020588944688, batch_size=32)
         loss_val = validate_model( X_valid, y_valid, model)
     
     else:
@@ -186,4 +186,7 @@ if __name__ == "__main__":
     #? è possibile visualizzare in real-time l'ottimizzazione dei parametri attraverso la dashboard optuna
     # optuna-dashboard sqlite:///db.sqlite3
     
-
+# Best
+#learning_rate': 0.002044020588944688, 
+# 'batch_size': 32, 
+# 'num_epochs': 20

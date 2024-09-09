@@ -30,7 +30,7 @@ else:
 
 
 
-NUM_ITS = 49 # Le iteration rappresentano il numero di episodi per il quale vogliamo eseguire la simulazione.
+NUM_ITS = 42 # Le iteration rappresentano il numero di episodi per il quale vogliamo eseguire la simulazione.
 beta_i  = 0.9 # parametro usato nella policy PI: tale valore verrà modificato tramite la 
 # formula curr_beta = beta_i**model_number con model_number che incrementa di 1 ogni volta. 
 # Inizialmente avremo 0.9^0, poi 0.9^1 poi 0.9^2 e così via il beta diminuirà esponenzialmente.
@@ -99,7 +99,7 @@ if __name__ == "__main__":
     }
 
     # scelta ambiente
-    cones = True
+    cones = False
     if cones:
     # istanza dell'ambiente
         env = ConesEnv()
