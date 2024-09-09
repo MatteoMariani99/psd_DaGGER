@@ -5,7 +5,7 @@ import numpy as np
 class SteeringWheel():
     def __init__(self, background_image):
         self.background_image = background_image
-        self.wheel_path = 'docs/steer.png'
+        self.wheel_path = 'docs/immagini/steer.png'
 
     def load_image(self,image_path):
         image = cv2.imread(image_path, cv2.IMREAD_UNCHANGED)
