@@ -76,7 +76,7 @@ Per poter eseguire il testing basta eseguire lo script:
 ```bash
 python3 test_agent.py
 ```
-
+Cambiare la variabile **cones** per caricare il tracciato con i coni (**cones** = True) o quello della strada (**cones** = False).
 
 
 
