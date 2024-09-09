@@ -8,30 +8,57 @@ Il primo passo è stato quello di studiare lo stato dell’arte in modo da reper
 
 ## Struttura
 La repository è così strutturata:
-- **Docs**: racchiude gli articoli dello stato dell'arte per lo studio del problema;
-- **World**: racchiude tutti i file urdf e sdf per il caricamento dell'auto e del tracciato;
-- **Scripts**: racchiude tutti i file utili al funzionamento dell'algoritmo;
+- **docs**: racchiude gli articoli dello stato dell'arte per lo studio del problema;
+- **world**: racchiude tutti i file urdf e sdf per il caricamento dell'auto e del tracciato;
+- **scripts**: racchiude tutti i file utili al funzionamento dell'algoritmo;
 - **data_test**: contiene tutte le imamgini/label ottenute (dataset aggregato);
 - **dagger_models**: contiene i modelli allenati durante la procedura di training;
 - **runs**: contiene i dati del training riproducibili su TensorBoard;
-- **images_video**: contiene immagini relative al training (loss) e i video di test;
+- **results**: contiene immagini relative al training (loss) e i video di test;
+- **trajectory**: contiene tutti i dati delle traiettorie (posizione veicolo) ottenute durante i test;
+
+
+## Implementazione
+L’articolo scelto descrive un algoritmo iterativo denominato Dagger (Dataset Aggregation) che allena una policy deterministica basandosi sulle osservazioni ottenute dalla guida di un esperto (umano, controllore P, mpc...).
+Inizialmente si crea un dataset collezionando immagini dall'ambiente (sotto la policy del solo expert). Dopo aver collezionato N immagini, si procede con un primo training della policy per aggiornare i pesi della rete e minimizzare la loss tramite MSE (azioni expert - azioni predette).
+Una volta allenata la prima policy, le azioni intraprese sull'ambiente non saranno date solo dall'esperto ma in parte anche dalla rete:
+
+$$
+policy = a \cdot \beta + agent \cdot (1-\beta)
+$$
+
+dove "a" rappresenta le azioni dell'expert, "agent" quelle predette dalla rete e $\beta$ un coefficiente di equilibrio (inizialmente $\beta$ = 1 e quindi si hanno solo azioni dell'expert: finito il primo training $\beta$ = 0.9 e così via). 
+Se si vuole eseguire un numero elevato di iterazioni, $\beta$ -> 0 e le azioni prevalenti saranno quelle predette dalla rete.
+
+![Immagine dagger](https://github.com/MatteoMariani99/psd_DaGGER/blob/main/docs/immagini/dagger.png)
+
+Per l'implementazione dell'algoritmo sono state prese in considerazione due tipologie di tracciato:
+- **tracciato su strada**: è il tracciato del percorso di Formula1 di Barcellona-Catalogna;
+- **tracciato con coni**: è il tracciato delimitato da coni gialli e blu (si considerano una serie di circuiti della Formula Student).
+
+![Immagine dagger](https://github.com/MatteoMariani99/psd_DaGGER/blob/main/docs/immagini/strada.png)
+![Immagine dagger](https://github.com/MatteoMariani99/psd_DaGGER/blob/main/docs/immagini/coni.png)
+
+Per il **tracciato con i coni** è stato necessario utilizzare il modello [Yolov8](https://github.com/ultralytics/ultralytics?tab=readme-ov-file) per il riconoscimento e l'identificazione, tramite bounding box, all'interno dell'immagine. 
+
+![Immagine dagger](https://github.com/MatteoMariani99/psd_DaGGER/blob/main/docs/immagini/coni_identificati.png)
 
 ## Installazione
 In primis è necessario eseguire il clone della repository tramite il comando:
 ```bash
 git clone https://github.com/MatteoMariani99/psd_DaGGER.git
 ```
-Il modo più semplice per poter seguire l'algoritmo è quello di installare [anaconda](https://www.anaconda.com/) e successivamente eseguire i seguenti comandi:
+Il modo più semplice per poter utilizzare l'algoritmo è quello di installare [anaconda](https://www.anaconda.com/) e successivamente eseguire i seguenti comandi all'interno della repository:
 
 ```bash
 conda env create -f dagger_cpu.yml
 ```
-se si possiede una GPU Nvidia è possibile invece sfruttarne le capacità creando l'ambiente:
+se si possiede una GPU Nvidia è possibile invece sfruttarne le potenzialità di calcolo creando l'ambiente:
 ```bash
 conda env create -f dagger.yml
 ```
 In questo modo vengono installate tutte le dipendenze necessarie per il funzionamento dell'algoritmo.
-Una volta fatto ciò è possibile eseguire l'algoritmo all'interno dell'ambiente che deve essere attivato tramite il comando:
+Una volta fatto ciò, l'ambiente deve essere attivato tramite il comando:
 ```bash
 conda activate dagger_cpu
 ```
@@ -47,16 +74,6 @@ python3 test_agent.py
 
 
 
-## Implementazione
-L’articolo scelto descrive una policy denominata Dagger (Dataset Aggregation) un algoritmo iterativo che allena una policy deterministica basandosi sulle osservazioni ottenute dalla guida di un esperto (umano, p, mpc...).
-Inizialmente si crea un dataset collezionando immagini dall'ambiente (sotto la policy del solo expert). Dopo aver collezionato N immagini, si procede con un primo training della policy per aggiornare i pesi della rete e minimizzare la loss tramite MSE (azioni expert - azioni predette).
-Una volta allenata la prima policy, le azioni intraprese sull'ambiente non saranno date solo dall'esperto ma in parte anche dalla rete:
 
-policy = a * beta + agent * (1-beta)
-
-dove "a" rappresenta le azioni dell'expert e "agent" quelle della rete; il coefficiente beta rappresenta una sorta di peso (inizialmente beta = 1 e quindi abbiamo solo azioni dell'expert: finito il primo training beta = 0.9 e così via). 
-Se si vogliono eseguire un numero elevato di iterazioni, alla fine beta sarà pari a 0 e ci saranno solo le azioni della rete a comandare l'auto.
-
-![Immagine dagger](https://github.com/MatteoMariani99/psd_DaGGER/blob/main/docs/dagger.png)
 
 
