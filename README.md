@@ -14,7 +14,7 @@ La repository è così strutturata:
 - **data_test**: contiene tutte le imamgini/label ottenute (dataset aggregato);
 - **dagger_models**: contiene i modelli allenati durante la procedura di training;
 - **runs**: contiene i dati del training riproducibili su TensorBoard;
-- **images_video**: contiene immagini relative al training (loss) e i video di test;
+- **results**: contiene immagini relative al training (loss) e i video di test;
 
 ## Installazione
 In primis è necessario eseguire il clone della repository tramite il comando:
