@@ -1,3 +1,4 @@
+import argparse
 import cv2
 import numpy as np
 import pickle
@@ -30,7 +31,7 @@ else:
 
 
 
-NUM_ITS = 42 # Le iteration rappresentano il numero di episodi per il quale vogliamo eseguire la simulazione.
+#NUM_ITS = 49 # Le iteration rappresentano il numero di episodi per il quale vogliamo eseguire la simulazione.
 beta_i  = 0.9 # parametro usato nella policy PI: tale valore verrà modificato tramite la 
 # formula curr_beta = beta_i**model_number con model_number che incrementa di 1 ogni volta. 
 # Inizialmente avremo 0.9^0, poi 0.9^1 poi 0.9^2 e così via il beta diminuirà esponenzialmente.
@@ -75,6 +76,18 @@ def store_data(data, datasets_dir="./data_test"):
 
 
 if __name__ == "__main__":
+    
+    parser = argparse.ArgumentParser(description=
+                                     "DAGGER\n"
+                                     "Default: --cones = False\t specifica il tracciato\n"
+                                     "Default: --num_its = 49\t\t specifica il numero di iterazioni",
+                                     formatter_class=argparse.RawTextHelpFormatter)
+    
+    parser.add_argument('--cones', action='store_true',help='tipologia di tracciato')
+    parser.add_argument('--num_its',type=int, default=49,help="numero di iterazioni/episodi")
+    args = parser.parse_args()
+    
+    NUM_ITS = args.num_its
 
     print(s)
     print("Welcome to the DAgger Algorithm")
@@ -83,6 +96,7 @@ if __name__ == "__main__":
     print("Trained models will be saved in the dagger_models directory.")
     print("Press any key to begin driving!")
     wait()
+
 
 
     if not os.path.exists("dagger_models"):
@@ -99,7 +113,7 @@ if __name__ == "__main__":
     }
 
     # scelta ambiente
-    cones = False
+    cones = args.cones
     if cones:
     # istanza dell'ambiente
         env = ConesEnv()
@@ -108,7 +122,7 @@ if __name__ == "__main__":
     
     # istanza del modello
     agent = Model()
-    agent.save("dagger_models/model_0.pth") # salvo il primo modello (vuoto)
+    agent.save("dagger_models/model_30.pth") # salvo il primo modello (vuoto)
     agent.to(device) # passo alla gpu
     
     steps = 0 # inizializzo il numero di step da eseguire per una simulazione

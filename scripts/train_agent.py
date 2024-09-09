@@ -1,3 +1,4 @@
+import argparse
 import optuna
 import pickle
 import numpy as np
@@ -159,6 +160,14 @@ def objective(trial):
 
 
 if __name__ == "__main__":
+    
+    parser = argparse.ArgumentParser(description=
+                                    "TRAINING\n"
+                                    "Default: --optimize = False\t ottimizzazione parametri ",
+                                    formatter_class=argparse.RawTextHelpFormatter)
+
+    parser.add_argument('--optimize', action='store_true',help='processo di ottimizzazione')
+    args = parser.parse_args()
 
     model = Model()
     model.to(device)
@@ -166,7 +175,7 @@ if __name__ == "__main__":
     # flag usato per la fase di ottimizzazione:
     # False: si esegue il training senza ottimizzazione parametri (senza OPTUNA)
     # True: si esegue il training con l'ottimizzazione dei parametri 
-    optimize = False
+    optimize = args.optimize
  
     # lettura dei dati  
     X_train, y_train, X_valid, y_valid = read_data("./data_test", frac=0.1)

@@ -1,11 +1,10 @@
-import time
 import numpy as np
 import draw_steering_angle
 import torch
 import cv2
 import math
 from model import Model
-import pybullet as p
+import argparse
 
 #? Import ambienti
 from environment_cones import ConesEnv
@@ -16,7 +15,6 @@ from get_cones import getCones
 
 #* Scelta del device di utilizzo: se è presente una GPU viene utilizzata
 device = torch.device("cuda:0" if torch.cuda.is_available() else "cpu")
-#device = "cpu"
 print("Torch Device:", device)
 
 
@@ -222,8 +220,19 @@ def run_episode(max_timesteps=2000):
 
 if __name__ == "__main__":                
     
+    
+    parser = argparse.ArgumentParser(description=
+                                     "TESTING\n"
+                                     "Default: --cones = False\n"
+                                     "Aggiungere il tag --cones se si vuole eseguire il testing con i coni altrimenti verrà caricato il modello allenato sul tracciato strada.",
+                                     formatter_class=argparse.RawTextHelpFormatter)
+    
+    parser.add_argument('--cones', action='store_true', help='tipologia di tracciato')
+    args = parser.parse_args()
+    
+    
     # numero di episodi 
-    n_test_episodes = 1                  
+    n_test_episodes = 15                  
     
     # istanza del modello
     agent = Model()
@@ -238,7 +247,7 @@ if __name__ == "__main__":
 
 
     #! Caricamento del modello ottimo ottenuto
-    cones = False # se cones = False viene caricato il modello road
+    cones = args.cones # se cones = False viene caricato il modello road
     if cones:
         env = ConesEnv()
         agent.load("dagger_models/modelli ottimi/cones/multi_track_49_iter.pth",device)
