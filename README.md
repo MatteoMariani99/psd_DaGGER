@@ -67,6 +67,10 @@ o
 conda activate dagger
 ```
 
+In [Visual Studio Code](https://code.visualstudio.com) è possibile installare l'apposita estensione **Python Environment Manager** per la gestione degli ambienti python/conda: in questo modo è possibile attivare l'ambiente che si desidera senza dover eseguire i comandi sopra riportati.
+
+
+
 Per poter eseguire il testing basta eseguire lo script:
 ```bash
 python3 test_agent.py
