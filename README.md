@@ -55,12 +55,12 @@ Per il **tracciato con i coni** è stato necessario utilizzare il modello [Yolov
 
 ![Immagine dagger](https://github.com/MatteoMariani99/psd_DaGGER/blob/main/docs/immagini/coni_identificati.png)
 
-## Installazione
+## Installazione ✅
 In primis è necessario eseguire il clone della repository tramite il comando:
 ```bash
 git clone --recurse-submodules https://github.com/MatteoMariani99/psd_DaGGER.git
 ```
-Il tag --recurse-submodules è necessario per clonare anche il submodule relativo alla cone detection.\
+❗Il tag --recurse-submodules è necessario per clonare anche il submodule relativo alla cone detection.❗\
 Il modo più semplice per poter utilizzare l'algoritmo è quello di installare [anaconda](https://www.anaconda.com/) e successivamente eseguire i seguenti comandi all'interno della repository:
 
 ```bash
@@ -82,13 +82,15 @@ conda activate dagger
 
 In [Visual Studio Code](https://code.visualstudio.com) è possibile installare l'apposita estensione **Python Environment Manager** per la gestione degli ambienti python/conda: in questo modo è possibile attivare l'ambiente che si desidera senza dover eseguire i comandi sopra riportati.
 
-
+## TESTING
 Per poter eseguire il testing basta eseguire lo script:
 ```bash
 python3 test_agent.py
 ```
-Cambiare la variabile **cones** per caricare il tracciato con i coni (**cones** = True) o quello della strada (**cones** = False).
-
+se non viene specificato alcun tag allora verrà eseguito il test sul tracciato su strada. Al contrario, specificando il tag **--cones** è possibile testare il tracciato con i coni nel seguente modo:
+```bash
+python3 test_agent.py --cones
+```
 
 
 
