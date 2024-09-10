@@ -1,9 +1,9 @@
 # Progetto Speciale per la Didattica
 ![Static Badge](https://img.shields.io/badge/ubuntu-22.04-orange?style=plastic&logo=ubuntu)
 
-![Static Badge](https://img.shields.io/badge/conda-version%2024.7.1-blue?style=plastic&logo=anaconda&logoColor=brightgreen&labelColor=black)
+![Static Badge](https://img.shields.io/badge/conda-24.7.1-blue?style=plastic&logo=anaconda&logoColor=brightgreen)
 
-![Static Badge](https://img.shields.io/badge/python-version%203.11.9-blue?style=plastic&logo=python&logoColor=yellow%20&labelColor=black)
+![Static Badge](https://img.shields.io/badge/python-3.11.9-blue?style=plastic&logo=python&logoColor=yellow%20)
 
 ![Static Badge](https://img.shields.io/badge/PyTorch-version%202.2.2-blue?style=plastic&logo=pytorch&logoColor=white&labelColor=orange)
 ![Static Badge](https://img.shields.io/badge/OpenCV-version%204.9.0.80-blue?style=plastic&logo=opencv&labelColor=brightgreen)
