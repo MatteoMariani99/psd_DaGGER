@@ -82,7 +82,7 @@ conda activate dagger
 
 In [Visual Studio Code](https://code.visualstudio.com) è possibile installare l'apposita estensione **Python Environment Manager** per la gestione degli ambienti python/conda: in questo modo è possibile attivare l'ambiente che si desidera senza dover eseguire i comandi sopra riportati.
 
-## TESTING
+## Testing
 Per poter eseguire il testing basta eseguire lo script:
 ```bash
 python3 test_agent.py
@@ -90,6 +90,16 @@ python3 test_agent.py
 se non viene specificato alcun tag allora verrà eseguito il test sul tracciato su strada. Al contrario, specificando il tag **--cones** è possibile testare il tracciato con i coni nel seguente modo:
 ```bash
 python3 test_agent.py --cones
+```
+
+## Training
+Per poter eseguire il training basta eseguire lo script:
+```bash
+python3 train_agent.py
+```
+se non viene specificato alcun tag allora verrà eseguito il training sul dataset aggregato conclusivo. Al contrario, specificando il tag **--optimize** è possibile eseguire il processo di ottimizzazione degli iperparametri nel seguente modo:
+```bash
+python3 test_agent.py --optimize
 ```
 
 
