@@ -61,24 +61,25 @@ In primis è necessario eseguire il clone della repository tramite il comando:
 git clone --recurse-submodules https://github.com/MatteoMariani99/psd_DaGGER.git
 ```
 ❗Il tag --recurse-submodules è necessario per clonare anche il submodule relativo alla cone detection.❗\
-Il modo più semplice per poter utilizzare l'algoritmo è quello di installare [anaconda](https://www.anaconda.com/) e successivamente eseguire i seguenti comandi all'interno della repository:
+Il modo più semplice per poter utilizzare l'algoritmo è quello di installare [anaconda](https://www.anaconda.com/) attraverso l'apposita guida per i [sistemi Linux](https://docs.conda.io/projects/conda/en/latest/user-guide/install/linux.html).
+Una volta installato, aprire un terminale all'interno della repository tramite il comando `CTRL + ALT + T` ed eseguire:
 
 ```bash
-conda env create -f dagger_cpu.yml
+chmod +x install.sh
 ```
-se si possiede una GPU Nvidia è possibile invece sfruttarne le potenzialità di calcolo creando l'ambiente:
-```bash
-conda env create -f dagger.yml
-```
-In questo modo vengono installate tutte le dipendenze necessarie per il funzionamento dell'algoritmo.
+Se si possiede una GPU Nvidia, questa verrà rilevata (all'interno dello script install.sh) e di conseguenza verrà automaticamente creato l'ambiente conda con tutti i driver necessari. 
+Al contrario, lo script permette di installare una versione appositamente per la CPU.
+Durante la creazione dell'ambiente verranno installate tutte le dipendenze necessarie, in modo da aver a disposizione un ambiente completo e pronto all'uso.
+
 Una volta fatto ciò, l'ambiente deve essere attivato tramite il comando:
 ```bash
 conda activate dagger_cpu
 ```
-o
+nel caso con GPU oppure tramite il comando:
 ```bash
 conda activate dagger
 ```
+nel caso con solo CPU.
 
 In [Visual Studio Code](https://code.visualstudio.com) è possibile installare l'apposita estensione **Python Environment Manager** per la gestione degli ambienti python/conda: in questo modo è possibile attivare l'ambiente che si desidera senza dover eseguire i comandi sopra riportati.
 
