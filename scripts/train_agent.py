@@ -163,9 +163,11 @@ if __name__ == "__main__":
     
     parser = argparse.ArgumentParser(description=
                                     "TRAINING\n"
-                                    "Default: --optimize = False\t ottimizzazione parametri ",
+                                    "Default: --cones = False\n"
+                                    "Default: --optimize = False\t ottimizzazione parametri",
                                     formatter_class=argparse.RawTextHelpFormatter)
 
+    parser.add_argument('--cones', action='store_true', help='tipologia di tracciato')
     parser.add_argument('--optimize', action='store_true',help='processo di ottimizzazione')
     args = parser.parse_args()
 
@@ -176,14 +178,19 @@ if __name__ == "__main__":
     # False: si esegue il training senza ottimizzazione parametri (senza OPTUNA)
     # True: si esegue il training con l'ottimizzazione dei parametri 
     optimize = args.optimize
+    cones = args.cones
  
     # lettura dei dati  
     X_train, y_train, X_valid, y_valid = read_data("./data_test", frac=0.1)
     
     
     if not optimize:
-        loss = train_model(X_train, y_train, 'dagger_models/modelli ottimi/road/new_variabile_10.pth', num_epochs=20, learning_rate= 0.002044020588944688, batch_size=32)
-        loss_val = validate_model( X_valid, y_valid, model)
+        if not cones:
+            loss = train_model(X_train, y_train, 'dagger_models/modelli ottimi/road/new_model.pth', num_epochs=20, learning_rate= 0.002044020588944688, batch_size=32)
+            loss_val = validate_model( X_valid, y_valid, model)
+        else:
+            loss = train_model(X_train, y_train, 'dagger_models/modelli ottimi/cones/new_model.pth', num_epochs=20, learning_rate= 0.002044020588944688, batch_size=32)
+            loss_val = validate_model( X_valid, y_valid, model)
     
     else:
         study = optuna.create_study(storage="sqlite:///db.sqlite3",direction='minimize')
