@@ -67,15 +67,14 @@ Una volta installato, aprire un terminale all'interno della repository tramite i
 ```bash
 chmod +x install.sh
 ```
-Se si possiede una GPU Nvidia, questa verrà rilevata (all'interno dello script install.sh) e di conseguenza verrà automaticamente creato l'ambiente conda con tutti i driver necessari. 
-Al contrario, lo script permette di installare una versione appositamente per la CPU.
+Se si possiede una GPU Nvidia, questa verrà rilevata (all'interno dello script install.sh) e di conseguenza verrà automaticamente creato l'ambiente conda con tutti i driver necessari. Al contrario, lo script creerà un ambiente per l'utilizzo con la CPU.
 Durante la creazione dell'ambiente verranno installate tutte le dipendenze necessarie, in modo da aver a disposizione un ambiente completo e pronto all'uso.
 
 Una volta fatto ciò, l'ambiente deve essere attivato tramite il comando:
 ```bash
 conda activate dagger_cpu
 ```
-nel caso con GPU oppure tramite il comando:
+nel caso con GPU, oppure tramite il comando:
 ```bash
 conda activate dagger
 ```
