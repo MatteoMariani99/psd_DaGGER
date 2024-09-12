@@ -85,31 +85,32 @@ In [Visual Studio Code](https://code.visualstudio.com) è possibile installare l
 ## Testing
 Per poter eseguire il testing si utilizza lo script:
 ```bash
-python3 test_agent.py
+python3 scripts/test_agent.py
 ```
 se non viene specificato alcun tag allora verrà eseguito il test sul tracciato su strada. Al contrario, specificando il tag **--cones** è possibile testare il tracciato con i coni nel seguente modo:
 ```bash
-python3 test_agent.py --cones
+python3 scripts/test_agent.py --cones
 ```
 
 ## Training
 Per poter eseguire il training si utilizza lo script:
 ```bash
-python3 train_agent.py
+python3 scripts/train_agent.py
 ```
-se non viene specificato alcun tag allora verrà eseguito il training sul dataset aggregato conclusivo. Al contrario, specificando il tag **--optimize** è possibile eseguire il processo di ottimizzazione degli iperparametri nel seguente modo:
+se non viene specificato alcun tag allora verrà eseguito il training sul dataset aggregato conclusivo, salvando il modello allenato nella cartella road. Al contrario, se è stato costruito il dataset aggregato con il tracciato dei coni, è necessario specificare il tag **--cones** per salvare il modello nella giusta cartella.\
+Specificando invece il tag **--optimize** è possibile eseguire il processo di ottimizzazione degli iperparametri nel seguente modo:
 ```bash
-python3 train_agent.py --optimize
+python3 scripts/train_agent.py --optimize
 ```
 
 ## Dagger
 Per poter eseguire l'algoritmo dagger si utilizza lo script:
 ```bash
-python3 dagger_test.py
+python3 scripts/dagger_test.py
 ```
 se non viene specificato alcun tag allora verrà eseguito l'algoritmo sul tracciato su strada con un numero di iterazioni `NUM_ITS` pari a 49. Al contrario, utilizzando il tag **--cones** si specifica il tracciato con i coni mentre con il tag **--num_its** è possibile personalizzare il numero di episodi per il quale viene eseguito l'algoritmo, il tutto nel seguente modo:
 ```bash
-python3 dagger_test.py --cones --num_its
+python3 scripts/dagger_test.py --cones --num_its
 ```
 
 
