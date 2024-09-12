@@ -20,7 +20,7 @@ if command -v nvidia-smi &> /dev/null; then
     conda env create -f dagger.yml
 else
     echo "No NVIDIA GPU detected or NVIDIA drivers are not installed."
-    echo " Create conda env for GPU"
+    echo " Create conda env for CPU"
     conda env create -f dagger_cpu.yml
 fi
 

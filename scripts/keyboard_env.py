@@ -13,7 +13,7 @@ else:
 
 # funzione che attende l'input da parte dell'utente
 def wait():
-    print("Premere qualsiasi tasto per iniziare a guiare!")
+    print("Premere qualsiasi tasto per iniziare a guidare!")
     _ = input()
 
 
