@@ -25,7 +25,7 @@ class RoadEnv(gym.Env):
 
 
  
-    def reset(self):
+    def reset(self,train=False):
         """
         Funzione che permette di inizializzare l'ambiente (tracciato e veicolo)
         """
@@ -39,8 +39,7 @@ class RoadEnv(gym.Env):
         # caricamento del tracciato
         p.loadSDF("world/models/road/meshes/barca_track_modified.sdf", globalScaling=1)
 
-        # punti di spawn della macchina
-        train = False
+        # punti di spawn della macchina training e testing
         if train:
             env1 = [[-10,1,.3], p.getQuaternionFromEuler([0,0,np.deg2rad(180)])]
             env2 = [[-12,-11,.3], p.getQuaternionFromEuler([0,0,np.deg2rad(180)])]
@@ -88,7 +87,7 @@ class RoadEnv(gym.Env):
         """
         self.action = action
         
-        print("Step: ", self.current_steps)
+        #print("Step: ", self.current_steps)
         self.current_steps += 1
         done = False
 

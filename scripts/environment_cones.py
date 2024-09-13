@@ -27,7 +27,7 @@ class ConesEnv(gym.Env):
 
 
     
-    def reset(self):
+    def reset(self, train=False):
         """
         Funzione che permette di inizializzare l'ambiente (tracciato e veicolo)
         """
@@ -36,12 +36,11 @@ class ConesEnv(gym.Env):
         # Reset della simulazione
         p.resetSimulation()
         p.setGravity(0, 0, -9.81)
-
-        train = False # se train uguale false, allora consideriamo i tracciato per il testing
-                
+     
         track_list_train = [0,1,2,4,5] # lista degli ID dei tracciati
         track_list_test = [6,7,9]
         
+        # scelta tracciato training
         if train:
             self.track_number = random.choice(track_list_train)
         else:
@@ -127,7 +126,7 @@ class ConesEnv(gym.Env):
         - done: flag che rappresenta l'azone terminale
         """
         
-        print("Step: ", self.current_steps)
+        #print("Step: ", self.current_steps)
         self.current_steps += 1
         done = False
 

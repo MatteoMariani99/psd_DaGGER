@@ -5,6 +5,7 @@ import cv2
 import math
 from model import Model
 import argparse
+from tqdm import tqdm
 
 #? Import ambienti
 from environment_cones import ConesEnv
@@ -163,57 +164,61 @@ def run_episode_save_pose(max_timesteps=2000):
             
             
 
-def run_episode(max_timesteps=2000):
+def run_episode(episodio_i, max_timesteps=2000):
     
     step = 0
     env.reset() # inizializzazione l'ambiente
     state= env.get_observation() # ottenimento delle osservazioni
-    
-    
-    while True:
+   
+    print("-----------------------------") 
+    print("TESTING: Algoritmo DAgger episodio n.",episodio_i) 
+    print("")
+    with tqdm(total=max_timesteps) as pbar:
+        while True:
 
-        # np.newaxis aumenta la dimensione dell'array di 1 (es. se è un array 1D diventa 2D)
-        # torch.from_numpy crea un tensore a partire da un'array numpy
-        # il modello ritorna le azioni (left/right, up/down)
-        prediction = agent(torch.from_numpy(state[np.newaxis,np.newaxis,...]).type(torch.FloatTensor).to(device))
-        a = prediction.detach().cpu().numpy().flatten()
-        
-        
-        # interfaccia diversi per coni e road
-        if not cones:
-            draw_steer_speed(state,a)
-        else:
-            # inizializzo un'immagine vuota per stampare in seguito i valori di velocità e sterzo
-            state_image = np.zeros((320,480), dtype=np.uint8)
-
-            text = " rad/s"
-            full_text = f"{str(round(a[0],3))}{text}" 
-            text1 = " m/s"
-            full_text1 = f"{str(round(a[1],2))}{text1}" 
+            # np.newaxis aumenta la dimensione dell'array di 1 (es. se è un array 1D diventa 2D)
+            # torch.from_numpy crea un tensore a partire da un'array numpy
+            # il modello ritorna le azioni (left/right, up/down)
+            prediction = agent(torch.from_numpy(state[np.newaxis,np.newaxis,...]).type(torch.FloatTensor).to(device))
+            a = prediction.detach().cpu().numpy().flatten()
             
-            # Display dei valori a video
-            cv2.putText(state_image, "Steer: ", (150,100), cv2.FONT_HERSHEY_SIMPLEX,  
-                              0.6, (255,255,255), 1, cv2.LINE_AA)
-            cv2.putText(state_image, full_text, (230,100), cv2.FONT_HERSHEY_SIMPLEX,  
-                              0.6, (255,255,255), 1, cv2.LINE_AA) 
-            cv2.putText(state_image, "Speed: ", (150,250), cv2.FONT_HERSHEY_SIMPLEX,  
-                              0.6, (255,255,255), 1, cv2.LINE_AA)
-            cv2.putText(state_image, full_text1, (230,250), cv2.FONT_HERSHEY_SIMPLEX,  
-                              0.6, (255,255,255), 1, cv2.LINE_AA) 
-            cv2.imshow("Camera", cv2.vconcat([cv2.resize(state,(480,320)), state_image]))
-            k = cv2.waitKey(1)
-            if k==ord('p'):
-                cv2.waitKey(0)
             
-        # data l'azione sopra ottenuta, si ottiene la nuova immagine
-        next_state, _, done = env.step(a)
-  
-        state = next_state
-        step += 1
+            # interfaccia diversi per coni e road
+            if not cones:
+                draw_steer_speed(state,a)
+            else:
+                # inizializzo un'immagine vuota per stampare in seguito i valori di velocità e sterzo
+                state_image = np.zeros((320,480), dtype=np.uint8)
 
-        # si interrompe quando si raggiunge il numero massimo di step
-        if done or step > max_timesteps: 
-            break
+                text = " rad/s"
+                full_text = f"{str(round(a[0],3))}{text}" 
+                text1 = " m/s"
+                full_text1 = f"{str(round(a[1],2))}{text1}" 
+                
+                # Display dei valori a video
+                cv2.putText(state_image, "Steer: ", (150,100), cv2.FONT_HERSHEY_SIMPLEX,  
+                                0.6, (255,255,255), 1, cv2.LINE_AA)
+                cv2.putText(state_image, full_text, (230,100), cv2.FONT_HERSHEY_SIMPLEX,  
+                                0.6, (255,255,255), 1, cv2.LINE_AA) 
+                cv2.putText(state_image, "Speed: ", (150,250), cv2.FONT_HERSHEY_SIMPLEX,  
+                                0.6, (255,255,255), 1, cv2.LINE_AA)
+                cv2.putText(state_image, full_text1, (230,250), cv2.FONT_HERSHEY_SIMPLEX,  
+                                0.6, (255,255,255), 1, cv2.LINE_AA) 
+                cv2.imshow("Camera", cv2.vconcat([cv2.resize(state,(480,320)), state_image]))
+                k = cv2.waitKey(1)
+                if k==ord('p'):
+                    cv2.waitKey(0)
+                
+            # data l'azione sopra ottenuta, si ottiene la nuova immagine
+            next_state, _, done = env.step(a)
+    
+            state = next_state
+            step += 1
+            pbar.update(1)
+
+            # si interrompe quando si raggiunge il numero massimo di step
+            if done or step > max_timesteps: 
+                break
         
 
     
@@ -259,7 +264,7 @@ if __name__ == "__main__":
     agent.to(device)
   
     for i in range(n_test_episodes):
-        run_episode()
+        run_episode(i)
         
      
     env.close()
