@@ -67,6 +67,10 @@ Una volta installato, aprire un terminale all'interno della repository tramite i
 ```bash
 chmod +x install.sh
 ```
+Per eseguire lo script fare:
+```bash
+bash install.sh
+```
 Se si possiede una GPU Nvidia, questa verrà rilevata (all'interno dello script install.sh) e di conseguenza verrà automaticamente creato l'ambiente conda con tutti i driver necessari. Al contrario, lo script creerà un ambiente per l'utilizzo con la CPU.
 Durante la creazione dell'ambiente verranno installate tutte le dipendenze necessarie, in modo da aver a disposizione un ambiente completo e pronto all'uso.
 
@@ -110,7 +114,7 @@ python3 scripts/dagger_test.py
 ```
 se non viene specificato alcun tag allora verrà eseguito l'algoritmo sul tracciato su strada con un numero di iterazioni `NUM_ITS` pari a 49. Al contrario, utilizzando il tag **--cones** si specifica il tracciato con i coni mentre con il tag **--num_its** è possibile personalizzare il numero di episodi per il quale viene eseguito l'algoritmo, il tutto nel seguente modo:
 ```bash
-python3 scripts/dagger_test.py --cones --num_its
+python3 scripts/dagger_test.py --cones --num_its=42
 ```
 
 
