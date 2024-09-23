@@ -1,4 +1,4 @@
-# Progetto Speciale per la Didattica
+# Progetto Speciale per la Didattica: navigazione con algoritmo DAgger
 ![Static Badge](https://img.shields.io/badge/ubuntu-22.04-orange?style=plastic&logo=ubuntu)
 
 ![Static Badge](https://img.shields.io/badge/conda-24.7.1-blue?style=plastic&logo=anaconda&logoColor=brightgreen)
@@ -9,8 +9,10 @@
 ![Static Badge](https://img.shields.io/badge/OpenCV-version%204.9.0.80-blue?style=plastic&logo=opencv&labelColor=brightgreen)
 ![Static Badge](https://img.shields.io/badge/numpy-version%201.26.4-blue?style=plastic&logo=numpy&logoColor=blue&labelColor=white)
 
-
-
+# Autore
+```bash
+M.Mariani (m.mariani34@studenti.unipi.it)
+```
 
 ## Descrizione
 L'obiettivo di questo progetto è la navigazione autonoma di una **auto da modellismo** su un tracciato di strada asfaltata e uno di coni (gialli e blu) per delimitare la corsia.
@@ -117,6 +119,10 @@ se non viene specificato alcun tag allora verrà eseguito l'algoritmo sul tracci
 python3 scripts/dagger_test.py --cones --num_its=42
 ```
 
-
+## Cite this work
+```bash
+M.Mariani, (2024)  Progetto Speciale per la Didattica: navigazione con algoritmo DAgger
+[Source code](https://github.com/MatteoMariani99/psd_DaGGER)
+```
 
 
