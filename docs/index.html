@@ -1,0 +1,156 @@
+<!doctype html>
+<html lang="it">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>psd_DaGGER — Navigazione autonoma con DAgger</title>
+  <meta name="description" content="Progetto Speciale per la Didattica: navigazione autonoma di un'auto da modellismo con algoritmo DAgger (Dataset Aggregation).">
+  <!-- Open Graph -->
+  <meta property="og:title" content="psd_DaGGER" />
+  <meta property="og:description" content="Navigazione autonoma con DAgger (Dataset Aggregation)." />
+  <meta property="og:image" content="assets/img/og.jpg" />
+  <meta name="twitter:card" content="summary_large_image" />
+  <link rel="preload" href="assets/css/styles.css" as="style" />
+  <link rel="stylesheet" href="assets/css/styles.css" />
+  <link rel="icon" href="assets/img/favicon.svg" />
+</head>
+<body>
+  <!-- HERO -->
+  <header class="hero">
+    <div class="wrap">
+      <h1>psd_DaGGER</h1>
+      <p class="sub">Navigazione autonoma con <strong>DAgger</strong> su tracciati strada &amp; coni (Formula Student)</p>
+      <p class="meta">Matteo Mariani · <a href="#code">Codice</a> · <a href="#install">Installazione</a> · <a href="#results">Risultati</a></p>
+      <div class="cta">
+        <a class="btn" href="#abstract">Abstract</a>
+        <a class="btn ghost" href="#video">Video</a>
+      </div>
+    </div>
+  </header>
+
+  <!-- TOC sticky -->
+  <nav class="toc">
+    <a href="#abstract">Abstract</a>
+    <a href="#method">Metodo</a>
+    <a href="#install">Installazione</a>
+    <a href="#train">Training</a>
+    <a href="#test">Testing</a>
+    <a href="#results">Risultati</a>
+    <a href="#code">Codice</a>
+    <a href="#bibtex">BibTeX</a>
+  </nav>
+
+  <main>
+    <!-- ABSTRACT -->
+    <section id="abstract" class="section">
+      <h2>Abstract</h2>
+      <p>
+        Il progetto affronta la navigazione autonoma di un’auto da modellismo su due scenari: strada e tracciati delimitati da coni (gialli/blu). Si adotta l’algoritmo
+        <em>DAgger – Dataset Aggregation</em>, che allena una policy deterministica combinando azioni dell’expert e dell’agente, con coefficiente di miscelazione <code>β</code> decrescente.
+      </p>
+      <p class="formula">policy = a · β + agent · (1 − β)</p>
+      <p>
+        Per i tracciati con coni si impiega <strong>YOLOv8</strong> per il rilevamento. Sono disponibili dataset aggregati, modelli allenati e log TensorBoard.
+      </p>
+    </section>
+
+    <!-- VIDEO -->
+    <section id="video" class="section">
+      <h2>Video</h2>
+      <div class="video">
+        <!-- sostituisci con il tuo id YouTube o file mp4 statico -->
+        <iframe src="https://www.youtube.com/embed/XXXXXXXX" title="Demo psd_DaGGER" loading="lazy" allowfullscreen></iframe>
+      </div>
+    </section>
+
+    <!-- METODO -->
+    <section id="method" class="section">
+      <h2>Metodo (DAgger)</h2>
+      <p>
+        Iterazioni: raccolta dati sotto expert → train iniziale (MSE tra azioni expert e predette) → policy mista con β&lt;1 → nuova raccolta → retrain … fino a convergenza.
+      </p>
+      <ul>
+        <li><strong>Expert</strong>: umano/controllore (P, MPC, …)</li>
+        <li><strong>Per i coni</strong>: rilevamento con YOLOv8</li>
+        <li><strong>Output</strong>: modelli (<code>dagger_models/</code>), traiettorie (<code>trajectory/</code>), risultati visivi (<code>results/</code>)</li>
+      </ul>
+    </section>
+
+    <!-- INSTALLAZIONE -->
+    <section id="install" class="section">
+      <h2>Installazione</h2>
+<pre><code>git clone --recurse-submodules https://github.com/MatteoMariani99/psd_DaGGER.git
+cd psd_DaGGER
+chmod +x install.sh
+bash install.sh
+
+# attiva ambiente
+conda activate dagger        # con GPU
+# oppure
+conda activate dagger_cpu    # solo CPU
+</code></pre>
+      <p>Visual Studio Code consigliato con estensione “Python Environment Manager”.</p>
+    </section>
+
+    <!-- TRAIN -->
+    <section id="train" class="section">
+      <h2>Training</h2>
+<pre><code># dataset aggregato strada
+python3 scripts/train_agent.py
+
+# tracciato con coni (+ ottimizzazione iperparametri opzionale)
+python3 scripts/train_agent.py --cones
+python3 scripts/train_agent.py --optimize
+</code></pre>
+    </section>
+
+    <!-- TEST -->
+    <section id="test" class="section">
+      <h2>Testing</h2>
+<pre><code># strada
+python3 scripts/test_agent.py
+
+# coni
+python3 scripts/test_agent.py --cones
+</code></pre>
+      <h3>Esecuzione DAgger</h3>
+<pre><code># strada (NUM_ITS default 49)
+python3 scripts/dagger_test.py
+
+# coni con episodi personalizzati
+python3 scripts/dagger_test.py --cones --num_its=42
+</code></pre>
+    </section>
+
+    <!-- RISULTATI -->
+    <section id="results" class="section grid">
+      <!-- Sostituisci i path con immagini reali in docs/assets/img/ o linka file esistenti in results/ -->
+      <figure><img src="assets/img/loss.webp" alt="Andamento loss" loading="lazy"><figcaption>Andamento della loss durante il training.</figcaption></figure>
+      <figure><img src="assets/img/trajectory.webp" alt="Traiettoria veicolo" loading="lazy"><figcaption>Traiettorie stimate vs. ground truth.</figcaption></figure>
+      <figure><img src="assets/img/cone_detection.webp" alt="Rilevamento coni (YOLOv8)" loading="lazy"><figcaption>Rilevamento coni con YOLOv8.</figcaption></figure>
+    </section>
+
+    <!-- CODICE -->
+    <section id="code" class="section">
+      <h2>Codice</h2>
+      <p><a href="https://github.com/MatteoMariani99/psd_DaGGER">Repository GitHub</a></p>
+    </section>
+
+    <!-- BIBTEX -->
+    <section id="bibtex" class="section">
+<pre>@misc{mariani2024psd_dagger,
+  author = {M. Mariani},
+  title  = {Progetto Speciale per la Didattica: navigazione con algoritmo DAgger},
+  year   = {2024},
+  howpublished = {\url{https://github.com/MatteoMariani99/psd_DaGGER}}
+}</pre>
+    </section>
+  </main>
+
+  <footer>
+    <p>© 2025 Matteo Mariani. Sito ispirato ai template <a href="https://github.com/nerfies/nerfies.github.io">Nerfies</a> / <a href="https://spla-tam.github.io/">SplaTAM</a>.</p>
+  </footer>
+
+  <script src="static/main.js" defer></script>
+</body>
+</html>
