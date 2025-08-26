@@ -1,4 +1,4 @@
-<!doctype html>
+<!DOCTYPE html>
 <html lang="it">
 <head>
   <meta charset="utf-8" />
@@ -8,15 +8,14 @@
   <meta property="og:title" content="psd_DaGGER — Navigazione autonoma con DAgger" />
   <meta property="og:description" content="Risultati, dettagli tecnici e guida per riprodurre psd_DaGGER." />
   <meta property="og:type" content="website" />
-  <meta name="theme-color" content="#0f172a" />
-  <link rel="preload" href="assets/style.css" as="style" />
+  <meta name="theme-color" content="#1f2937" />
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600&family=Roboto:wght@400;700&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="assets/style.css" />
   <link rel="icon" href="assets/logo.svg" type="image/svg+xml" />
-  <!-- MathJax per mostrare β-mixing -->
   <script defer src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
 </head>
-
 <body>
+
   <header class="site-header">
     <div class="container">
       <a class="brand" href="#">
@@ -47,13 +46,8 @@
             <a class="button primary" href="#risultati">Guarda i risultati</a>
             <a class="button ghost" href="#riproducibilita">Riproduci</a>
           </div>
-          <div class="badges">
-            <a class="badge" href="https://arxiv.org" target="_blank" rel="noreferrer">Articolo di riferimento</a>
-            <a class="badge" href="https://github.com/MatteoMariani99/psd_DaGGER">Repository</a>
-          </div>
         </div>
         <figure class="hero-media">
-          <!-- Sostituisci con una tua immagine cover in docs/media/cover.jpg -->
           <img src="media/cover.jpg" alt="Anteprima progetto (placeholder)" onerror="this.src='assets/placeholder.webp'">
         </figure>
       </div>
@@ -88,16 +82,6 @@
             \\text{policy} = a \\cdot \\beta + \\text{agent} \\cdot (1-\\beta)
           \\]
         </div>
-        <details class="card">
-          <summary>Pipeline ad alto livello</summary>
-          <ol>
-            <li><strong>Dataset iniziale</strong> con policy dell’esperto (umano/controllore).</li>
-            <li><strong>Training</strong> della policy π₁ sul dataset raccolto.</li>
-            <li><strong>Raccolta dati iterativa</strong> in ambiente con mixing β ↓.</li>
-            <li><strong>Aggregazione</strong> dei nuovi esempi etichettati dall’esperto.</li>
-            <li><strong>Retraining</strong> su dataset aggregato fino a convergenza.</li>
-          </ol>
-        </details>
       </div>
     </section>
 
@@ -105,7 +89,6 @@
     <section id="risultati" class="section">
       <div class="container">
         <h2>Risultati</h2>
-        <p class="muted">Galleria auto-popolata da <code>docs/media/</code>. Aggiungi immagini (<code>.jpg/.png/.webp</code>) o video (<code>.mp4</code>).</p>
         <div id="gallery" class="gallery"></div>
       </div>
     </section>
@@ -119,42 +102,13 @@
             <h3>Installazione</h3>
             <pre><code>git clone --recurse-submodules https://github.com/MatteoMariani99/psd_DaGGER.git
 cd psd_DaGGER
-chmod +x install.sh
-bash install.sh
-# Attiva ambiente
-conda activate dagger        # GPU Nvidia
-# oppure
-conda activate dagger_cpu    # solo CPU
-</code></pre>
+bash install.sh</code></pre>
           </div>
           <div>
             <h3>Training / Test</h3>
             <pre><code># Test (road)
-python3 scripts/test_agent.py
-
-# Test (cones)
-python3 scripts/test_agent.py --cones
-
-# Training (road)
-python3 scripts/train_agent.py
-
-# Training con ottimizzazione
-python3 scripts/train_agent.py --optimize
-
-# Esecuzione DAgger (cones, 42 iterazioni)
-python3 scripts/dagger_test.py --cones --num_its=42
-</code></pre>
+python3 scripts/test_agent.py</code></pre>
           </div>
-        </div>
-
-        <p class="note">
-          Per YOLOv8 sui coni, assicurati che i pesi/dataset siano in posizione come nella repo (vedi README).  
-          Vedi anche <em>runs/</em> per TensorBoard e <em>trajectory/</em> per le traiettorie.
-        </p>
-
-        <div class="cta-row">
-          <a class="button primary" href="https://github.com/MatteoMariani99/psd_DaGGER">Apri Repository</a>
-          <a class="button ghost" href="#risultati">Vai alla galleria</a>
         </div>
       </div>
     </section>
